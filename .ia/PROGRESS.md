@@ -4,6 +4,22 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-18 (session 5) — Bug de navigation vers les sourates corrigé + serveur web pour tester l'UI
+
+- L'utilisateur a testé l'UI via le serveur `flutter run -d web-server` (lancé en session précédente) et a signalé : naviguer vers Al-Baqara affichait la 2ᵉ page de la sourate au lieu de la 1ère.
+- **Cause trouvée** : voir le détail complet dans [DATA_SOURCES.md](DATA_SOURCES.md) section "Bug trouvé et corrigé". En résumé : Al-Fatiha (7 versets) se termine tôt sur la page 3, et Al-Baqara commence à la suite sur cette même page — mais l'en-tête de page (utilisé pour construire `navigation.json` en session 2) indiquait encore "Al-Fatiha" puisqu'elle occupe le haut de la page. `pageDebut` d'Al-Baqara était donc enregistré à 4 au lieu de 3.
+- **Vérification systématique refaite** pour les 113 transitions de sourates (2 à 114) via des planches de vignettes montrant la page précédant chaque `pageDebut` enregistré, à la recherche d'une cartouche de sourate à mi-page. **Seule Al-Baqara était fausse** ; toutes les autres transitions sont confirmées correctes. `navigation.json` régénéré avec la correction (Al-Baqara : pageDebut 4 → 3).
+- Ajout d'un test de régression `app/test/navigation_test.dart` qui simule un vrai tap utilisateur (ouvrir la liste des sourates → taper sur une sourate) et vérifie l'image de page réellement affichée. Couvre Al-Baqara (cas du bug) et An-Nas (dernière sourate). `flutter test` : 4/4 passent. `flutter analyze` : toujours 0 erreur.
+- Correctif UI supplémentaire (`app/lib/app.dart`) : ajout d'un `ScrollBehavior` personnalisé pour activer le glisser à la souris/trackpad (Flutter n'active que le tactile par défaut) — nécessaire pour tester confortablement au clavier/souris via le serveur web ; sans impact sur iPhone où le swipe tactile fonctionne déjà nativement.
+- Serveur `flutter run -d web-server` relancé avec les correctifs, accessible sur `http://localhost:8080` (redirigé automatiquement par WSL2 vers Windows).
+
+### Prochaine session — à faire en priorité
+1. Confirmer avec l'utilisateur que la navigation vers Al-Baqara (et idéalement quelques autres sourates) est maintenant correcte visuellement dans le navigateur.
+2. Continuer les tests visuels de l'UI (Juz', aller-à-la-page, signets, mode sombre) et remonter tout autre problème.
+3. Reste bloquant : toujours pas de build iOS réel (Phase 3.5 — Apple Developer + Codemagic).
+
+---
+
 ## 2026-09-18 (session 4) — Flutter installé et projet compilé/testé avec succès
 
 L'utilisateur a explicitement autorisé l'installation de Flutter sur sa machine (WSL Ubuntu). Réalisé par l'assistant :

@@ -51,6 +51,18 @@ Cette table doit être **vérifiée manuellement**, entrée par entrée, avant i
   - Le tableau `hizb` est présent dans le schéma mais **vide** : les marqueurs de Hizb/Rub'/Thumn visibles en marge des pages (roundels numérotés) n'ont pas été décodés (numérotation peu claire à distance, non prioritaire par rapport à sourate/Juz').
 - Scripts de traitement (non commités dans `app/`, à conserver si besoin de régénérer) : extraction PDF→WebP et génération des planches de contact, écrits en Python (PyMuPDF + Pillow) dans un venv local, réutilisables si le PDF source change.
 
+## Bug trouvé et corrigé (2026-09-18, session 5) : une sourate peut commencer au milieu d'une page
+
+**Symptôme rapporté par l'utilisateur** : en naviguant vers Al-Baqara depuis la liste des sourates, l'app affichait la 2e page de la sourate au lieu de la 1ère.
+
+**Cause réelle** : la méthode de vérification initiale (session 2) s'appuyait sur l'en-tête répété en haut de chaque page ("سورة البقرة ..."). Cet en-tête indique la sourate **présente en haut de la page**, pas forcément celle qui commence sur cette page. Comme Al-Fatiha ne fait que 7 versets, elle se termine tôt sur la page 3, et **Al-Baqara commence à la suite, sur la même page 3** — mais l'en-tête de la page 3 affiche encore "الفاتحة" puisque c'est elle qui occupe le haut de page. La page 4 est donc en réalité la **2ᵉ page** d'Al-Baqara, pas la 1ère. `pageDebut` d'Al-Baqara était donc enregistré à 4 au lieu de 3.
+
+Ce même piège avait déjà été identifié et correctement traité pour les sourates courtes de la fin du Coran (Juz' 30, voir plus haut) mais n'avait pas été vérifié pour le reste du livre.
+
+**Vérification corrective faite** : génération de planches de vignettes montrant, pour chacune des 114 sourates, la page précédant son `pageDebut` enregistré — pour repérer visuellement toute cartouche de nouvelle sourate apparaissant à mi-page. Les 113 transitions (sourate 2 à 114) ont été repassées en revue une par une. **Une seule erreur trouvée : Al-Baqara** (corrigée : `pageDebut` 4 → 3). Toutes les autres transitions sont confirmées correctes.
+
+**Leçon retenue** : l'en-tête de page n'est fiable que pour dire "quelle sourate est en haut de cette page", jamais pour dire "quelle page commence cette sourate". Toute vérification future de pagination doit inspecter le contenu réel de la page (présence d'une cartouche), pas seulement l'en-tête. Un test de régression (`app/test/navigation_test.dart`) vérifie maintenant que la navigation vers Al-Baqara affiche bien `page_0003.webp`.
+
 ## Prochaines étapes concrètes
 
 - [ ] Relecture humaine de `navigation.json` avant publication (au moins un échantillon aléatoire de sourates/Juz', en particulier le Juz' 30 qui a le plus de sourates par page).
