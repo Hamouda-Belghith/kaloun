@@ -35,13 +35,13 @@ Publier sur l'App Store une application iOS simple et fiable de lecture du Coran
 - [x] Mode hors-ligne complet (assets embarqués dans `app/assets/`).
 - [ ] **Bloquant** : le code n'a jamais été compilé ni exécuté dans cet environnement (pas de Flutter SDK). Résolu en Phase 2.5 ci-dessous.
 
-### Phase 2.5 — Mise en route locale (Windows + WSL + iPhone, sans Mac)
-- [ ] Installer Flutter SDK **côté Windows** (recommandé plutôt que dans WSL — voir [INSTRUCTIONS.md](INSTRUCTIONS.md) section "Environnement de développement de l'utilisateur"). Suivre `flutter doctor` jusqu'à ce qu'il soit propre pour Web/Windows/Android (la case iOS restera rouge, normal sans Mac).
-- [ ] Cloner/synchroniser le repo `Hamouda-Belghith/kaloun` côté Windows (ou continuer depuis WSL si plus simple pour git, et lancer les commandes `flutter` depuis Windows en pointant sur le chemin `\\wsl$\Ubuntu\home\hamouda\projects\kaloun\app`).
-- [ ] Dans `app/` : lancer `flutter create .` pour générer les dossiers de plateforme manquants (`ios/`, `android/`, etc.) sans écraser `lib/`, `assets/`, `pubspec.yaml` déjà écrits.
-- [ ] `flutter pub get`, puis `flutter analyze` — corriger toute erreur de compilation (le code a été écrit sans jamais être compilé, des erreurs sont probables).
-- [ ] Itérer vite en local sans Mac : `flutter run -d chrome` (ou un émulateur Android via Android Studio) pour valider l'UI, le RTL, la navigation entre écrans, le chargement des pages/données — avant de consommer des minutes de build cloud pour iOS.
-- [ ] (Optionnel) `flutter test` si des tests sont ajoutés.
+### Phase 2.5 — Mise en route locale ✅ (faite côté WSL par l'assistant le 2026-09-18)
+- [x] Flutter SDK 3.47.4 installé dans WSL (`~/dev/flutter`, sans sudo — l'utilisateur avait donné l'autorisation d'installer sur sa machine). `flutter doctor` propre pour Linux/Web ; Android/iOS toolchains absents (normal, non nécessaires pour analyser/tester le code Dart).
+- [x] `flutter create .` lancé dans `app/` : génère `ios/`, `android/`, `macos/`, `windows/`, `linux/`, `web/`. `lib/`, `assets/`, `pubspec.yaml` préservés intacts. Bundle identifier généré : **`com.hamoudabelghith.mosshafQaloun`** (iOS) / `com.hamoudabelghith.mosshaf_qaloun` (Android) — à changer si un autre nom est choisi.
+- [x] `flutter pub get`, `flutter analyze` → **aucune erreur**.
+- [x] `flutter test` → corrigé un test généré par défaut (référençait un widget `MyApp` inexistant) et un piège classique (`SharedPreferences` a besoin de `setMockInitialValues` en test unitaire, sinon le chargement reste bloqué indéfiniment — comportement normal sur un vrai appareil, seulement un souci de test). 2 tests passent : démarrage + chargement complet des données de navigation et rendu de l'écran lecteur.
+- [x] `flutter build web --release` → build réussi (validation supplémentaire au-delà de l'analyseur statique).
+- [ ] Reste à faire côté utilisateur (Windows) : installer Flutter sur Windows si tu veux un émulateur Android/Chrome graphique pour visualiser l'UI (voir [INSTRUCTIONS.md](INSTRUCTIONS.md)) — pas obligatoire pour avancer, mais utile pour "voir" l'app avant de passer par Codemagic/TestFlight.
 
 ### Phase 3 — Polish
 - [ ] Mode nuit / thème sombre.

@@ -10,8 +10,9 @@ workflows:
         # APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY
         - app_store_credentials
       vars:
-        # TODO: remplacer par le bundle identifier réel une fois décidé (voir .ia/PLAN.md).
-        BUNDLE_ID: "com.hamoudabelghith.mosshafqaloun"
+        # Généré par `flutter create` (org com.hamoudabelghith). À changer ici + dans
+        # Xcode/ios/Runner.xcodeproj si le nom définitif de l'app change (.ia/PLAN.md).
+        BUNDLE_ID: "com.hamoudabelghith.mosshafQaloun"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
       flutter: stable

@@ -4,6 +4,31 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-18 (session 4) — Flutter installé et projet compilé/testé avec succès
+
+L'utilisateur a explicitement autorisé l'installation de Flutter sur sa machine (WSL Ubuntu). Réalisé par l'assistant :
+
+- **Flutter 3.47.4** installé dans `~/dev/flutter` (tarball officiel, pas de sudo nécessaire). `~/.bashrc` mis à jour pour l'ajouter au PATH.
+- `flutter create --org com.hamoudabelghith --project-name mosshaf_qaloun .` lancé dans `app/` : génère les dossiers de plateforme manquants (`ios/`, `android/`, `macos/`, `windows/`, `linux/`, `web/`) sans toucher à `lib/`, `assets/`, `pubspec.yaml`. Bundle identifier obtenu : `com.hamoudabelghith.mosshafQaloun` (iOS).
+- `flutter pub get` puis `flutter analyze` → **0 erreur, 0 warning**.
+- `flutter test` → 1 échec initial corrigé :
+  - Le test par défaut généré par `flutter create` référençait un widget `MyApp` qui n'existe pas dans notre code (`MosshafQalounApp`) → remplacé par deux tests pertinents (démarrage + chargement complet des données/rendu de l'écran lecteur).
+  - `pumpAndSettle` restait bloqué indéfiniment : `SharedPreferences.getInstance()` n'a pas de réponse de canal de plateforme dans l'environnement de test unitaire sans `SharedPreferences.setMockInitialValues({})`. **Ce n'est pas un bug de l'app** (fonctionne normalement sur un vrai appareil), juste un prérequis des tests Flutter — ajouté dans `test/widget_test.dart`.
+  - Résultat final : **2/2 tests passent**, incluant le chargement réel de `navigation.json`, le parsing des modèles, et le rendu de l'écran lecteur avec la barre de navigation.
+- `flutter build web --release` → build réussi (validation supplémentaire, catch les erreurs de build que l'analyseur statique peut manquer).
+- Nettoyage : `app/build/` (374 Mo d'artefacts de build web, régénérable) supprimé, jamais commité (`.gitignore` déjà correct).
+- `codemagic.yaml` : placeholder `BUNDLE_ID` remplacé par la vraie valeur générée (`com.hamoudabelghith.mosshafQaloun`).
+- [PLAN.md](PLAN.md) : Phase 2.5 cochée comme faite.
+
+**Conclusion : le code Flutter écrit en session 2 compile et fonctionne correctement du premier coup** (une fois le test corrigé) — pas de bug applicatif trouvé dans `lib/`.
+
+### Prochaine session — à faire en priorité
+1. Toujours pas de build iOS réel testé (bloqué sans Mac) — passer à la Phase 3.5 : compte Apple Developer + Codemagic + premier build TestFlight.
+2. Si l'utilisateur veut voir l'UI visuellement avant Codemagic : installer Flutter sur Windows (ou utiliser le Flutter de WSL avec un serveur X/VNC, plus compliqué) pour lancer `flutter run -d chrome`.
+3. Trancher nom de l'app définitif + bundle ID (actuel : `com.hamoudabelghith.mosshafQaloun`, généré automatiquement, changeable).
+
+---
+
 ## 2026-09-18 (session 3) — Dépôt GitHub + plan de mise en route (Windows/WSL, sans Mac)
 
 - Dépôt public créé et poussé : **https://github.com/Hamouda-Belghith/kaloun** (branche `main`). `gh` CLI installé localement (pas de sudo dans cet environnement, binaire téléchargé dans `~/.local/bin`), authentification faite par l'utilisateur via le flux web device-code.
