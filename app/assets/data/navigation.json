@@ -1,0 +1,1044 @@
+{
+  "totalPages": 627,
+  "contenuCoranique": {
+    "premierePage": 3,
+    "dernierePage": 605
+  },
+  "sourates": [
+    {
+      "numero": 1,
+      "nom_ar": "الفاتحة",
+      "nom_fr": "Al-Fatiha",
+      "pageDebut": 3,
+      "nombreAyat": 7,
+      "estMecquoise": true
+    },
+    {
+      "numero": 2,
+      "nom_ar": "البقرة",
+      "nom_fr": "Al-Baqara",
+      "pageDebut": 4,
+      "nombreAyat": 286,
+      "estMecquoise": false
+    },
+    {
+      "numero": 3,
+      "nom_ar": "آل عمران",
+      "nom_fr": "Al-Imran",
+      "pageDebut": 51,
+      "nombreAyat": 200,
+      "estMecquoise": false
+    },
+    {
+      "numero": 4,
+      "nom_ar": "النساء",
+      "nom_fr": "An-Nisa",
+      "pageDebut": 78,
+      "nombreAyat": 176,
+      "estMecquoise": false
+    },
+    {
+      "numero": 5,
+      "nom_ar": "المائدة",
+      "nom_fr": "Al-Ma'ida",
+      "pageDebut": 108,
+      "nombreAyat": 120,
+      "estMecquoise": false
+    },
+    {
+      "numero": 6,
+      "nom_ar": "الأنعام",
+      "nom_fr": "Al-An'am",
+      "pageDebut": 129,
+      "nombreAyat": 165,
+      "estMecquoise": true
+    },
+    {
+      "numero": 7,
+      "nom_ar": "الأعراف",
+      "nom_fr": "Al-A'raf",
+      "pageDebut": 152,
+      "nombreAyat": 206,
+      "estMecquoise": true
+    },
+    {
+      "numero": 8,
+      "nom_ar": "الأنفال",
+      "nom_fr": "Al-Anfal",
+      "pageDebut": 178,
+      "nombreAyat": 75,
+      "estMecquoise": false
+    },
+    {
+      "numero": 9,
+      "nom_ar": "التوبة",
+      "nom_fr": "At-Tawba",
+      "pageDebut": 188,
+      "nombreAyat": 129,
+      "estMecquoise": false
+    },
+    {
+      "numero": 10,
+      "nom_ar": "يونس",
+      "nom_fr": "Yunus",
+      "pageDebut": 209,
+      "nombreAyat": 109,
+      "estMecquoise": true
+    },
+    {
+      "numero": 11,
+      "nom_ar": "هود",
+      "nom_fr": "Hud",
+      "pageDebut": 223,
+      "nombreAyat": 123,
+      "estMecquoise": true
+    },
+    {
+      "numero": 12,
+      "nom_ar": "يوسف",
+      "nom_fr": "Yusuf",
+      "pageDebut": 237,
+      "nombreAyat": 111,
+      "estMecquoise": true
+    },
+    {
+      "numero": 13,
+      "nom_ar": "الرعد",
+      "nom_fr": "Ar-Ra'd",
+      "pageDebut": 250,
+      "nombreAyat": 43,
+      "estMecquoise": false
+    },
+    {
+      "numero": 14,
+      "nom_ar": "إبراهيم",
+      "nom_fr": "Ibrahim",
+      "pageDebut": 257,
+      "nombreAyat": 52,
+      "estMecquoise": true
+    },
+    {
+      "numero": 15,
+      "nom_ar": "الحجر",
+      "nom_fr": "Al-Hijr",
+      "pageDebut": 263,
+      "nombreAyat": 99,
+      "estMecquoise": true
+    },
+    {
+      "numero": 16,
+      "nom_ar": "النحل",
+      "nom_fr": "An-Nahl",
+      "pageDebut": 269,
+      "nombreAyat": 128,
+      "estMecquoise": true
+    },
+    {
+      "numero": 17,
+      "nom_ar": "الإسراء",
+      "nom_fr": "Al-Isra",
+      "pageDebut": 283,
+      "nombreAyat": 111,
+      "estMecquoise": true
+    },
+    {
+      "numero": 18,
+      "nom_ar": "الكهف",
+      "nom_fr": "Al-Kahf",
+      "pageDebut": 295,
+      "nombreAyat": 110,
+      "estMecquoise": true
+    },
+    {
+      "numero": 19,
+      "nom_ar": "مريم",
+      "nom_fr": "Maryam",
+      "pageDebut": 306,
+      "nombreAyat": 98,
+      "estMecquoise": true
+    },
+    {
+      "numero": 20,
+      "nom_ar": "طه",
+      "nom_fr": "Ta-Ha",
+      "pageDebut": 314,
+      "nombreAyat": 135,
+      "estMecquoise": true
+    },
+    {
+      "numero": 21,
+      "nom_ar": "الأنبياء",
+      "nom_fr": "Al-Anbiya",
+      "pageDebut": 323,
+      "nombreAyat": 112,
+      "estMecquoise": true
+    },
+    {
+      "numero": 22,
+      "nom_ar": "الحج",
+      "nom_fr": "Al-Hajj",
+      "pageDebut": 333,
+      "nombreAyat": 78,
+      "estMecquoise": false
+    },
+    {
+      "numero": 23,
+      "nom_ar": "المؤمنون",
+      "nom_fr": "Al-Mu'minun",
+      "pageDebut": 343,
+      "nombreAyat": 118,
+      "estMecquoise": true
+    },
+    {
+      "numero": 24,
+      "nom_ar": "النور",
+      "nom_fr": "An-Nur",
+      "pageDebut": 351,
+      "nombreAyat": 64,
+      "estMecquoise": false
+    },
+    {
+      "numero": 25,
+      "nom_ar": "الفرقان",
+      "nom_fr": "Al-Furqan",
+      "pageDebut": 361,
+      "nombreAyat": 77,
+      "estMecquoise": true
+    },
+    {
+      "numero": 26,
+      "nom_ar": "الشعراء",
+      "nom_fr": "Ash-Shu'ara",
+      "pageDebut": 368,
+      "nombreAyat": 227,
+      "estMecquoise": true
+    },
+    {
+      "numero": 27,
+      "nom_ar": "النمل",
+      "nom_fr": "An-Naml",
+      "pageDebut": 378,
+      "nombreAyat": 93,
+      "estMecquoise": true
+    },
+    {
+      "numero": 28,
+      "nom_ar": "القصص",
+      "nom_fr": "Al-Qasas",
+      "pageDebut": 387,
+      "nombreAyat": 88,
+      "estMecquoise": true
+    },
+    {
+      "numero": 29,
+      "nom_ar": "العنكبوت",
+      "nom_fr": "Al-Ankabut",
+      "pageDebut": 398,
+      "nombreAyat": 69,
+      "estMecquoise": true
+    },
+    {
+      "numero": 30,
+      "nom_ar": "الروم",
+      "nom_fr": "Ar-Rum",
+      "pageDebut": 406,
+      "nombreAyat": 60,
+      "estMecquoise": true
+    },
+    {
+      "numero": 31,
+      "nom_ar": "لقمان",
+      "nom_fr": "Luqman",
+      "pageDebut": 412,
+      "nombreAyat": 34,
+      "estMecquoise": true
+    },
+    {
+      "numero": 32,
+      "nom_ar": "السجدة",
+      "nom_fr": "As-Sajda",
+      "pageDebut": 416,
+      "nombreAyat": 30,
+      "estMecquoise": true
+    },
+    {
+      "numero": 33,
+      "nom_ar": "الأحزاب",
+      "nom_fr": "Al-Ahzab",
+      "pageDebut": 419,
+      "nombreAyat": 73,
+      "estMecquoise": false
+    },
+    {
+      "numero": 34,
+      "nom_ar": "سبأ",
+      "nom_fr": "Saba",
+      "pageDebut": 429,
+      "nombreAyat": 54,
+      "estMecquoise": true
+    },
+    {
+      "numero": 35,
+      "nom_ar": "فاطر",
+      "nom_fr": "Fatir",
+      "pageDebut": 436,
+      "nombreAyat": 45,
+      "estMecquoise": true
+    },
+    {
+      "numero": 36,
+      "nom_ar": "يس",
+      "nom_fr": "Ya-Sin",
+      "pageDebut": 442,
+      "nombreAyat": 83,
+      "estMecquoise": true
+    },
+    {
+      "numero": 37,
+      "nom_ar": "الصافات",
+      "nom_fr": "As-Saffat",
+      "pageDebut": 447,
+      "nombreAyat": 182,
+      "estMecquoise": true
+    },
+    {
+      "numero": 38,
+      "nom_ar": "ص",
+      "nom_fr": "Sad",
+      "pageDebut": 454,
+      "nombreAyat": 88,
+      "estMecquoise": true
+    },
+    {
+      "numero": 39,
+      "nom_ar": "الزمر",
+      "nom_fr": "Az-Zumar",
+      "pageDebut": 460,
+      "nombreAyat": 75,
+      "estMecquoise": true
+    },
+    {
+      "numero": 40,
+      "nom_ar": "غافر",
+      "nom_fr": "Ghafir",
+      "pageDebut": 469,
+      "nombreAyat": 85,
+      "estMecquoise": true
+    },
+    {
+      "numero": 41,
+      "nom_ar": "فصلت",
+      "nom_fr": "Fussilat",
+      "pageDebut": 478,
+      "nombreAyat": 54,
+      "estMecquoise": true
+    },
+    {
+      "numero": 42,
+      "nom_ar": "الشورى",
+      "nom_fr": "Ash-Shura",
+      "pageDebut": 484,
+      "nombreAyat": 53,
+      "estMecquoise": true
+    },
+    {
+      "numero": 43,
+      "nom_ar": "الزخرف",
+      "nom_fr": "Az-Zukhruf",
+      "pageDebut": 491,
+      "nombreAyat": 89,
+      "estMecquoise": true
+    },
+    {
+      "numero": 44,
+      "nom_ar": "الدخان",
+      "nom_fr": "Ad-Dukhan",
+      "pageDebut": 497,
+      "nombreAyat": 59,
+      "estMecquoise": true
+    },
+    {
+      "numero": 45,
+      "nom_ar": "الجاثية",
+      "nom_fr": "Al-Jathiya",
+      "pageDebut": 500,
+      "nombreAyat": 37,
+      "estMecquoise": true
+    },
+    {
+      "numero": 46,
+      "nom_ar": "الأحقاف",
+      "nom_fr": "Al-Ahqaf",
+      "pageDebut": 504,
+      "nombreAyat": 35,
+      "estMecquoise": true
+    },
+    {
+      "numero": 47,
+      "nom_ar": "محمد",
+      "nom_fr": "Muhammad",
+      "pageDebut": 508,
+      "nombreAyat": 38,
+      "estMecquoise": false
+    },
+    {
+      "numero": 48,
+      "nom_ar": "الفتح",
+      "nom_fr": "Al-Fath",
+      "pageDebut": 512,
+      "nombreAyat": 29,
+      "estMecquoise": false
+    },
+    {
+      "numero": 49,
+      "nom_ar": "الحجرات",
+      "nom_fr": "Al-Hujurat",
+      "pageDebut": 517,
+      "nombreAyat": 18,
+      "estMecquoise": false
+    },
+    {
+      "numero": 50,
+      "nom_ar": "ق",
+      "nom_fr": "Qaf",
+      "pageDebut": 519,
+      "nombreAyat": 45,
+      "estMecquoise": true
+    },
+    {
+      "numero": 51,
+      "nom_ar": "الذاريات",
+      "nom_fr": "Adh-Dhariyat",
+      "pageDebut": 522,
+      "nombreAyat": 60,
+      "estMecquoise": true
+    },
+    {
+      "numero": 52,
+      "nom_ar": "الطور",
+      "nom_fr": "At-Tur",
+      "pageDebut": 525,
+      "nombreAyat": 49,
+      "estMecquoise": true
+    },
+    {
+      "numero": 53,
+      "nom_ar": "النجم",
+      "nom_fr": "An-Najm",
+      "pageDebut": 527,
+      "nombreAyat": 62,
+      "estMecquoise": true
+    },
+    {
+      "numero": 54,
+      "nom_ar": "القمر",
+      "nom_fr": "Al-Qamar",
+      "pageDebut": 530,
+      "nombreAyat": 55,
+      "estMecquoise": true
+    },
+    {
+      "numero": 55,
+      "nom_ar": "الرحمن",
+      "nom_fr": "Ar-Rahman",
+      "pageDebut": 533,
+      "nombreAyat": 78,
+      "estMecquoise": false
+    },
+    {
+      "numero": 56,
+      "nom_ar": "الواقعة",
+      "nom_fr": "Al-Waqi'a",
+      "pageDebut": 536,
+      "nombreAyat": 96,
+      "estMecquoise": true
+    },
+    {
+      "numero": 57,
+      "nom_ar": "الحديد",
+      "nom_fr": "Al-Hadid",
+      "pageDebut": 539,
+      "nombreAyat": 29,
+      "estMecquoise": false
+    },
+    {
+      "numero": 58,
+      "nom_ar": "المجادلة",
+      "nom_fr": "Al-Mujadila",
+      "pageDebut": 543,
+      "nombreAyat": 22,
+      "estMecquoise": false
+    },
+    {
+      "numero": 59,
+      "nom_ar": "الحشر",
+      "nom_fr": "Al-Hashr",
+      "pageDebut": 547,
+      "nombreAyat": 24,
+      "estMecquoise": false
+    },
+    {
+      "numero": 60,
+      "nom_ar": "الممتحنة",
+      "nom_fr": "Al-Mumtahina",
+      "pageDebut": 550,
+      "nombreAyat": 13,
+      "estMecquoise": false
+    },
+    {
+      "numero": 61,
+      "nom_ar": "الصف",
+      "nom_fr": "As-Saff",
+      "pageDebut": 553,
+      "nombreAyat": 14,
+      "estMecquoise": false
+    },
+    {
+      "numero": 62,
+      "nom_ar": "الجمعة",
+      "nom_fr": "Al-Jumu'a",
+      "pageDebut": 554,
+      "nombreAyat": 11,
+      "estMecquoise": false
+    },
+    {
+      "numero": 63,
+      "nom_ar": "المنافقون",
+      "nom_fr": "Al-Munafiqun",
+      "pageDebut": 556,
+      "nombreAyat": 11,
+      "estMecquoise": false
+    },
+    {
+      "numero": 64,
+      "nom_ar": "التغابن",
+      "nom_fr": "At-Taghabun",
+      "pageDebut": 557,
+      "nombreAyat": 18,
+      "estMecquoise": false
+    },
+    {
+      "numero": 65,
+      "nom_ar": "الطلاق",
+      "nom_fr": "At-Talaq",
+      "pageDebut": 559,
+      "nombreAyat": 12,
+      "estMecquoise": false
+    },
+    {
+      "numero": 66,
+      "nom_ar": "التحريم",
+      "nom_fr": "At-Tahrim",
+      "pageDebut": 561,
+      "nombreAyat": 12,
+      "estMecquoise": false
+    },
+    {
+      "numero": 67,
+      "nom_ar": "الملك",
+      "nom_fr": "Al-Mulk",
+      "pageDebut": 563,
+      "nombreAyat": 30,
+      "estMecquoise": true
+    },
+    {
+      "numero": 68,
+      "nom_ar": "القلم",
+      "nom_fr": "Al-Qalam",
+      "pageDebut": 566,
+      "nombreAyat": 52,
+      "estMecquoise": true
+    },
+    {
+      "numero": 69,
+      "nom_ar": "الحاقة",
+      "nom_fr": "Al-Haqqa",
+      "pageDebut": 568,
+      "nombreAyat": 52,
+      "estMecquoise": true
+    },
+    {
+      "numero": 70,
+      "nom_ar": "المعارج",
+      "nom_fr": "Al-Ma'arij",
+      "pageDebut": 570,
+      "nombreAyat": 44,
+      "estMecquoise": true
+    },
+    {
+      "numero": 71,
+      "nom_ar": "نوح",
+      "nom_fr": "Nuh",
+      "pageDebut": 572,
+      "nombreAyat": 28,
+      "estMecquoise": true
+    },
+    {
+      "numero": 72,
+      "nom_ar": "الجن",
+      "nom_fr": "Al-Jinn",
+      "pageDebut": 573,
+      "nombreAyat": 28,
+      "estMecquoise": true
+    },
+    {
+      "numero": 73,
+      "nom_ar": "المزمل",
+      "nom_fr": "Al-Muzzammil",
+      "pageDebut": 575,
+      "nombreAyat": 20,
+      "estMecquoise": true
+    },
+    {
+      "numero": 74,
+      "nom_ar": "المدثر",
+      "nom_fr": "Al-Muddaththir",
+      "pageDebut": 577,
+      "nombreAyat": 56,
+      "estMecquoise": true
+    },
+    {
+      "numero": 75,
+      "nom_ar": "القيامة",
+      "nom_fr": "Al-Qiyama",
+      "pageDebut": 579,
+      "nombreAyat": 40,
+      "estMecquoise": true
+    },
+    {
+      "numero": 76,
+      "nom_ar": "الإنسان",
+      "nom_fr": "Al-Insan",
+      "pageDebut": 580,
+      "nombreAyat": 31,
+      "estMecquoise": false
+    },
+    {
+      "numero": 77,
+      "nom_ar": "المرسلات",
+      "nom_fr": "Al-Mursalat",
+      "pageDebut": 582,
+      "nombreAyat": 50,
+      "estMecquoise": true
+    },
+    {
+      "numero": 78,
+      "nom_ar": "النبأ",
+      "nom_fr": "An-Naba",
+      "pageDebut": 583,
+      "nombreAyat": 40,
+      "estMecquoise": true
+    },
+    {
+      "numero": 79,
+      "nom_ar": "النازعات",
+      "nom_fr": "An-Naziat",
+      "pageDebut": 585,
+      "nombreAyat": 46,
+      "estMecquoise": true
+    },
+    {
+      "numero": 80,
+      "nom_ar": "عبس",
+      "nom_fr": "Abas",
+      "pageDebut": 586,
+      "nombreAyat": 42,
+      "estMecquoise": true
+    },
+    {
+      "numero": 81,
+      "nom_ar": "التكوير",
+      "nom_fr": "At-Takwir",
+      "pageDebut": 587,
+      "nombreAyat": 29,
+      "estMecquoise": true
+    },
+    {
+      "numero": 82,
+      "nom_ar": "الإنفطار",
+      "nom_fr": "Al-Infitar",
+      "pageDebut": 588,
+      "nombreAyat": 19,
+      "estMecquoise": true
+    },
+    {
+      "numero": 83,
+      "nom_ar": "المطففين",
+      "nom_fr": "Al-Mutaffifin",
+      "pageDebut": 589,
+      "nombreAyat": 36,
+      "estMecquoise": true
+    },
+    {
+      "numero": 84,
+      "nom_ar": "الإنشقاق",
+      "nom_fr": "Al-Inshiqaq",
+      "pageDebut": 590,
+      "nombreAyat": 25,
+      "estMecquoise": true
+    },
+    {
+      "numero": 85,
+      "nom_ar": "البروج",
+      "nom_fr": "Al-Buruj",
+      "pageDebut": 591,
+      "nombreAyat": 22,
+      "estMecquoise": true
+    },
+    {
+      "numero": 86,
+      "nom_ar": "الطارق",
+      "nom_fr": "At-Tariq",
+      "pageDebut": 592,
+      "nombreAyat": 17,
+      "estMecquoise": true
+    },
+    {
+      "numero": 87,
+      "nom_ar": "الأعلى",
+      "nom_fr": "Al-A'la",
+      "pageDebut": 593,
+      "nombreAyat": 19,
+      "estMecquoise": true
+    },
+    {
+      "numero": 88,
+      "nom_ar": "الغاشية",
+      "nom_fr": "Al-Ghashiya",
+      "pageDebut": 593,
+      "nombreAyat": 26,
+      "estMecquoise": true
+    },
+    {
+      "numero": 89,
+      "nom_ar": "الفجر",
+      "nom_fr": "Al-Fajr",
+      "pageDebut": 594,
+      "nombreAyat": 30,
+      "estMecquoise": true
+    },
+    {
+      "numero": 90,
+      "nom_ar": "البلد",
+      "nom_fr": "Al-Balad",
+      "pageDebut": 595,
+      "nombreAyat": 20,
+      "estMecquoise": true
+    },
+    {
+      "numero": 91,
+      "nom_ar": "الشمس",
+      "nom_fr": "Ash-Shams",
+      "pageDebut": 596,
+      "nombreAyat": 15,
+      "estMecquoise": true
+    },
+    {
+      "numero": 92,
+      "nom_ar": "الليل",
+      "nom_fr": "Al-Layl",
+      "pageDebut": 596,
+      "nombreAyat": 21,
+      "estMecquoise": true
+    },
+    {
+      "numero": 93,
+      "nom_ar": "الضحى",
+      "nom_fr": "Ad-Duha",
+      "pageDebut": 597,
+      "nombreAyat": 11,
+      "estMecquoise": true
+    },
+    {
+      "numero": 94,
+      "nom_ar": "الشرح",
+      "nom_fr": "Ash-Sharh",
+      "pageDebut": 597,
+      "nombreAyat": 8,
+      "estMecquoise": true
+    },
+    {
+      "numero": 95,
+      "nom_ar": "التين",
+      "nom_fr": "At-Tin",
+      "pageDebut": 598,
+      "nombreAyat": 8,
+      "estMecquoise": true
+    },
+    {
+      "numero": 96,
+      "nom_ar": "العلق",
+      "nom_fr": "Al-Alaq",
+      "pageDebut": 598,
+      "nombreAyat": 19,
+      "estMecquoise": true
+    },
+    {
+      "numero": 97,
+      "nom_ar": "القدر",
+      "nom_fr": "Al-Qadr",
+      "pageDebut": 599,
+      "nombreAyat": 5,
+      "estMecquoise": true
+    },
+    {
+      "numero": 98,
+      "nom_ar": "البينة",
+      "nom_fr": "Al-Bayyina",
+      "pageDebut": 599,
+      "nombreAyat": 8,
+      "estMecquoise": false
+    },
+    {
+      "numero": 99,
+      "nom_ar": "الزلزلة",
+      "nom_fr": "Az-Zalzala",
+      "pageDebut": 600,
+      "nombreAyat": 8,
+      "estMecquoise": false
+    },
+    {
+      "numero": 100,
+      "nom_ar": "العاديات",
+      "nom_fr": "Al-Adiyat",
+      "pageDebut": 600,
+      "nombreAyat": 11,
+      "estMecquoise": true
+    },
+    {
+      "numero": 101,
+      "nom_ar": "القارعة",
+      "nom_fr": "Al-Qari'a",
+      "pageDebut": 601,
+      "nombreAyat": 11,
+      "estMecquoise": true
+    },
+    {
+      "numero": 102,
+      "nom_ar": "التكاثر",
+      "nom_fr": "At-Takathur",
+      "pageDebut": 601,
+      "nombreAyat": 8,
+      "estMecquoise": true
+    },
+    {
+      "numero": 103,
+      "nom_ar": "العصر",
+      "nom_fr": "Al-Asr",
+      "pageDebut": 602,
+      "nombreAyat": 3,
+      "estMecquoise": true
+    },
+    {
+      "numero": 104,
+      "nom_ar": "الهمزة",
+      "nom_fr": "Al-Humaza",
+      "pageDebut": 602,
+      "nombreAyat": 9,
+      "estMecquoise": true
+    },
+    {
+      "numero": 105,
+      "nom_ar": "الفيل",
+      "nom_fr": "Al-Fil",
+      "pageDebut": 602,
+      "nombreAyat": 5,
+      "estMecquoise": true
+    },
+    {
+      "numero": 106,
+      "nom_ar": "قريش",
+      "nom_fr": "Quraysh",
+      "pageDebut": 603,
+      "nombreAyat": 4,
+      "estMecquoise": true
+    },
+    {
+      "numero": 107,
+      "nom_ar": "الماعون",
+      "nom_fr": "Al-Ma'un",
+      "pageDebut": 603,
+      "nombreAyat": 7,
+      "estMecquoise": true
+    },
+    {
+      "numero": 108,
+      "nom_ar": "الكوثر",
+      "nom_fr": "Al-Kawthar",
+      "pageDebut": 603,
+      "nombreAyat": 3,
+      "estMecquoise": true
+    },
+    {
+      "numero": 109,
+      "nom_ar": "الكافرون",
+      "nom_fr": "Al-Kafirun",
+      "pageDebut": 604,
+      "nombreAyat": 6,
+      "estMecquoise": true
+    },
+    {
+      "numero": 110,
+      "nom_ar": "النصر",
+      "nom_fr": "An-Nasr",
+      "pageDebut": 604,
+      "nombreAyat": 3,
+      "estMecquoise": false
+    },
+    {
+      "numero": 111,
+      "nom_ar": "المسد",
+      "nom_fr": "Al-Masad",
+      "pageDebut": 604,
+      "nombreAyat": 5,
+      "estMecquoise": true
+    },
+    {
+      "numero": 112,
+      "nom_ar": "الإخلاص",
+      "nom_fr": "Al-Ikhlas",
+      "pageDebut": 605,
+      "nombreAyat": 4,
+      "estMecquoise": true
+    },
+    {
+      "numero": 113,
+      "nom_ar": "الفلق",
+      "nom_fr": "Al-Falaq",
+      "pageDebut": 605,
+      "nombreAyat": 5,
+      "estMecquoise": true
+    },
+    {
+      "numero": 114,
+      "nom_ar": "الناس",
+      "nom_fr": "An-Nas",
+      "pageDebut": 605,
+      "nombreAyat": 6,
+      "estMecquoise": true
+    }
+  ],
+  "juz": [
+    {
+      "numero": 1,
+      "pageDebut": 3
+    },
+    {
+      "numero": 2,
+      "pageDebut": 23
+    },
+    {
+      "numero": 3,
+      "pageDebut": 43
+    },
+    {
+      "numero": 4,
+      "pageDebut": 63
+    },
+    {
+      "numero": 5,
+      "pageDebut": 83
+    },
+    {
+      "numero": 6,
+      "pageDebut": 103
+    },
+    {
+      "numero": 7,
+      "pageDebut": 123
+    },
+    {
+      "numero": 8,
+      "pageDebut": 143
+    },
+    {
+      "numero": 9,
+      "pageDebut": 163
+    },
+    {
+      "numero": 10,
+      "pageDebut": 183
+    },
+    {
+      "numero": 11,
+      "pageDebut": 203
+    },
+    {
+      "numero": 12,
+      "pageDebut": 223
+    },
+    {
+      "numero": 13,
+      "pageDebut": 243
+    },
+    {
+      "numero": 14,
+      "pageDebut": 263
+    },
+    {
+      "numero": 15,
+      "pageDebut": 283
+    },
+    {
+      "numero": 16,
+      "pageDebut": 303
+    },
+    {
+      "numero": 17,
+      "pageDebut": 323
+    },
+    {
+      "numero": 18,
+      "pageDebut": 343
+    },
+    {
+      "numero": 19,
+      "pageDebut": 363
+    },
+    {
+      "numero": 20,
+      "pageDebut": 383
+    },
+    {
+      "numero": 21,
+      "pageDebut": 403
+    },
+    {
+      "numero": 22,
+      "pageDebut": 423
+    },
+    {
+      "numero": 23,
+      "pageDebut": 443
+    },
+    {
+      "numero": 24,
+      "pageDebut": 463
+    },
+    {
+      "numero": 25,
+      "pageDebut": 483
+    },
+    {
+      "numero": 26,
+      "pageDebut": 503
+    },
+    {
+      "numero": 27,
+      "pageDebut": 523
+    },
+    {
+      "numero": 28,
+      "pageDebut": 543
+    },
+    {
+      "numero": 29,
+      "pageDebut": 563
+    },
+    {
+      "numero": 30,
+      "pageDebut": 583
+    }
+  ],
+  "hizb": []
+}

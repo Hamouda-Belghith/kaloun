@@ -1,0 +1,10 @@
+.dart_tool/
+.idea/
+build/
+ios/Pods/
+ios/.symlinks/
+*.iml
+.DS_Store
+
+# Source PDF (445 Mo) : trop volumineux pour Git/GitHub, conservé en local uniquement.
+*.pdf
