@@ -77,3 +77,18 @@ lib/
 
 - 627 images WebP compressées ≈ 60–100 Mo de bundle → acceptable pour l'App Store (limite de téléchargement cellulaire 200 Mo, au-delà l'utilisateur doit être en Wi-Fi — à surveiller, viser < 150 Mo au total).
 - Chargement des images à la demande (le `PageView` Flutter ne construit que les pages visibles/adjacentes) — pas de préchargement de tout le Mosshaf en mémoire.
+
+## CI/CD iOS sans Mac
+
+L'utilisateur développe sur PC Windows + WSL Ubuntu et n'a pas de Mac. Xcode (obligatoire pour compiler/signer une app iOS) ne tourne que sur macOS : impossible de builder la cible iOS en local dans cet environnement, quelle que soit la config. Solution retenue : **CI/CD avec runner macOS géré** — le code source ne change pas, seule la compilation se fait dans le cloud.
+
+- **Service retenu : [Codemagic](https://codemagic.io/)** — spécialisé Flutter, offre un palier gratuit avec minutes de build macOS, gère la signature iOS automatiquement via une clé API App Store Connect (pas besoin de manipuler certificats/profils à la main), et peut publier direct sur **TestFlight**.
+- Config de départ dans [`codemagic.yaml`](../codemagic.yaml) à la racine du dépôt (workflow `ios-testflight`) — à ajuster une fois le bundle identifier et le compte Apple Developer définis (placeholders présents dans le fichier).
+- Flux de travail :
+  1. Compte Apple Developer Program actif (payant, 99 USD/an — nécessaire de toute façon pour installer sur un iPhone physique au-delà du provisioning gratuit de 7 jours, qui lui-même requiert un Mac).
+  2. Créer une clé API App Store Connect (App Store Connect → Users and Access → Keys) et l'ajouter dans Codemagic (Teams → Integrations → App Store Connect).
+  3. Connecter le repo GitHub `Hamouda-Belghith/kaloun` à Codemagic, pointer sur le dossier `app/`.
+  4. Chaque push sur `main` (ou déclenchement manuel) → Codemagic build l'IPA signée → upload automatique sur TestFlight.
+  5. Sur l'iPhone : installer l'app **TestFlight** (App Store), accepter l'invitation de testeur, installer/mettre à jour la build.
+- Pour itérer plus vite sans consommer de minutes de build cloud à chaque petit changement : valider d'abord l'UI/la logique avec `flutter run -d chrome` (ou un émulateur Android) en local, ne déclencher un build Codemagic que pour les étapes qui comptent (nouvel écran fonctionnel, avant une session de test sur iPhone).
+- Alternative si Codemagic ne convient pas : location d'un Mac cloud (MacinCloud, MacStadium) avec accès Xcode complet à distance, plus lourd à mettre en place mais donne un contrôle total (utile si un jour on a besoin de déboguer un problème spécifique à Xcode).

@@ -4,6 +4,24 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-18 (session 3) — Dépôt GitHub + plan de mise en route (Windows/WSL, sans Mac)
+
+- Dépôt public créé et poussé : **https://github.com/Hamouda-Belghith/kaloun** (branche `main`). `gh` CLI installé localement (pas de sudo dans cet environnement, binaire téléchargé dans `~/.local/bin`), authentification faite par l'utilisateur via le flux web device-code.
+- Le PDF source (445 Mo) est exclu du repo via `.gitignore` (`*.pdf`) — reste uniquement en local.
+- Contexte précisé par l'utilisateur : développement sur PC Windows perso, VS Code connecté à WSL Ubuntu, test prévu sur un **iPhone physique**. **Pas de Mac** → impossible de compiler/exécuter la cible iOS en local (Xcode = macOS uniquement). Noté dans [INSTRUCTIONS.md](INSTRUCTIONS.md) pour que les sessions futures ne suggèrent pas `flutter run` sur simulateur iOS à cet utilisateur.
+- Décision d'architecture : contourner l'absence de Mac avec un CI/CD géré — **Codemagic** (palier gratuit, spécialisé Flutter, signe et publie sur TestFlight automatiquement). Ajout de [`codemagic.yaml`](../codemagic.yaml) à la racine du repo (workflow de départ, bundle ID encore en placeholder).
+- [PLAN.md](PLAN.md) réorganisé avec deux nouvelles étapes concrètes : **Phase 2.5** (mise en route locale : Flutter sur Windows, `flutter create .`, `flutter analyze`, itération rapide via Chrome/émulateur Android avant de consommer des minutes de build cloud) et **Phase 3.5** (tests réels sur l'iPhone via Codemagic + TestFlight, en boucle jusqu'à satisfaction avant la Phase 4 de publication).
+- **Règle permanente ajoutée** dans [INSTRUCTIONS.md](INSTRUCTIONS.md) : mettre à jour `.ia/` (PROGRESS/PLAN/ARCHITECTURE/DATA_SOURCES/APP_STORE_CHECKLIST selon pertinence) à chaque session sans que l'utilisateur ait à le redemander, et pousser sur GitHub si un remote est déjà configuré.
+- Aucun code applicatif modifié cette session (uniquement doc + config CI).
+
+### Prochaine session — à faire en priorité
+1. Utilisateur : installer Flutter sur Windows, lancer `flutter create .` dans `app/`, `flutter pub get`, `flutter analyze` — remonter les erreurs de compilation trouvées (le code Dart n'a jamais été compilé).
+2. Corriger les éventuelles erreurs de compilation trouvées à l'étape 1.
+3. Créer le compte Apple Developer + compte Codemagic, brancher le repo, faire un premier build de test.
+4. Trancher le nom de l'app + bundle identifier définitif (actuellement placeholder `com.hamoudabelghith.mosshafqaloun` dans `codemagic.yaml`).
+
+---
+
 ## 2026-09-18 (session 2) — Extraction des données + squelette Flutter
 
 Environnement : pas de Flutter SDK installé sur cette machine (Linux/WSL), pas de `poppler-utils`, pas de `sudo`. Contournement : création d'un venv Python (`python3 -m venv`) avec `pip` fonctionnel, installation de `pymupdf` + `pillow` pour traiter le PDF directement.

@@ -33,7 +33,15 @@ Publier sur l'App Store une application iOS simple et fiable de lecture du Coran
 - [x] Aller à une page précise (saisie numéro).
 - [x] Signet automatique (dernière page lue) + signets manuels.
 - [x] Mode hors-ligne complet (assets embarqués dans `app/assets/`).
-- [ ] **Bloquant** : aucun Flutter SDK disponible dans cet environnement de développement (Linux/WSL sans Flutter, sans Xcode). Le code n'a jamais été compilé ni exécuté. Prochaine étape obligatoire : ouvrir `app/` sur une machine avec Flutter installé, lancer `flutter create .` pour générer `ios/`/`android/` (en gardant `lib/`, `assets/`, `pubspec.yaml`), puis `flutter pub get`, `flutter analyze`, `flutter run`.
+- [ ] **Bloquant** : le code n'a jamais été compilé ni exécuté dans cet environnement (pas de Flutter SDK). Résolu en Phase 2.5 ci-dessous.
+
+### Phase 2.5 — Mise en route locale (Windows + WSL + iPhone, sans Mac)
+- [ ] Installer Flutter SDK **côté Windows** (recommandé plutôt que dans WSL — voir [INSTRUCTIONS.md](INSTRUCTIONS.md) section "Environnement de développement de l'utilisateur"). Suivre `flutter doctor` jusqu'à ce qu'il soit propre pour Web/Windows/Android (la case iOS restera rouge, normal sans Mac).
+- [ ] Cloner/synchroniser le repo `Hamouda-Belghith/kaloun` côté Windows (ou continuer depuis WSL si plus simple pour git, et lancer les commandes `flutter` depuis Windows en pointant sur le chemin `\\wsl$\Ubuntu\home\hamouda\projects\kaloun\app`).
+- [ ] Dans `app/` : lancer `flutter create .` pour générer les dossiers de plateforme manquants (`ios/`, `android/`, etc.) sans écraser `lib/`, `assets/`, `pubspec.yaml` déjà écrits.
+- [ ] `flutter pub get`, puis `flutter analyze` — corriger toute erreur de compilation (le code a été écrit sans jamais être compilé, des erreurs sont probables).
+- [ ] Itérer vite en local sans Mac : `flutter run -d chrome` (ou un émulateur Android via Android Studio) pour valider l'UI, le RTL, la navigation entre écrans, le chargement des pages/données — avant de consommer des minutes de build cloud pour iOS.
+- [ ] (Optionnel) `flutter test` si des tests sont ajoutés.
 
 ### Phase 3 — Polish
 - [ ] Mode nuit / thème sombre.
@@ -42,11 +50,19 @@ Publier sur l'App Store une application iOS simple et fiable de lecture du Coran
 - [ ] Tests sur plusieurs tailles d'écran iPhone/iPad.
 - [ ] Accessibilité de base (VoiceOver sur les écrans de navigation, pas nécessairement sur le rendu image du Mosshaf).
 
+### Phase 3.5 — Tests sur l'iPhone via CI (pas de Mac disponible)
+- [ ] Créer/valider un compte Apple Developer Program (99$/an) — nécessaire pour installer sur un iPhone physique au-delà du provisioning gratuit de 7 jours (qui requiert lui-même un Mac, donc inutilisable ici).
+- [ ] Créer un compte [Codemagic](https://codemagic.io/) et connecter le repo GitHub `Hamouda-Belghith/kaloun` (dossier `app/`).
+- [ ] Créer une clé API App Store Connect et l'ajouter à Codemagic (intégration "App Store Connect").
+- [ ] Adapter [`codemagic.yaml`](../codemagic.yaml) (déjà présent à la racine) avec le vrai bundle identifier une fois choisi (question ouverte n°1 ci-dessous).
+- [ ] Premier build déclenché → vérifier qu'il arrive bien sur TestFlight.
+- [ ] Installer TestFlight sur l'iPhone, accepter l'invitation, installer la build, tester réellement l'app (navigation, lecture, signets).
+- [ ] Boucle : coder → push → build Codemagic → tester sur iPhone via TestFlight → corriger → recommencer, jusqu'à satisfaction.
+
 ### Phase 4 — Publication App Store
-- [ ] Compte Apple Developer (99$/an) créé.
 - [ ] Icônes, captures d'écran, fiche App Store (description FR/AR/EN).
 - [ ] Politique de confidentialité (obligatoire même sans collecte de données).
-- [ ] Build release, TestFlight, tests internes.
+- [ ] Build release final, tests internes TestFlight complets.
 - [ ] Soumission App Store Connect (voir [APP_STORE_CHECKLIST.md](APP_STORE_CHECKLIST.md)).
 
 ### Phase 5 (optionnelle, plus tard)

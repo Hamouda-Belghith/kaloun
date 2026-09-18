@@ -2,6 +2,15 @@
 
 Ce fichier contient les conventions et règles à suivre pour toute session de travail (humaine ou IA) sur ce projet. À lire avant de reprendre le développement.
 
+## Règle permanente : tenir `.ia/` à jour à chaque session
+
+**Cette règle s'applique automatiquement, sans que l'utilisateur ait besoin de la redemander.** À chaque session de travail qui modifie le code, les données, ou fait avancer le projet :
+1. Mettre à jour [PROGRESS.md](PROGRESS.md) avec une nouvelle entrée datée décrivant ce qui a été fait, ce qui a été décidé, et ce qui reste bloquant.
+2. Cocher/mettre à jour les cases pertinentes dans [PLAN.md](PLAN.md).
+3. Mettre à jour [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_SOURCES.md](DATA_SOURCES.md) ou [APP_STORE_CHECKLIST.md](APP_STORE_CHECKLIST.md) si une décision technique, une donnée, ou une étape de publication a changé.
+4. Committer ces mises à jour de `.ia/` avec le reste du travail de la session (pas de commit séparé nécessaire, mais ne pas les oublier).
+5. Si un dépôt distant est configuré (`git remote -v`) et qu'on a déjà poussé dans cette conversation, pousser aussi les mises à jour de `.ia/` — l'utilisateur développe depuis une autre machine (Windows/VS Code) et doit voir l'état à jour en pullant.
+
 ## Règles non négociables (contenu religieux)
 
 1. **Ne jamais modifier, recomposer ou "corriger" automatiquement le texte du Coran.** Toute page affichée doit être une reproduction fidèle du scan source (image), sauf validation manuelle explicite d'un changement.
@@ -34,3 +43,10 @@ Ce fichier contient les conventions et règles à suivre pour toute session de t
 ## Questions à trancher avec l'utilisateur (ne pas décider seul)
 
 Voir la section "Questions ouvertes" dans [PLAN.md](PLAN.md) — nom de l'app, bundle ID, compte Apple Developer, droits sur l'édition, stratégie texte vs image si elle doit évoluer.
+
+## Environnement de développement de l'utilisateur
+
+- PC Windows personnel, VS Code connecté à **WSL Ubuntu** (le dépôt vit dans le filesystem WSL, `/home/hamouda/projects/kaloun`).
+- Appareil de test : un **iPhone physique**, pas d'appareil Android.
+- **Pas de Mac.** Xcode ne fonctionne que sur macOS : il est donc impossible de compiler/exécuter la cible iOS localement (ni depuis Windows, ni depuis WSL). Toute la chaîne de build iOS doit passer par un service tiers (Mac dans le cloud ou CI/CD macOS — voir [ARCHITECTURE.md](ARCHITECTURE.md) section "CI/CD iOS sans Mac"). Ne jamais suggérer `flutter build ios` ou `flutter run` sur un simulateur iOS en local à cet utilisateur — ça ne peut pas fonctionner dans son environnement.
+- Pour l'itération rapide sur l'UI/la logique (avant de consommer des minutes de build cloud), Flutter peut tourner en local sur Windows nativement pour les cibles Web (`flutter run -d chrome`), Windows desktop (`flutter run -d windows`), ou un émulateur Android (si Android Studio est installé) — ça valide la mise en page RTL, la navigation, les écrans, même si la cible finale est iOS uniquement.
