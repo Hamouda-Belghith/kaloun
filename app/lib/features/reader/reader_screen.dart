@@ -78,8 +78,8 @@ class _ReaderScreenState extends State<ReaderScreen> {
         ),
         body: PageView.builder(
           controller: _controller,
-          // Livre arabe : le doigt glisse vers la droite pour avancer.
-          reverse: true,
+          // Pas de `reverse` : le Directionality RTL parent place déjà la page 1
+          // à droite et fait avancer vers la gauche (`reverse: true` annulerait ça).
           itemCount: data.totalPages,
           onPageChanged: _onPageChanged,
           itemBuilder: (context, index) {

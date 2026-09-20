@@ -35,6 +35,8 @@ Publier sur l'App Store une application iOS simple et fiable de lecture du Coran
 - [x] Mode hors-ligne complet (assets embarqués dans `app/assets/`).
 - [ ] **Bloquant** : le code n'a jamais été compilé ni exécuté dans cet environnement (pas de Flutter SDK). Résolu en Phase 2.5 ci-dessous.
 
+> Tout ce qui doit être fait à la main est listé dans [MANUEL.md](../MANUEL.md).
+
 ### Phase 2.5 — Mise en route locale ✅ (faite côté WSL par l'assistant le 2026-09-18)
 - [x] Flutter SDK 3.47.4 installé dans WSL (`~/dev/flutter`, sans sudo — l'utilisateur avait donné l'autorisation d'installer sur sa machine). `flutter doctor` propre pour Linux/Web ; Android/iOS toolchains absents (normal, non nécessaires pour analyser/tester le code Dart).
 - [x] `flutter create .` lancé dans `app/` : génère `ios/`, `android/`, `macos/`, `windows/`, `linux/`, `web/`. `lib/`, `assets/`, `pubspec.yaml` préservés intacts. Bundle identifier généré : **`com.hamoudabelghith.mosshafQaloun`** (iOS) / `com.hamoudabelghith.mosshaf_qaloun` (Android) — à changer si un autre nom est choisi.

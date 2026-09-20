@@ -41,7 +41,7 @@
       "numero": 5,
       "nom_ar": "المائدة",
       "nom_fr": "Al-Ma'ida",
-      "pageDebut": 108,
+      "pageDebut": 107,
       "nombreAyat": 120,
       "estMecquoise": false
     },
@@ -89,7 +89,7 @@
       "numero": 11,
       "nom_ar": "هود",
       "nom_fr": "Hud",
-      "pageDebut": 223,
+      "pageDebut": 222,
       "nombreAyat": 123,
       "estMecquoise": true
     },
@@ -97,7 +97,7 @@
       "numero": 12,
       "nom_ar": "يوسف",
       "nom_fr": "Yusuf",
-      "pageDebut": 237,
+      "pageDebut": 236,
       "nombreAyat": 111,
       "estMecquoise": true
     },
@@ -113,7 +113,7 @@
       "numero": 14,
       "nom_ar": "إبراهيم",
       "nom_fr": "Ibrahim",
-      "pageDebut": 257,
+      "pageDebut": 256,
       "nombreAyat": 52,
       "estMecquoise": true
     },
@@ -129,7 +129,7 @@
       "numero": 16,
       "nom_ar": "النحل",
       "nom_fr": "An-Nahl",
-      "pageDebut": 269,
+      "pageDebut": 268,
       "nombreAyat": 128,
       "estMecquoise": true
     },
@@ -145,7 +145,7 @@
       "numero": 18,
       "nom_ar": "الكهف",
       "nom_fr": "Al-Kahf",
-      "pageDebut": 295,
+      "pageDebut": 294,
       "nombreAyat": 110,
       "estMecquoise": true
     },
@@ -161,7 +161,7 @@
       "numero": 20,
       "nom_ar": "طه",
       "nom_fr": "Ta-Ha",
-      "pageDebut": 314,
+      "pageDebut": 313,
       "nombreAyat": 135,
       "estMecquoise": true
     },
@@ -201,7 +201,7 @@
       "numero": 25,
       "nom_ar": "الفرقان",
       "nom_fr": "Al-Furqan",
-      "pageDebut": 361,
+      "pageDebut": 360,
       "nombreAyat": 77,
       "estMecquoise": true
     },
@@ -225,7 +225,7 @@
       "numero": 28,
       "nom_ar": "القصص",
       "nom_fr": "Al-Qasas",
-      "pageDebut": 387,
+      "pageDebut": 386,
       "nombreAyat": 88,
       "estMecquoise": true
     },
@@ -233,7 +233,7 @@
       "numero": 29,
       "nom_ar": "العنكبوت",
       "nom_fr": "Al-Ankabut",
-      "pageDebut": 398,
+      "pageDebut": 397,
       "nombreAyat": 69,
       "estMecquoise": true
     },
@@ -241,7 +241,7 @@
       "numero": 30,
       "nom_ar": "الروم",
       "nom_fr": "Ar-Rum",
-      "pageDebut": 406,
+      "pageDebut": 405,
       "nombreAyat": 60,
       "estMecquoise": true
     },
@@ -281,7 +281,7 @@
       "numero": 35,
       "nom_ar": "فاطر",
       "nom_fr": "Fatir",
-      "pageDebut": 436,
+      "pageDebut": 435,
       "nombreAyat": 45,
       "estMecquoise": true
     },
@@ -289,7 +289,7 @@
       "numero": 36,
       "nom_ar": "يس",
       "nom_fr": "Ya-Sin",
-      "pageDebut": 442,
+      "pageDebut": 441,
       "nombreAyat": 83,
       "estMecquoise": true
     },
@@ -313,7 +313,7 @@
       "numero": 39,
       "nom_ar": "الزمر",
       "nom_fr": "Az-Zumar",
-      "pageDebut": 460,
+      "pageDebut": 459,
       "nombreAyat": 75,
       "estMecquoise": true
     },
@@ -321,7 +321,7 @@
       "numero": 40,
       "nom_ar": "غافر",
       "nom_fr": "Ghafir",
-      "pageDebut": 469,
+      "pageDebut": 468,
       "nombreAyat": 85,
       "estMecquoise": true
     },
@@ -345,7 +345,7 @@
       "numero": 43,
       "nom_ar": "الزخرف",
       "nom_fr": "Az-Zukhruf",
-      "pageDebut": 491,
+      "pageDebut": 490,
       "nombreAyat": 89,
       "estMecquoise": true
     },
@@ -369,7 +369,7 @@
       "numero": 46,
       "nom_ar": "الأحقاف",
       "nom_fr": "Al-Ahqaf",
-      "pageDebut": 504,
+      "pageDebut": 503,
       "nombreAyat": 35,
       "estMecquoise": true
     },
@@ -393,7 +393,7 @@
       "numero": 49,
       "nom_ar": "الحجرات",
       "nom_fr": "Al-Hujurat",
-      "pageDebut": 517,
+      "pageDebut": 516,
       "nombreAyat": 18,
       "estMecquoise": false
     },
@@ -409,7 +409,7 @@
       "numero": 51,
       "nom_ar": "الذاريات",
       "nom_fr": "Adh-Dhariyat",
-      "pageDebut": 522,
+      "pageDebut": 521,
       "nombreAyat": 60,
       "estMecquoise": true
     },
@@ -417,7 +417,7 @@
       "numero": 52,
       "nom_ar": "الطور",
       "nom_fr": "At-Tur",
-      "pageDebut": 525,
+      "pageDebut": 524,
       "nombreAyat": 49,
       "estMecquoise": true
     },
@@ -433,7 +433,7 @@
       "numero": 54,
       "nom_ar": "القمر",
       "nom_fr": "Al-Qamar",
-      "pageDebut": 530,
+      "pageDebut": 529,
       "nombreAyat": 55,
       "estMecquoise": true
     },
@@ -441,7 +441,7 @@
       "numero": 55,
       "nom_ar": "الرحمن",
       "nom_fr": "Ar-Rahman",
-      "pageDebut": 533,
+      "pageDebut": 532,
       "nombreAyat": 78,
       "estMecquoise": false
     },
@@ -449,7 +449,7 @@
       "numero": 56,
       "nom_ar": "الواقعة",
       "nom_fr": "Al-Waqi'a",
-      "pageDebut": 536,
+      "pageDebut": 535,
       "nombreAyat": 96,
       "estMecquoise": true
     },
@@ -457,7 +457,7 @@
       "numero": 57,
       "nom_ar": "الحديد",
       "nom_fr": "Al-Hadid",
-      "pageDebut": 539,
+      "pageDebut": 538,
       "nombreAyat": 29,
       "estMecquoise": false
     },
@@ -473,7 +473,7 @@
       "numero": 59,
       "nom_ar": "الحشر",
       "nom_fr": "Al-Hashr",
-      "pageDebut": 547,
+      "pageDebut": 546,
       "nombreAyat": 24,
       "estMecquoise": false
     },
@@ -489,7 +489,7 @@
       "numero": 61,
       "nom_ar": "الصف",
       "nom_fr": "As-Saff",
-      "pageDebut": 553,
+      "pageDebut": 552,
       "nombreAyat": 14,
       "estMecquoise": false
     },
@@ -505,7 +505,7 @@
       "numero": 63,
       "nom_ar": "المنافقون",
       "nom_fr": "Al-Munafiqun",
-      "pageDebut": 556,
+      "pageDebut": 555,
       "nombreAyat": 11,
       "estMecquoise": false
     },
@@ -545,7 +545,7 @@
       "numero": 68,
       "nom_ar": "القلم",
       "nom_fr": "Al-Qalam",
-      "pageDebut": 566,
+      "pageDebut": 565,
       "nombreAyat": 52,
       "estMecquoise": true
     },
@@ -553,7 +553,7 @@
       "numero": 69,
       "nom_ar": "الحاقة",
       "nom_fr": "Al-Haqqa",
-      "pageDebut": 568,
+      "pageDebut": 567,
       "nombreAyat": 52,
       "estMecquoise": true
     },
@@ -561,7 +561,7 @@
       "numero": 70,
       "nom_ar": "المعارج",
       "nom_fr": "Al-Ma'arij",
-      "pageDebut": 570,
+      "pageDebut": 569,
       "nombreAyat": 44,
       "estMecquoise": true
     },
@@ -569,7 +569,7 @@
       "numero": 71,
       "nom_ar": "نوح",
       "nom_fr": "Nuh",
-      "pageDebut": 572,
+      "pageDebut": 571,
       "nombreAyat": 28,
       "estMecquoise": true
     },
@@ -593,7 +593,7 @@
       "numero": 74,
       "nom_ar": "المدثر",
       "nom_fr": "Al-Muddaththir",
-      "pageDebut": 577,
+      "pageDebut": 576,
       "nombreAyat": 56,
       "estMecquoise": true
     },
@@ -601,7 +601,7 @@
       "numero": 75,
       "nom_ar": "القيامة",
       "nom_fr": "Al-Qiyama",
-      "pageDebut": 579,
+      "pageDebut": 578,
       "nombreAyat": 40,
       "estMecquoise": true
     },
@@ -609,7 +609,7 @@
       "numero": 76,
       "nom_ar": "الإنسان",
       "nom_fr": "Al-Insan",
-      "pageDebut": 580,
+      "pageDebut": 579,
       "nombreAyat": 31,
       "estMecquoise": false
     },
@@ -617,7 +617,7 @@
       "numero": 77,
       "nom_ar": "المرسلات",
       "nom_fr": "Al-Mursalat",
-      "pageDebut": 582,
+      "pageDebut": 581,
       "nombreAyat": 50,
       "estMecquoise": true
     },
@@ -633,7 +633,7 @@
       "numero": 79,
       "nom_ar": "النازعات",
       "nom_fr": "An-Naziat",
-      "pageDebut": 585,
+      "pageDebut": 584,
       "nombreAyat": 46,
       "estMecquoise": true
     },
@@ -665,7 +665,7 @@
       "numero": 83,
       "nom_ar": "المطففين",
       "nom_fr": "Al-Mutaffifin",
-      "pageDebut": 589,
+      "pageDebut": 588,
       "nombreAyat": 36,
       "estMecquoise": true
     },
@@ -697,7 +697,7 @@
       "numero": 87,
       "nom_ar": "الأعلى",
       "nom_fr": "Al-A'la",
-      "pageDebut": 593,
+      "pageDebut": 592,
       "nombreAyat": 19,
       "estMecquoise": true
     },

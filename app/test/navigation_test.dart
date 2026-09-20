@@ -22,6 +22,8 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(find.text(nomAr), 200);
+    await tester.ensureVisible(find.text(nomAr));
+    await tester.pumpAndSettle();
     await tester.tap(find.text(nomAr));
     await tester.pumpAndSettle();
 
@@ -39,6 +41,12 @@ void main() {
       (WidgetTester tester) async {
     final asset = await pageShownAfterTapping(tester, 'البقرة');
     expect(asset, 'assets/pages/page_0003.webp');
+  });
+
+  testWidgets('Al-Kahf affiche page_0294 (cartouche en bas de page)',
+      (WidgetTester tester) async {
+    final asset = await pageShownAfterTapping(tester, 'الكهف');
+    expect(asset, 'assets/pages/page_0294.webp');
   });
 
   testWidgets('An-Nas (dernière sourate) affiche page_0605',

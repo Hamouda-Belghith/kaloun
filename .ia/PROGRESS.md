@@ -4,6 +4,22 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-20 (session 6) — 38 débuts de sourate corrigés, sens des pages RTL, MANUEL.md
+
+- **Al-Kahf (et 37 autres sourates) mal placées** : la cartouche d'une sourate peut se trouver **en bas de la page précédente**, pas seulement en haut d'une page. Mon contrôle de session 5 (vignettes à l'œil) avait raté ces cas. Correction par **détection automatique** des cartouches de sourate sur les 603 pages de texte (bandes denses d'ornement rose dans la zone de texte) : 114 cartouches attendues, 114 trouvées après retrait de 1 faux positif (verset page 457) et ajout de 1 cartouche non détectée (page 416, vérifiée à l'œil, en haut de page). Les 114 recadrages ont ensuite été relus visuellement avec le nom de la sourate attendue. Résultat : **38 `pageDebut` décalés d'une page** (ex. Al-Kahf 295 → 294, Al-Ma'ida 108 → 107, Hud 223 → 222) ; les autres inchangés. `navigation.json` régénéré.
+- Points sensibles restants : les **Juz'** ont été relevés par le texte « الجزء ... » de l'en-tête, avec la même limite théorique (un Juz' commencé en milieu de page). Ils suivent un motif de 20 pages exactement, ce qui suggère un alignement sur le début des pages, mais **non vérifié page par page** — à confirmer à l'étape 5 de [MANUEL.md](../MANUEL.md).
+- **Sens des pages** : `reverse: true` combiné au `Directionality` RTL inversait deux fois, ce qui redonnait du gauche → droite. `reverse` retiré ; le `Directionality` RTL suffit (page 1 à droite, on avance vers la gauche).
+- Test de régression ajouté pour Al-Kahf (`navigation_test.dart`). `flutter analyze` : 0 erreur ; `flutter test` : 5/5.
+- Nouveau fichier **[MANUEL.md](../MANUEL.md)** à la racine : planning de tout ce qui reste à faire à la main (compte Apple, Codemagic, TestFlight, relecture humaine du texte, droits sur l'édition, documents légaux, fiche App Store, soumission).
+- Serveur de test : les processus lancés avec `nohup`/`setsid` sont tués à la fin de chaque appel d'outil ; il faut le lancer via le mode arrière-plan de l'outil. Et ne jamais utiliser `pkill -f <motif>` dans la même commande que le motif (le shell se tue lui-même).
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur reteste Al-Kahf, quelques autres sourates et le sens des pages, puis suit [MANUEL.md](../MANUEL.md) (commencer par le compte Apple Developer, à cause du délai de validation).
+2. Vérifier les débuts de Juz' page par page (même méthode que pour les sourates si un défaut apparaît).
+3. Rédiger la politique de confidentialité et l'écran « À propos ».
+
+---
+
 ## 2026-09-18 (session 5) — Bug de navigation vers les sourates corrigé + serveur web pour tester l'UI
 
 - L'utilisateur a testé l'UI via le serveur `flutter run -d web-server` (lancé en session précédente) et a signalé : naviguer vers Al-Baqara affichait la 2ᵉ page de la sourate au lieu de la 1ère.

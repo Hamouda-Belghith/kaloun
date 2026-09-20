@@ -63,6 +63,13 @@ Ce même piège avait déjà été identifié et correctement traité pour les s
 
 **Leçon retenue** : l'en-tête de page n'est fiable que pour dire "quelle sourate est en haut de cette page", jamais pour dire "quelle page commence cette sourate". Toute vérification future de pagination doit inspecter le contenu réel de la page (présence d'une cartouche), pas seulement l'en-tête. Un test de régression (`app/test/navigation_test.dart`) vérifie maintenant que la navigation vers Al-Baqara affiche bien `page_0003.webp`.
 
+
+### Mise à jour (2026-09-20) : la correction de session 5 était incomplète
+
+Le contrôle par vignettes avait laissé passer 37 autres cas (dont Al-Kahf) où la cartouche de la sourate est **en bas de la page précédente**. Corrigé par détection automatique des cartouches (script Python : bandes de pixels roses denses dans la zone de texte, une par cartouche) puis relecture visuelle des 114 recadrages : **38 sourates avaient un `pageDebut` trop élevé de 1**. Le nombre de cartouches détectées (114) et l'ordre des sourates (fixe) donnent directement la page de chaque sourate. **Règle : ne plus jamais déduire un début de sourate de l'en-tête de page ; utiliser la cartouche.**
+
+Les débuts de Juz' restent basés sur le texte de l'en-tête (motif régulier de 20 pages) et sont à vérifier (voir [MANUEL.md](../MANUEL.md) étape 5).
+
 ## Prochaines étapes concrètes
 
 - [ ] Relecture humaine de `navigation.json` avant publication (au moins un échantillon aléatoire de sourates/Juz', en particulier le Juz' 30 qui a le plus de sourates par page).

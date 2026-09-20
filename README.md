@@ -27,6 +27,7 @@ Voir [.ia/PROGRESS.md](.ia/PROGRESS.md) pour l'avancement détaillé.
 
 Tous les documents de pilotage (plan, architecture, instructions de dev, checklist App Store) sont dans le dossier [.ia/](.ia/) :
 
+- [MANUEL.md](MANUEL.md) — planning de ce qui reste à faire à la main (comptes, TestFlight, relecture, publication).
 - [.ia/PLAN.md](.ia/PLAN.md) — feuille de route et découpage en phases.
 - [.ia/ARCHITECTURE.md](.ia/ARCHITECTURE.md) — choix techniques et structure de l'app.
 - [.ia/DATA_SOURCES.md](.ia/DATA_SOURCES.md) — traitement du PDF source et données de navigation (sourates/Juz'/pages).
