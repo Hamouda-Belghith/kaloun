@@ -4,6 +4,26 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-22 (session 7) — Déploiement web temporaire (Vercel, gratuit)
+
+L'utilisateur a décidé de ne pas payer les 99 USD/an Apple Developer pour l'instant, et veut une version testable/utilisable dès maintenant. Demande explicite : déployer comme site web sur Vercel (gratuit), avec Supabase seulement si besoin, **sans écraser le code ni la doc existants** (le projet iOS reste tel quel, à reprendre plus tard).
+
+- **Pas de Supabase** : inutile, l'app n'a ni compte ni données partagées (signets en stockage local uniquement) — même logique que la partie offline de `what_to_eat`, mais ici *tout* est offline, pas seulement la liste de courses.
+- **Pas de deuxième codebase** : c'est le même Flutter (`app/lib/`, `app/assets/`) qui sert iOS et le web — c'est la raison d'être de Flutter. Créer une doc séparée avait du sens (fait : [WEB_DEPLOY.md](../WEB_DEPLOY.md)), dupliquer le code n'en avait pas.
+- Ajout de `app/vercel.json` + `app/vercel-build.sh` : Vercel n'a pas Flutter préinstallé, le script télécharge le SDK dans `/tmp` à chaque build et lance `flutter build web --release`. Piège rencontré : les builds Vercel tournent en `root`, ce que Git refuse sur le dossier Flutter téléchargé (`detected dubious ownership`) → fixé avec `git config --global --add safe.directory /tmp/flutter`.
+- Déployé via `vercel` CLI (déjà authentifié `hamoudabelghith197@gmail.com` / équipe `hbe-projects`, la même que `what_to_eat`). Projet renommé `mosshaf-qaloun-web` (au départ nommé `app` par défaut).
+- **Piège découvert** : Vercel protège par défaut les URLs `*-hbe-projects.vercel.app` derrière une authentification SSO (redirection 302 vers `vercel.com/sso-api`) — vérifié que `what_to_eat` a exactement le même comportement. Seule l'URL "vanity" sans nom d'équipe (`app-seven-tau-28.vercel.app`, générée automatiquement) est publique. **C'est celle-ci qu'il faut utiliser/partager.**
+- Connexion Git→Vercel pour déploiement auto au push tentée mais échouée (erreur 400 de l'API Vercel) : nécessite probablement une autorisation via navigateur (installation de l'app GitHub de Vercel) qu'un assistant ne peut pas faire seul. Redéploiement pour l'instant **manuel** : `cd app && vercel --prod --yes`.
+- Vérifié que les assets se chargent bien en production (`main.dart.js`, `assets/assets/data/navigation.json` — Flutter web double le préfixe `assets/`, comportement normal, pas un bug).
+- Nouveau fichier **[WEB_DEPLOY.md](../WEB_DEPLOY.md)** à la racine : doc dédiée au déploiement web, séparée de `.ia/` et `MANUEL.md` qui restent inchangés (toujours valables pour la publication iOS plus tard).
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur teste l'URL publique https://app-seven-tau-28.vercel.app sur son iPhone (Safari) et remonte les problèmes.
+2. Si usage régulier : envisager d'activer le service worker PWA (comme `what_to_eat` avec Serwist) pour un vrai offline complet et une icône d'écran d'accueil.
+3. Si souhaité : finaliser la connexion Git→Vercel depuis le dashboard (Settings → Git → Connect) pour ne plus redéployer à la main.
+
+---
+
 ## 2026-09-20 (session 6) — 38 débuts de sourate corrigés, sens des pages RTL, MANUEL.md
 
 - **Al-Kahf (et 37 autres sourates) mal placées** : la cartouche d'une sourate peut se trouver **en bas de la page précédente**, pas seulement en haut d'une page. Mon contrôle de session 5 (vignettes à l'œil) avait raté ces cas. Correction par **détection automatique** des cartouches de sourate sur les 603 pages de texte (bandes denses d'ornement rose dans la zone de texte) : 114 cartouches attendues, 114 trouvées après retrait de 1 faux positif (verset page 457) et ajout de 1 cartouche non détectée (page 416, vérifiée à l'œil, en haut de page). Les 114 recadrages ont ensuite été relus visuellement avec le nom de la sourate attendue. Résultat : **38 `pageDebut` décalés d'une page** (ex. Al-Kahf 295 → 294, Al-Ma'ida 108 → 107, Hud 223 → 222) ; les autres inchangés. `navigation.json` régénéré.

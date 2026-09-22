@@ -6,6 +6,8 @@ Application mobile (iOS d'abord, potentiellement Android plus tard) présentant 
 
 Une application équivalente existe déjà sur le Play Store (pas développée par nous, technologie inconnue). Ce projet part **de zéro**, sans réutilisation de code, pour livrer une version iOS publiée sur l'App Store — et pourra être étendue à Android via le même codebase si besoin.
 
+🌐 **En attendant la publication App Store** (compte Apple Developer à 99 USD/an, voir [MANUEL.md](MANUEL.md)), l'app est utilisable dès maintenant comme site web gratuit : **https://app-seven-tau-28.vercel.app** — détails dans [WEB_DEPLOY.md](WEB_DEPLOY.md).
+
 ## Fonctionnalités visées
 
 - Lecture du Mosshaf page par page (rendu fidèle au scan original, rasm tunisien).
@@ -28,6 +30,7 @@ Voir [.ia/PROGRESS.md](.ia/PROGRESS.md) pour l'avancement détaillé.
 Tous les documents de pilotage (plan, architecture, instructions de dev, checklist App Store) sont dans le dossier [.ia/](.ia/) :
 
 - [MANUEL.md](MANUEL.md) — planning de ce qui reste à faire à la main (comptes, TestFlight, relecture, publication).
+- [WEB_DEPLOY.md](WEB_DEPLOY.md) — déploiement web temporaire (Vercel, gratuit) en attendant la publication App Store.
 - [.ia/PLAN.md](.ia/PLAN.md) — feuille de route et découpage en phases.
 - [.ia/ARCHITECTURE.md](.ia/ARCHITECTURE.md) — choix techniques et structure de l'app.
 - [.ia/DATA_SOURCES.md](.ia/DATA_SOURCES.md) — traitement du PDF source et données de navigation (sourates/Juz'/pages).

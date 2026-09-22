@@ -1,0 +1,6 @@
+{
+  "buildCommand": "bash vercel-build.sh",
+  "installCommand": "echo skip",
+  "outputDirectory": "build/web",
+  "framework": null
+}
