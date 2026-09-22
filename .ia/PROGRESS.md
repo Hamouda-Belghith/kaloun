@@ -4,6 +4,16 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-24 (session 9) — Page 620 à l'envers corrigée
+
+- Bug signalé par l'utilisateur : la page 620 (section tajwid des pages de fin, 606-627) s'affichait à l'envers (rotation 180°). Vérifié sur le PDF/l'image extraite : c'est **un défaut du scan source lui-même**, pas un bug de l'app (les pages 619 et 621 voisines sont correctement orientées, la page 620 seule était inversée, y compris le numéro de page imprimé "15 م" qui apparaissait en haut au lieu du bas).
+- Corrigé en pivotant l'image `app/assets/pages/page_0620.webp` de 180° (rotation seule, aucune autre retouche du contenu — conforme à la règle de ne jamais modifier le texte, cf. [INSTRUCTIONS.md](../INSTRUCTIONS.md)).
+- À cette occasion, vérification visuelle complète des pages 606-627 (jamais entièrement inspectées jusqu'ici, voir [DATA_SOURCES.md](DATA_SOURCES.md)) : aucune autre anomalie de rotation trouvée dans cette section.
+- **Non fait par manque de temps/outillage** : un contrôle automatique de rotation sur l'ensemble des 627 pages (pas seulement 606-627). Les pages 3-605 ont déjà été vues en détail lors de la vérification des sourates (session 6, 26 planches de contact couvrant l'intégralité du livre), où une page inversée aurait probablement sauté aux yeux (en-tête absent/anormal), mais ce n'est pas une garantie formelle. À garder en tête pendant la relecture humaine prévue dans [MANUEL.md](../MANUEL.md) étape 5.
+- `flutter test` : 5/5. Poussé (déploiement web automatique).
+
+---
+
 ## 2026-09-22 (session 8) — Connexion Git↔Vercel + logo/icône PWA
 
 - **Connexion GitHub↔Vercel finalisée.** Le blocage de session 7 (erreur 400) venait de l'app GitHub de Vercel non installée sur le dépôt (confirmé via l'API : `"action": "Install GitHub App"`). L'utilisateur l'a installée sur https://github.com/apps/vercel, puis `vercel git connect --yes` a fonctionné. **Chaque push sur `main` redéploie désormais automatiquement.**
