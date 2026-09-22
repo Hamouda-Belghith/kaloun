@@ -4,6 +4,24 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-22 (session 8) — Connexion Git↔Vercel + logo/icône PWA
+
+- **Connexion GitHub↔Vercel finalisée.** Le blocage de session 7 (erreur 400) venait de l'app GitHub de Vercel non installée sur le dépôt (confirmé via l'API : `"action": "Install GitHub App"`). L'utilisateur l'a installée sur https://github.com/apps/vercel, puis `vercel git connect --yes` a fonctionné. **Chaque push sur `main` redéploie désormais automatiquement.**
+- **Logo fourni par l'utilisateur** (couverture de Mosshaf bleu et blanc, "القرآن الكريم" avec mention "برواية قالون") appliqué comme icône de l'app web/PWA — le logo par défaut ("un logo qui n'a pas de sens") remplacé :
+  - `app/web/icons/Icon-192.png`, `Icon-512.png` : logo tel quel.
+  - `app/web/icons/Icon-maskable-*.png` : logo avec ~15% de marge (couleur de fond échantillonnée sur le coin de l'image) pour survivre à un recadrage circulaire Android.
+  - `app/web/favicon.png` régénéré à partir du même logo.
+  - `app/web/manifest.json` et `app/web/index.html` : nom "mosshaf_qaloun" (générique, avec underscore) remplacé par "Mosshaf Qaloun" partout (nom sous l'icône, titre d'onglet, description), couleur de thème alignée sur le bleu du logo (`#0B32D8`).
+  - Logo source conservé dans `app/branding/logo-source.png` (hors pipeline pubspec/web, juste pour réemploi futur — ex. icône iOS App Store, actuellement des icônes Flutter par défaut, voir [MANUEL.md](../MANUEL.md) étape 2).
+- Redéployé (push → déploiement auto Vercel).
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur revérifie l'icône sur l'écran d'accueil iPhone (il faudra retirer puis réajouter le raccourci existant : iOS ne recharge pas toujours l'icône d'un raccourci déjà installé).
+2. Si ce logo convient aussi pour l'App Store plus tard : générer le jeu d'icônes iOS (`app/ios/Runner/Assets.xcassets/AppIcon.appiconset/`) à partir de `app/branding/logo-source.png` (actuellement les icônes par défaut Flutter, non remplacées).
+3. Reste de la Phase 3.5 / MANUEL.md inchangé (Apple Developer, Codemagic — toujours en attente, l'utilisateur a choisi le web en solution temporaire).
+
+---
+
 ## 2026-09-22 (session 7) — Déploiement web temporaire (Vercel, gratuit)
 
 L'utilisateur a décidé de ne pas payer les 99 USD/an Apple Developer pour l'instant, et veut une version testable/utilisable dès maintenant. Demande explicite : déployer comme site web sur Vercel (gratuit), avec Supabase seulement si besoin, **sans écraser le code ni la doc existants** (le projet iOS reste tel quel, à reprendre plus tard).

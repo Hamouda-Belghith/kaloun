@@ -1,11 +1,11 @@
 {
-    "name": "mosshaf_qaloun",
-    "short_name": "mosshaf_qaloun",
+    "name": "Mosshaf Qaloun",
+    "short_name": "Mosshaf Qaloun",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0B32D8",
+    "theme_color": "#0B32D8",
+    "description": "Mosshaf Qaloun — Édition Tunisienne : lecture du Coran hors-ligne avec navigation par page, sourate et Juz'.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

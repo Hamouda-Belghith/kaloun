@@ -31,12 +31,9 @@ vercel --prod --yes
 
 Ça prend 1 à 2 minutes (téléchargement du SDK Flutter inclus à chaque fois, pas de cache entre builds pour l'instant).
 
-### Pour activer le déploiement automatique à chaque push (optionnel)
+### Déploiement automatique à chaque push : activé ✅
 
-1. Sur https://vercel.com, ouvrir le projet **mosshaf-qaloun-web**.
-2. Settings → Git → Connect Git Repository → choisir `Hamouda-Belghith/kaloun`.
-3. Vérifier que **Root Directory** est bien réglé sur `app` (déjà fait côté projet, mais à confirmer visuellement).
-4. Une fois connecté, chaque `git push` sur `main` redéploiera automatiquement.
+Le dépôt GitHub est connecté au projet Vercel depuis le 2026-09-22 (app GitHub de Vercel installée sur `Hamouda-Belghith/kaloun`). **Chaque `git push` sur `main` redéploie automatiquement** — plus besoin de lancer `vercel --prod` à la main, sauf pour tester un changement avant de le pousser.
 
 ## Config technique du projet Vercel
 
@@ -56,3 +53,4 @@ vercel --prod --yes
 ## Historique
 
 - 2026-09-22 : premier déploiement (voir [.ia/PROGRESS.md](.ia/PROGRESS.md) pour le détail de session).
+- 2026-09-22 : connexion GitHub↔Vercel finalisée (déploiement auto au push) ; logo/icône PWA remplacés par le logo fourni par l'utilisateur (`app/branding/logo-source.png`).
