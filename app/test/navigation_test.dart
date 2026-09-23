@@ -83,6 +83,31 @@ void main() {
     expect(currentAsset(tester), 'assets/pages/page_0003.webp');
   });
 
+  testWidgets(
+      "Un signet sur la page imprimée 602 (fichier 603) s'affiche 'صفحة 602 - الكوثر'",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    // Va sur la page imprimée 602 (fichier 603) via "Aller à la page".
+    await tester.tap(find.byIcon(Icons.pin));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '602');
+    await tester.tap(find.text('انتقال'));
+    await tester.pumpAndSettle();
+    expect(currentAsset(tester), 'assets/pages/page_0603.webp');
+
+    // Ajoute un signet sur cette page, puis vérifie son libellé.
+    await tester.tap(find.byIcon(Icons.bookmark));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.bookmark_add));
+    await tester.pumpAndSettle();
+
+    expect(find.text('صفحة 602 - الكوثر'), findsOneWidget);
+  });
+
   testWidgets("'التعريف بالمصحف' affiche page_0606 (juste après la dernière page coranique)",
       (WidgetTester tester) async {
     await tester.pumpWidget(const MosshafQalounApp());

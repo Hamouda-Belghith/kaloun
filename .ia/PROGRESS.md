@@ -4,6 +4,16 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-23 (session 11) — Signets : numéro imprimé + nom de sourate
+
+Bug signalé par l'utilisateur : un signet créé sur la page imprimée 602 ramenait bien à la bonne page (navigation correcte), mais s'affichait "صفحة 603" dans la liste (numéro de position fichier, pas le numéro imprimé — même défaut que "Aller à la page" avant la session 10, ici pas encore corrigé côté signets). Demande en plus : afficher le nom de la sourate.
+
+- `NavigationData` : ajoute `pageImprimeeDepuisPageFichier` (inverse de la conversion ajoutée en session 10) et `libellePage(pageFichier)` qui renvoie `"صفحة <numéro imprimé> - <nom de la sourate>"` pour les pages coraniques, `"التعريف بالمصحف"` pour les pages de fin, `"الغلاف"` pour la couverture (cas limites peu probables mais gérés).
+- `BookmarksScreen` prend maintenant `NavigationData` en plus de `currentPage` et utilise `libellePage` pour l'affichage (le stockage interne du signet reste la position fichier, seul l'affichage change).
+- Test de régression : signet sur page imprimée 602 (fichier 603, début de sourate الكوثر) → libellé attendu `"صفحة 602 - الكوثر"`. `flutter analyze` : 0 erreur. `flutter test` : 8/8.
+
+---
+
 ## 2026-09-23 (session 10) — "Aller à la page" utilise le numéro imprimé, section "التعريف بالمصحف"
 
 Demande de l'utilisateur : jusqu'ici "Aller à la page" utilisait la position du fichier (`page_XXXX.webp`), qui ne correspond pas au numéro **imprimé** en bas de chaque page du Mosshaf (décalage de -1, déjà documenté dans [DATA_SOURCES.md](DATA_SOURCES.md)). Voulait que a) la fonctionnalité utilise le numéro imprimé, b) la plage soit 1-604, c) les pages après la 605 (fichier) soient regroupées sous un intitulé "التعريف بالمصحف" séparé.

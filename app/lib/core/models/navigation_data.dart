@@ -53,6 +53,24 @@ class NavigationData {
   /// règles de tajwid...), juste après la dernière page coranique.
   int get pageDebutIntroduction => dernierePage + 1;
 
+  /// Convertit une position fichier en numéro **imprimé** (celui visible en
+  /// bas du Mosshaf), uniquement valable pour les pages coraniques.
+  int pageImprimeeDepuisPageFichier(int pageFichier) => pageFichier - 1;
+
+  /// Libellé humain d'une page (fichier) : numéro imprimé + nom de sourate
+  /// pour le texte coranique, intitulé de la section pour les pages de fin.
+  String libellePage(int pageFichier) {
+    if (pageFichier >= pageDebutIntroduction) {
+      return 'التعريف بالمصحف';
+    }
+    if (pageFichier < premierePage) {
+      return 'الغلاف';
+    }
+    final sourate = sourateForPage(pageFichier);
+    final numero = pageImprimeeDepuisPageFichier(pageFichier);
+    return 'صفحة $numero - ${sourate.nomAr}';
+  }
+
   /// Sourate active pour une page donnée (la dernière dont pageDebut <= page).
   Sourate sourateForPage(int page) {
     Sourate result = sourates.first;

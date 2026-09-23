@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../core/models/bookmark.dart';
+import '../../core/models/navigation_data.dart';
 import '../../core/services/bookmark_service.dart';
 
 class BookmarksScreen extends StatefulWidget {
-  const BookmarksScreen({super.key, required this.currentPage});
+  const BookmarksScreen({super.key, required this.currentPage, required this.data});
 
   final int currentPage;
+  final NavigationData data;
 
   @override
   State<BookmarksScreen> createState() => _BookmarksScreenState();
@@ -67,7 +69,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                       final b = _bookmarks[i];
                       return ListTile(
                         leading: const Icon(Icons.bookmark),
-                        title: Text('صفحة ${b.page}'),
+                        title: Text(widget.data.libellePage(b.page)),
                         subtitle: Text(
                           '${b.createdAt.year}-${b.createdAt.month.toString().padLeft(2, '0')}-${b.createdAt.day.toString().padLeft(2, '0')}',
                         ),
