@@ -7,14 +7,25 @@ class NavigationData {
   final List<Juz> juz;
   final List<Hizb> hizb;
 
+  /// Première et dernière page (fichier) du texte coranique. Le numéro
+  /// imprimé en bas de chaque page du Mosshaf est décalé de -1 par rapport
+  /// à la position dans le fichier (page-fichier 3 -> "2" imprimé, jusqu'à
+  /// page-fichier 605 -> "604" imprimé). Au-delà, une numérotation séparée
+  /// ("١ م", "٢ م"...) commence pour les pages de fin (introduction/tajwid).
+  final int premierePage;
+  final int dernierePage;
+
   const NavigationData({
     required this.totalPages,
     required this.sourates,
     required this.juz,
     required this.hizb,
+    required this.premierePage,
+    required this.dernierePage,
   });
 
   factory NavigationData.fromJson(Map<String, dynamic> json) {
+    final contenu = json['contenuCoranique'] as Map<String, dynamic>;
     return NavigationData(
       totalPages: json['totalPages'] as int,
       sourates: (json['sourates'] as List)
@@ -26,8 +37,21 @@ class NavigationData {
       hizb: (json['hizb'] as List)
           .map((e) => Hizb.fromJson(e as Map<String, dynamic>))
           .toList(),
+      premierePage: contenu['premierePage'] as int,
+      dernierePage: contenu['dernierePage'] as int,
     );
   }
+
+  /// Dernier numéro de page **imprimé** (celui visible en bas du Mosshaf).
+  int get dernierePageImprimee => dernierePage - 1;
+
+  /// Convertit un numéro de page imprimé (1 à [dernierePageImprimee]) en
+  /// position dans le fichier (utilisée par le lecteur/`PageView`).
+  int pageFichierDepuisPageImprimee(int pageImprimee) => pageImprimee + 1;
+
+  /// Page (fichier) où commence la section "التعريف بالمصحف" (introduction,
+  /// règles de tajwid...), juste après la dernière page coranique.
+  int get pageDebutIntroduction => dernierePage + 1;
 
   /// Sourate active pour une page donnée (la dernière dont pageDebut <= page).
   Sourate sourateForPage(int page) {

@@ -54,4 +54,47 @@ void main() {
     final asset = await pageShownAfterTapping(tester, 'الناس');
     expect(asset, 'assets/pages/page_0605.webp');
   });
+
+  String currentAsset(WidgetTester tester) {
+    final imageFinder = find.byWidgetPredicate((widget) {
+      if (widget is Image && widget.image is AssetImage) {
+        return (widget.image as AssetImage).assetName.contains('page_');
+      }
+      return false;
+    });
+    final widget = tester.widget<Image>(imageFinder);
+    return (widget.image as AssetImage).assetName;
+  }
+
+  testWidgets(
+      "'Aller à la page' 2 affiche page_0003 (le numéro imprimé '2' correspond au fichier 3)",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byIcon(Icons.pin));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '2');
+    await tester.tap(find.text('انتقال'));
+    await tester.pumpAndSettle();
+
+    expect(currentAsset(tester), 'assets/pages/page_0003.webp');
+  });
+
+  testWidgets("'التعريف بالمصحف' affiche page_0606 (juste après la dernière page coranique)",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byIcon(Icons.pin));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('التعريف بالمصحف'));
+    await tester.pumpAndSettle();
+
+    expect(currentAsset(tester), 'assets/pages/page_0606.webp');
+  });
 }

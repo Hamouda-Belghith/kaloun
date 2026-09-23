@@ -4,6 +4,18 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-23 (session 10) — "Aller à la page" utilise le numéro imprimé, section "التعريف بالمصحف"
+
+Demande de l'utilisateur : jusqu'ici "Aller à la page" utilisait la position du fichier (`page_XXXX.webp`), qui ne correspond pas au numéro **imprimé** en bas de chaque page du Mosshaf (décalage de -1, déjà documenté dans [DATA_SOURCES.md](DATA_SOURCES.md)). Voulait que a) la fonctionnalité utilise le numéro imprimé, b) la plage soit 1-604, c) les pages après la 605 (fichier) soient regroupées sous un intitulé "التعريف بالمصحف" séparé.
+
+- Revérifié précisément avant de coder (zoom sur le numéro imprimé) : page-fichier 3 → "2" imprimé, page-fichier 605 → "604" imprimé, page-fichier 606 → nouvelle numérotation séparée "١ م" (probablement "ملحق" = annexe). Confirme exactement les chiffres donnés par l'utilisateur (min 1, max 604).
+- `NavigationData` (`navigation_data.dart`) expose maintenant `premierePage`/`dernierePage` (déjà présents dans `navigation.json` sous `contenuCoranique` depuis la session 2, mais jamais lus côté Dart jusqu'ici), plus des helpers : `dernierePageImprimee` (= 604), `pageFichierDepuisPageImprimee(n)` (= n+1), `pageDebutIntroduction` (= 606).
+- `GotoPageScreen` : prend maintenant `NavigationData` au lieu de `totalPages` ; le champ accepte 1-604 (numéro imprimé) et convertit en position fichier avant de naviguer. Ajout d'un `ListTile` sous le champ : **"التعريف بالمصحف"** (avec sous-titre "مقدمة الطبعة وقواعد التجويد"), qui saute directement à la page-fichier 606.
+- 2 tests ajoutés dans `navigation_test.dart` : `"Aller à la page" 2` → `page_0003.webp` (vérifie la conversion), et le tap sur "التعريف بالمصحف" → `page_0606.webp`. `flutter analyze` : 0 erreur. `flutter test` : 7/7.
+- Rien changé dans `navigation.json` ni dans la logique sourates/Juz' (qui utilisent et continueront d'utiliser la position fichier en interne, seule la fonctionnalité "Aller à la page" expose le numéro imprimé à l'utilisateur).
+
+---
+
 ## 2026-09-24 (session 9) — Page 620 à l'envers corrigée
 
 - Bug signalé par l'utilisateur : la page 620 (section tajwid des pages de fin, 606-627) s'affichait à l'envers (rotation 180°). Vérifié sur le PDF/l'image extraite : c'est **un défaut du scan source lui-même**, pas un bug de l'app (les pages 619 et 621 voisines sont correctement orientées, la page 620 seule était inversée, y compris le numéro de page imprimé "15 م" qui apparaissait en haut au lieu du bas).

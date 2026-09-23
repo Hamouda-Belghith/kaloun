@@ -129,7 +129,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
                 onPressed: () async {
                   final page = await Navigator.of(context).push<int>(
                     MaterialPageRoute(
-                      builder: (_) => GotoPageScreen(totalPages: data.totalPages),
+                      builder: (_) => GotoPageScreen(data: data),
                     ),
                   );
                   if (page != null) _goToPage(page);
