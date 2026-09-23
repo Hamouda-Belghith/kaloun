@@ -99,9 +99,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(
-                tooltip: 'Sourates',
-                icon: const Icon(Icons.menu_book),
+              _NavButton(
+                icon: Icons.menu_book,
+                label: 'سور',
                 onPressed: () async {
                   final page = await Navigator.of(context).push<int>(
                     MaterialPageRoute(
@@ -111,9 +111,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
                   if (page != null) _goToPage(page);
                 },
               ),
-              IconButton(
-                tooltip: "Juz'",
-                icon: const Icon(Icons.view_list),
+              _NavButton(
+                icon: Icons.view_list,
+                label: 'أجزاء',
                 onPressed: () async {
                   final page = await Navigator.of(context).push<int>(
                     MaterialPageRoute(
@@ -123,9 +123,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
                   if (page != null) _goToPage(page);
                 },
               ),
-              IconButton(
-                tooltip: 'Aller à la page',
-                icon: const Icon(Icons.pin),
+              _NavButton(
+                icon: Icons.pin,
+                label: 'صفحة',
                 onPressed: () async {
                   final page = await Navigator.of(context).push<int>(
                     MaterialPageRoute(
@@ -135,13 +135,16 @@ class _ReaderScreenState extends State<ReaderScreen> {
                   if (page != null) _goToPage(page);
                 },
               ),
-              IconButton(
-                tooltip: 'Signets',
-                icon: const Icon(Icons.bookmark),
+              _NavButton(
+                icon: Icons.bookmark,
+                label: 'إشارات',
                 onPressed: () async {
                   final page = await Navigator.of(context).push<int>(
                     MaterialPageRoute(
-                      builder: (_) => BookmarksScreen(currentPage: _currentPage, data: data),
+                      builder: (_) => BookmarksScreen(
+                        currentPage: _currentPage,
+                        data: data,
+                      ),
                     ),
                   );
                   if (page != null) _goToPage(page);
@@ -149,6 +152,36 @@ class _ReaderScreenState extends State<ReaderScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NavButton extends StatelessWidget {
+  const _NavButton({
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon),
+            Text(label, style: Theme.of(context).textTheme.labelSmall),
+          ],
         ),
       ),
     );

@@ -4,6 +4,13 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-23 (session 12) — Libellés arabes sous les icônes du bas
+
+- Barre du bas du lecteur : chaque icône a maintenant son nom en arabe dessous — **سور** (sourates), **أجزاء** (Juz'), **صفحة** (aller à la page), **إشارات** (signets). Ajout d'un petit widget privé `_NavButton` (icône + texte) dans `reader_screen.dart` à la place des `IconButton` avec infobulle (les infobulles ne sont pas visibles au doigt sur mobile).
+- Les icônes gardent les mêmes types (`Icons.menu_book`, `view_list`, `pin`, `bookmark`), donc les tests existants continuent de les retrouver. `flutter analyze` : 0 erreur, `flutter test` : 8/8.
+
+---
+
 ## 2026-09-23 (session 11) — Signets : numéro imprimé + nom de sourate
 
 Bug signalé par l'utilisateur : un signet créé sur la page imprimée 602 ramenait bien à la bonne page (navigation correcte), mais s'affichait "صفحة 603" dans la liste (numéro de position fichier, pas le numéro imprimé — même défaut que "Aller à la page" avant la session 10, ici pas encore corrigé côté signets). Demande en plus : afficher le nom de la sourate.
