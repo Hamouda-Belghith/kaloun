@@ -4,6 +4,18 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-24 (session 14) — Section "تجويد" (résumés de tajwid)
+
+- Demande de l'utilisateur : nouvelle section dans la barre du bas, au même niveau que "سور", pour des résumés de tajwid. Il a ajouté 3 PDF dans le dossier du projet en local (des "شجرة" — arbres/diagrammes récapitulatifs, une seule page paysage chacun) : أحكام النون الساكنة والتنوين, أحكام الميم الساكنة, المدود.
+- PDF rendus en images WebP haute résolution (échelle 3x, ~170-340 Ko chacune) dans `app/assets/tajwid/` (`noun_sakina.webp`, `mim_sakina.webp`, `madd.webp`). PDF sources déplacés dans `app/branding/tajwid-sources/` (hors pipeline de build, gardés pour pouvoir regénérer les images si besoin) — exception ajoutée dans `.gitignore` (qui exclut `*.pdf` à cause du gros PDF du Coran) pour ne pas les ignorer.
+- `navigation.json` : nouveau tableau `tajwid` (id, titre, fichier).
+- Nouveau modèle `TajwidResource`, `NavigationData.tajwid` (liste chargée depuis le JSON, absente = liste vide plutôt qu'une erreur).
+- Nouveaux écrans : `TajwidScreen` (liste des résumés) et `TajwidViewerScreen` (image plein écran zoomable, même principe que le lecteur de pages du Coran, mais format paysage adapté aux diagrammes).
+- Barre du bas du lecteur : 5ᵉ bouton **تجويد** (icône `account_tree_outlined`, en forme d'arbre — cohérent avec "شجرة"). Padding horizontal des boutons réduit (12 → 6) pour que les 5 tiennent confortablement.
+- Test de régression ajouté (ouverture de la section, présence des 3 titres, ouverture de l'image "المدود"). `flutter analyze` : 0 erreur. `flutter test` : 9/9.
+
+---
+
 ## 2026-09-24 (session 13) — Noms des Juz' (الأول، الثاني...)
 
 - Demande de l'utilisateur : ajouter le nom de chaque Juz', pas seulement son numéro.

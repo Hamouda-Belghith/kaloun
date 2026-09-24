@@ -1,11 +1,13 @@
 import 'sourate.dart';
 import 'juz.dart';
+import 'tajwid_resource.dart';
 
 class NavigationData {
   final int totalPages;
   final List<Sourate> sourates;
   final List<Juz> juz;
   final List<Hizb> hizb;
+  final List<TajwidResource> tajwid;
 
   /// Première et dernière page (fichier) du texte coranique. Le numéro
   /// imprimé en bas de chaque page du Mosshaf est décalé de -1 par rapport
@@ -20,6 +22,7 @@ class NavigationData {
     required this.sourates,
     required this.juz,
     required this.hizb,
+    required this.tajwid,
     required this.premierePage,
     required this.dernierePage,
   });
@@ -36,6 +39,9 @@ class NavigationData {
           .toList(),
       hizb: (json['hizb'] as List)
           .map((e) => Hizb.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      tajwid: (json['tajwid'] as List? ?? [])
+          .map((e) => TajwidResource.fromJson(e as Map<String, dynamic>))
           .toList(),
       premierePage: contenu['premierePage'] as int,
       dernierePage: contenu['dernierePage'] as int,

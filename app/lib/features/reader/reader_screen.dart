@@ -6,6 +6,7 @@ import '../bookmarks/bookmarks_screen.dart';
 import '../goto_page/goto_page_screen.dart';
 import '../juz/juz_screen.dart';
 import '../sourates/sourates_screen.dart';
+import '../tajwid/tajwid_screen.dart';
 
 class ReaderScreen extends StatefulWidget {
   const ReaderScreen({super.key, this.initialPage});
@@ -150,6 +151,17 @@ class _ReaderScreenState extends State<ReaderScreen> {
                   if (page != null) _goToPage(page);
                 },
               ),
+              _NavButton(
+                icon: Icons.account_tree_outlined,
+                label: 'تجويد',
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => TajwidScreen(tajwid: data.tajwid),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -175,7 +187,7 @@ class _NavButton extends StatelessWidget {
       onTap: onPressed,
       borderRadius: BorderRadius.circular(8),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

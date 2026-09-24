@@ -1070,5 +1070,22 @@
       "nom": "الثلاثون"
     }
   ],
-  "hizb": []
+  "hizb": [],
+  "tajwid": [
+    {
+      "id": "noun_sakina",
+      "titre": "أحكام النون الساكنة والتنوين",
+      "fichier": "assets/tajwid/noun_sakina.webp"
+    },
+    {
+      "id": "mim_sakina",
+      "titre": "أحكام الميم الساكنة",
+      "fichier": "assets/tajwid/mim_sakina.webp"
+    },
+    {
+      "id": "madd",
+      "titre": "المدود",
+      "fichier": "assets/tajwid/madd.webp"
+    }
+  ]
 }

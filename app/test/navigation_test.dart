@@ -122,4 +122,32 @@ void main() {
 
     expect(currentAsset(tester), 'assets/pages/page_0606.webp');
   });
+
+  testWidgets(
+      "La section تجويد liste les 3 résumés et ouvre l'image correspondante",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byIcon(Icons.account_tree_outlined));
+    await tester.pumpAndSettle();
+
+    expect(find.text('أحكام النون الساكنة والتنوين'), findsOneWidget);
+    expect(find.text('أحكام الميم الساكنة'), findsOneWidget);
+    expect(find.text('المدود'), findsOneWidget);
+
+    await tester.tap(find.text('المدود'));
+    await tester.pumpAndSettle();
+
+    final imageFinder = find.byWidgetPredicate((widget) {
+      if (widget is Image && widget.image is AssetImage) {
+        return (widget.image as AssetImage).assetName.contains('tajwid/');
+      }
+      return false;
+    });
+    final widget = tester.widget<Image>(imageFinder);
+    expect((widget.image as AssetImage).assetName, 'assets/tajwid/madd.webp');
+  });
 }

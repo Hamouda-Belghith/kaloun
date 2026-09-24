@@ -8,3 +8,5 @@ ios/.symlinks/
 
 # Source PDF (445 Mo) : trop volumineux pour Git/GitHub, conservé en local uniquement.
 *.pdf
+# Exception : PDF sources des résumés de tajwid (petits, utiles pour régénérer les images).
+!app/branding/tajwid-sources/*.pdf
