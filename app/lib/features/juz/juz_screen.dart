@@ -19,7 +19,7 @@ class JuzScreen extends StatelessWidget {
             final j = juz[i];
             return ListTile(
               leading: CircleAvatar(child: Text('${j.numero}')),
-              title: Text('الجزء ${j.numero}'),
+              title: Text('الجزء ${j.nom}'),
               trailing: Text('ص ${j.pageDebut}'),
               onTap: () => Navigator.of(context).pop(j.pageDebut),
             );

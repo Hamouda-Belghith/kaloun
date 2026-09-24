@@ -2,12 +2,17 @@ class Juz {
   final int numero;
   final int pageDebut;
 
-  const Juz({required this.numero, required this.pageDebut});
+  /// Nom du Juz' tel qu'il apparaît dans l'en-tête de chaque page du
+  /// Mosshaf (ex. "الأول", "الحادي عشر", "الثلاثون").
+  final String nom;
+
+  const Juz({required this.numero, required this.pageDebut, required this.nom});
 
   factory Juz.fromJson(Map<String, dynamic> json) {
     return Juz(
       numero: json['numero'] as int,
       pageDebut: json['pageDebut'] as int,
+      nom: json['nom'] as String,
     );
   }
 }

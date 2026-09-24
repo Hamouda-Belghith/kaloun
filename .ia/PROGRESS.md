@@ -4,6 +4,17 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-24 (session 13) — Noms des Juz' (الأول، الثاني...)
+
+- Demande de l'utilisateur : ajouter le nom de chaque Juz', pas seulement son numéro.
+- Choix : les noms utilisés sont les **ordinaux en toutes lettres tels qu'imprimés dans l'en-tête de ce Mosshaf précis** ("الأول", "الحادي عشر", "السادس والعشرون", "الثلاثون"...), plutôt que la convention alternative (premiers mots du Juz', ex. "الم", "سيقول"...) qui est aussi répandue mais qui n'est pas ce qui est réellement imprimé dans cette édition. Revérifié directement sur 3 pages (Juz 11, 21, 26) avant d'intégrer les 30 noms, par prudence après les deux bugs de pagination précédents.
+- `navigation.json` : champ `nom` ajouté aux 30 entrées de `juz`.
+- `Juz` (modèle Dart) : nouveau champ `nom` (requis). `JuzScreen` affiche désormais "الجزء ${nom}" au lieu de "الجزء ${numero}" (le numéro reste visible dans le cercle à gauche de chaque ligne).
+- L'AppBar du lecteur (qui affiche "<sourate> · الجزء <numéro>") n'a pas été changée : le numéro seul y reste plus lisible qu'un ordinal long à côté du nom de sourate.
+- `flutter analyze` : 0 erreur. `flutter test` : 8/8 (aucun test dédié aux noms de Juz' ajouté, changement purement d'affichage sans logique de navigation impactée).
+
+---
+
 ## 2026-09-23 (session 12) — Libellés arabes sous les icônes du bas
 
 - Barre du bas du lecteur : chaque icône a maintenant son nom en arabe dessous — **سور** (sourates), **أجزاء** (Juz'), **صفحة** (aller à la page), **إشارات** (signets). Ajout d'un petit widget privé `_NavButton` (icône + texte) dans `reader_screen.dart` à la place des `IconButton` avec infobulle (les infobulles ne sont pas visibles au doigt sur mobile).

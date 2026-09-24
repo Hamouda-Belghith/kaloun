@@ -921,123 +921,153 @@
   "juz": [
     {
       "numero": 1,
-      "pageDebut": 3
+      "pageDebut": 3,
+      "nom": "الأول"
     },
     {
       "numero": 2,
-      "pageDebut": 23
+      "pageDebut": 23,
+      "nom": "الثاني"
     },
     {
       "numero": 3,
-      "pageDebut": 43
+      "pageDebut": 43,
+      "nom": "الثالث"
     },
     {
       "numero": 4,
-      "pageDebut": 63
+      "pageDebut": 63,
+      "nom": "الرابع"
     },
     {
       "numero": 5,
-      "pageDebut": 83
+      "pageDebut": 83,
+      "nom": "الخامس"
     },
     {
       "numero": 6,
-      "pageDebut": 103
+      "pageDebut": 103,
+      "nom": "السادس"
     },
     {
       "numero": 7,
-      "pageDebut": 123
+      "pageDebut": 123,
+      "nom": "السابع"
     },
     {
       "numero": 8,
-      "pageDebut": 143
+      "pageDebut": 143,
+      "nom": "الثامن"
     },
     {
       "numero": 9,
-      "pageDebut": 163
+      "pageDebut": 163,
+      "nom": "التاسع"
     },
     {
       "numero": 10,
-      "pageDebut": 183
+      "pageDebut": 183,
+      "nom": "العاشر"
     },
     {
       "numero": 11,
-      "pageDebut": 203
+      "pageDebut": 203,
+      "nom": "الحادي عشر"
     },
     {
       "numero": 12,
-      "pageDebut": 223
+      "pageDebut": 223,
+      "nom": "الثاني عشر"
     },
     {
       "numero": 13,
-      "pageDebut": 243
+      "pageDebut": 243,
+      "nom": "الثالث عشر"
     },
     {
       "numero": 14,
-      "pageDebut": 263
+      "pageDebut": 263,
+      "nom": "الرابع عشر"
     },
     {
       "numero": 15,
-      "pageDebut": 283
+      "pageDebut": 283,
+      "nom": "الخامس عشر"
     },
     {
       "numero": 16,
-      "pageDebut": 303
+      "pageDebut": 303,
+      "nom": "السادس عشر"
     },
     {
       "numero": 17,
-      "pageDebut": 323
+      "pageDebut": 323,
+      "nom": "السابع عشر"
     },
     {
       "numero": 18,
-      "pageDebut": 343
+      "pageDebut": 343,
+      "nom": "الثامن عشر"
     },
     {
       "numero": 19,
-      "pageDebut": 363
+      "pageDebut": 363,
+      "nom": "التاسع عشر"
     },
     {
       "numero": 20,
-      "pageDebut": 383
+      "pageDebut": 383,
+      "nom": "العشرون"
     },
     {
       "numero": 21,
-      "pageDebut": 403
+      "pageDebut": 403,
+      "nom": "الحادي والعشرون"
     },
     {
       "numero": 22,
-      "pageDebut": 423
+      "pageDebut": 423,
+      "nom": "الثاني والعشرون"
     },
     {
       "numero": 23,
-      "pageDebut": 443
+      "pageDebut": 443,
+      "nom": "الثالث والعشرون"
     },
     {
       "numero": 24,
-      "pageDebut": 463
+      "pageDebut": 463,
+      "nom": "الرابع والعشرون"
     },
     {
       "numero": 25,
-      "pageDebut": 483
+      "pageDebut": 483,
+      "nom": "الخامس والعشرون"
     },
     {
       "numero": 26,
-      "pageDebut": 503
+      "pageDebut": 503,
+      "nom": "السادس والعشرون"
     },
     {
       "numero": 27,
-      "pageDebut": 523
+      "pageDebut": 523,
+      "nom": "السابع والعشرون"
     },
     {
       "numero": 28,
-      "pageDebut": 543
+      "pageDebut": 543,
+      "nom": "الثامن والعشرون"
     },
     {
       "numero": 29,
-      "pageDebut": 563
+      "pageDebut": 563,
+      "nom": "التاسع والعشرون"
     },
     {
       "numero": 30,
-      "pageDebut": 583
+      "pageDebut": 583,
+      "nom": "الثلاثون"
     }
   ],
   "hizb": []
