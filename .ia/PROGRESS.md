@@ -4,6 +4,16 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-09-24 (session 15) — 4 nouveaux documents tajwid, dont un multi-pages
+
+- L'utilisateur a ajouté 4 nouveaux PDF : شجرة حكم لام التعريف (1 page), خلاصة مخارج الحروف (1 page), خلاصة صفات الحروف (2 pages), et متن تحفة الأطفال (le poème de tajwid de l'imam Al-Jamzuri, 5 pages, format portrait contrairement aux autres qui sont en paysage).
+- `TajwidResource` généralisé : le champ `fichier` (singulier) devient `fichiers` (liste), pour supporter les documents à plusieurs pages. Les 3 entrées existantes migrées vers `fichiers: [un seul élément]`.
+- `TajwidViewerScreen` réécrit en `StatefulWidget` avec un `PageView` (au lieu d'une image fixe) : swipe entre les pages quand il y en a plusieurs, indicateur "n / total" sous le titre. Pour une seule page, comportement inchangé (pas d'indicateur).
+- Section تجويد passe de 3 à **7 entrées**. PDF sources déplacés dans `app/branding/tajwid-sources/` (le PDF تحفة الأطفال avait l'extension `.PDF` en majuscules, renommée en `.pdf` pour correspondre au filtre `.gitignore`).
+- Test de régression ajouté pour متن تحفة الأطفال (ouverture, 1ère page affichée, indicateur "1 / 5"). `flutter analyze` : 0 erreur. `flutter test` : 10/10.
+
+---
+
 ## 2026-09-24 (session 14) — Section "تجويد" (résumés de tajwid)
 
 - Demande de l'utilisateur : nouvelle section dans la barre du bas, au même niveau que "سور", pour des résumés de tajwid. Il a ajouté 3 PDF dans le dossier du projet en local (des "شجرة" — arbres/diagrammes récapitulatifs, une seule page paysage chacun) : أحكام النون الساكنة والتنوين, أحكام الميم الساكنة, المدود.

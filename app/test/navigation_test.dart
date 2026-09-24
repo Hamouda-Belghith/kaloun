@@ -150,4 +150,33 @@ void main() {
     final widget = tester.widget<Image>(imageFinder);
     expect((widget.image as AssetImage).assetName, 'assets/tajwid/madd.webp');
   });
+
+  testWidgets(
+      "متن تحفة الأطفال (5 pages) : la 1ère page s'affiche et l'indicateur montre '1 / 5'",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byIcon(Icons.account_tree_outlined));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.text('متن تحفة الأطفال'), 200);
+    await tester.tap(find.text('متن تحفة الأطفال'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('1 / 5'), findsOneWidget);
+
+    final imageFinder = find.byWidgetPredicate((widget) {
+      if (widget is Image && widget.image is AssetImage) {
+        return (widget.image as AssetImage).assetName.contains('tuhfat_atfal');
+      }
+      return false;
+    });
+    final widget = tester.widget<Image>(imageFinder);
+    expect(
+      (widget.image as AssetImage).assetName,
+      'assets/tajwid/tuhfat_atfal_1.webp',
+    );
+  });
 }

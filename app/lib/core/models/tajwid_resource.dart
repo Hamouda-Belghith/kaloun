@@ -1,19 +1,19 @@
 class TajwidResource {
   final String id;
   final String titre;
-  final String fichier;
+  final List<String> fichiers;
 
   const TajwidResource({
     required this.id,
     required this.titre,
-    required this.fichier,
+    required this.fichiers,
   });
 
   factory TajwidResource.fromJson(Map<String, dynamic> json) {
     return TajwidResource(
       id: json['id'] as String,
       titre: json['titre'] as String,
-      fichier: json['fichier'] as String,
+      fichiers: (json['fichiers'] as List).cast<String>(),
     );
   }
 }

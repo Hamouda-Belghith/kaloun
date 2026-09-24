@@ -1075,17 +1075,56 @@
     {
       "id": "noun_sakina",
       "titre": "أحكام النون الساكنة والتنوين",
-      "fichier": "assets/tajwid/noun_sakina.webp"
+      "fichiers": [
+        "assets/tajwid/noun_sakina.webp"
+      ]
     },
     {
       "id": "mim_sakina",
       "titre": "أحكام الميم الساكنة",
-      "fichier": "assets/tajwid/mim_sakina.webp"
+      "fichiers": [
+        "assets/tajwid/mim_sakina.webp"
+      ]
     },
     {
       "id": "madd",
       "titre": "المدود",
-      "fichier": "assets/tajwid/madd.webp"
+      "fichiers": [
+        "assets/tajwid/madd.webp"
+      ]
+    },
+    {
+      "id": "lam_taarif",
+      "titre": "حكم لام أل",
+      "fichiers": [
+        "assets/tajwid/lam_taarif.webp"
+      ]
+    },
+    {
+      "id": "makharij_huruf",
+      "titre": "مخارج الحروف",
+      "fichiers": [
+        "assets/tajwid/makharij_huruf.webp"
+      ]
+    },
+    {
+      "id": "sifat_huruf",
+      "titre": "صفات الحروف",
+      "fichiers": [
+        "assets/tajwid/sifat_huruf_1.webp",
+        "assets/tajwid/sifat_huruf_2.webp"
+      ]
+    },
+    {
+      "id": "tuhfat_atfal",
+      "titre": "متن تحفة الأطفال",
+      "fichiers": [
+        "assets/tajwid/tuhfat_atfal_1.webp",
+        "assets/tajwid/tuhfat_atfal_2.webp",
+        "assets/tajwid/tuhfat_atfal_3.webp",
+        "assets/tajwid/tuhfat_atfal_4.webp",
+        "assets/tajwid/tuhfat_atfal_5.webp"
+      ]
     }
   ]
 }
