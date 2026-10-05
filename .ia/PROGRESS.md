@@ -15,6 +15,8 @@ Demande de l'utilisateur : retravailler l'UX/UI du site avec les outils de desig
 - Aucun changement de logique/texte repéré par les tests : `flutter analyze` 0 erreur, `flutter test` 10/10 sans modification. `flutter build web --release` vérifié en plus (catch une erreur de type `BottomAppBarTheme` → `BottomAppBarThemeData`, renommage côté SDK Flutter récent).
 - Poussé sur `origin/dev` uniquement, `main`/prod non touché.
 
+- **Validé et promu en production le 2026-10-05** (`git checkout main && git merge --ff-only dev && git push`). Les deux URL publiques (`mushaf-qaloun-tounsi.vercel.app` et `app-seven-tau-28.vercel.app`) servent la nouvelle UI.
+
 ### Prochaine session — à faire en priorité
 1. L'utilisateur compare l'URL dev (https://mushaf-qaloun-tounsi-dev.vercel.app, connexion Vercel requise) à la prod actuelle et donne son avis.
 2. Si validé : `git checkout main && git merge --ff-only dev && git push && git checkout dev` pour passer en prod (geste réservé à l'utilisateur, jamais automatique).
