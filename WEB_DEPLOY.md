@@ -35,6 +35,18 @@ vercel --prod --yes
 
 Le dépôt GitHub est connecté au projet Vercel depuis le 2026-09-22 (app GitHub de Vercel installée sur `Hamouda-Belghith/kaloun`). **Chaque `git push` sur `main` redéploie automatiquement** — plus besoin de lancer `vercel --prod` à la main, sauf pour tester un changement avant de le pousser.
 
+### Environnements (dev / prod) — depuis le 2026-10-05
+
+| Branche | Environnement Vercel | URL |
+|---------|----------------------|-----|
+| `dev`   | Preview (domaine de branche) | https://mushaf-qaloun-tounsi-dev.vercel.app |
+| `main`  | Production | https://mushaf-qaloun-tounsi.vercel.app |
+
+- Les nouveautés sont poussées sur `dev` : déploiement automatique sur l'URL dev.
+- Mise en production : `git checkout main && git merge --ff-only dev && git push && git checkout dev`.
+- L'URL dev est protégée par Vercel Authentication (connexion au compte Vercel requise).
+- Pas de base de données : rien d'autre à séparer entre dev et prod.
+
 ## Config technique du projet Vercel
 
 - Nom du projet : `mosshaf-qaloun-web` (équipe `hbe-projects`, la même que `what_to_eat`)
