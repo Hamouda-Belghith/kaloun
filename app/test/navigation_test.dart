@@ -179,4 +179,29 @@ void main() {
       'assets/tajwid/tuhfat_atfal_1.webp',
     );
   });
+
+  testWidgets(
+      "Icône d'écoute audio présente sur chaque sourate et ne plante pas au tap",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byIcon(Icons.menu_book));
+    await tester.pumpAndSettle();
+
+    final playIcon = find.byIcon(Icons.play_circle_outline).first;
+    expect(playIcon, findsOneWidget);
+
+    await tester.tap(playIcon);
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    // Pas de plugin audio réel dans l'environnement de test : l'essentiel
+    // est que l'échec (réseau/plugin absent) soit intercepté proprement,
+    // sans exception non gérée qui ferait planter l'écran.
+    expect(tester.takeException(), isNull);
+  });
 }

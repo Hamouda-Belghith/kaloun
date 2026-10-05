@@ -90,6 +90,7 @@ Le PDF vient d'une édition tunisienne du Mosshaf dont l'éditeur n'est pas iden
 - [ ] **Demander une autorisation écrite** de diffusion dans une application (email, garder la réponse). Sans réponse, décider en connaissance de cause
 - [ ] Prévoir la mention de la source dans l'écran « À propos » de l'app
 - [ ] Ne pas présenter l'app comme « officielle » sans accord de l'organisme
+- [ ] **Audio (ajouté le 2026-10-05)** : l'app diffuse en streaming la récitation de Mahmoud Khalil Al-Hussary (rawiya Qaloun) depuis l'API publique mp3quran.net, sans vérification formelle des droits avec le récitateur/ses ayants droit (seulement constaté que mp3quran.net le propose publiquement). Voir [.ia/DATA_SOURCES.md](.ia/DATA_SOURCES.md) section "Audio des sourates". À mentionner dans la même demande que l'étape ci-dessus si besoin.
 
 ## Étape 7 — Documents légaux et support (obligatoires pour Apple)
 

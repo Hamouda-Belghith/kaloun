@@ -71,6 +71,14 @@ Le contrôle par vignettes avait laissé passer 37 autres cas (dont Al-Kahf) où
 
 Les débuts de Juz' restent basés sur le texte de l'en-tête (motif régulier de 20 pages) et sont à vérifier (voir [MANUEL.md](../MANUEL.md) étape 5).
 
+## Audio des sourates (ajouté le 2026-10-05)
+
+- **Récitateur : Mahmoud Khalil Al-Hussary** (محمود خليل الحصري), **rawiya Qaloun 3an Nafi3** (رواية قالون عن نافع) — demande explicite de l'utilisateur, qui avait d'abord repéré cet enregistrement sur SoundCloud et sur qaloun.app.
+- **Source retenue : l'API publique [mp3quran.net](https://www.mp3quran.net/eng/api)**, pas SoundCloud ni qaloun.app. Raison : SoundCloud ne permet pas de retélécharger/réhéberger les pistes qui y sont mises en ligne (conditions d'utilisation de la plateforme), et qaloun.app n'a pas d'API publique documentée. mp3quran.net est en revanche une API REST publique explicitement conçue pour être consommée par des apps tierces (documentation à https://www.mp3quran.net/eng/api), très largement utilisée dans l'écosystème des apps Coran.
+- Confirmé via l'API (`GET /api/v3/reciters?language=ar`) : le récitateur id `118` (محمود خليل الحصري) a bien un moshaf `قالون عن نافع - مرتل`, server `https://cdn.mp3quran.net/audio/mahmoud-husary/r5/`, 114 sourates. Fichiers nommés `001.mp3` à `114.mp3` (vérifié en HTTP HEAD), servis directement en streaming (`audio/mpeg`, ~160 Mo pour la plus grosse sourate — Al-Baqara).
+- **Pas de fichiers embarqués dans l'app** : le Coran entier en Qaloun par ce récitateur pèserait plusieurs Go, et les droits précis sur l'enregistrement audio lui-même (par opposition au texte coranique, non copyrightable) n'ont pas été vérifiés formellement avec le récitateur/ses ayants droit — seulement constaté que mp3quran.net le propose publiquement pour ce type d'usage. Le streaming direct depuis leur CDN évite de dupliquer/héberger nous-mêmes ces fichiers.
+- Conséquence : c'est la **seule fonctionnalité de l'app qui nécessite une connexion internet** (tout le reste — lecture du Mosshaf, navigation, signets, tajwid — reste 100% hors-ligne). Géré dans `app/lib/features/sourates/sourates_screen.dart` : bouton d'écoute par sourate, lecteur en bas d'écran, message d'erreur explicite si le réseau n'est pas disponible.
+
 ## Prochaines étapes concrètes
 
 - [ ] Relecture humaine de `navigation.json` avant publication (au moins un échantillon aléatoire de sourates/Juz', en particulier le Juz' 30 qui a le plus de sourates par page).

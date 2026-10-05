@@ -4,6 +4,24 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-05 (session 17) — Écoute audio des sourates (Al-Hussary, rawiya Qaloun)
+
+Demande de l'utilisateur : ajouter l'audio d'un seul récitateur, Mahmoud Khalil Al-Hussary, en rawiya Qaloun 3an Nafi3 impérativement. L'utilisateur avait repéré l'enregistrement sur SoundCloud et sur qaloun.app.
+
+- **Source retenue : API publique mp3quran.net**, pas les deux liens fournis. SoundCloud ne permet pas de retélécharger/réhéberger ses pistes (ses propres conditions d'utilisation) et qaloun.app n'a pas d'API publique documentée. mp3quran.net, en revanche, est une API REST publique explicitement conçue pour les apps tierces — vérifié via `GET /api/v3/reciters?language=ar` : récitateur id `118` (محمود خليل الحصري), moshaf `قالون عن نافع - مرتل` confirmé, server `https://cdn.mp3quran.net/audio/mahmoud-husary/r5/`, fichiers `001.mp3`–`114.mp3` (vérifiés en HTTP HEAD, ~160 Mo pour Al-Baqara).
+- **Streaming, pas de fichiers embarqués** : le Coran entier par ce récitateur pèserait plusieurs Go, et les droits précis sur l'enregistrement audio (distinct du texte coranique lui-même, non copyrightable) n'ont pas été vérifiés formellement avec le récitateur/ses ayants droit — seulement constaté que mp3quran.net le diffuse publiquement pour ce type d'usage. Noté dans [MANUEL.md](../MANUEL.md) étape 6 et [DATA_SOURCES.md](DATA_SOURCES.md), même traitement que pour le Mosshaf PDF lui-même.
+- **Seule fonctionnalité de l'app qui nécessite une connexion internet** — tout le reste reste hors-ligne.
+- Implémentation : dépendance `just_audio` ; `core/services/quran_audio.dart` (construction de l'URL + constantes récitateur/rawiya) ; `SouratesScreen` réécrite en `StatefulWidget` avec un bouton lecture/pause par sourate (icône + état de chargement via `StreamBuilder<PlayerState>`) et un mini-lecteur en bas d'écran (titre, barre de progression, bouton stop) quand une sourate est chargée. Message d'erreur explicite si le réseau est indisponible.
+- `flutter analyze` : 0 erreur. `flutter test` : 11/11 (un test ajouté : l'icône d'écoute est présente et un tap ne lève pas d'exception non gérée, même sans plugin audio réel dans l'environnement de test). `flutter build web --release` vérifié.
+- Poussé sur `dev` uniquement (comme pour la refonte UX/UI précédente) — à valider par l'utilisateur en écoutant réellement une sourate avant promotion en `main`.
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur teste l'écoute réelle sur https://mushaf-qaloun-tounsi-dev.vercel.app (au moins une sourate courte et une longue, et le comportement hors-ligne/erreur réseau).
+2. Si validé : promotion en prod (`git checkout main && git merge --ff-only dev && git push`).
+3. Envisager, si demandé un jour : mémoriser la position de lecture en cas de changement d'écran, ou étendre l'écoute à la navigation par Juz'/page actuelle du lecteur (actuellement limité à l'écran Sourates).
+
+---
+
 ## 2026-10-05 (session 16) — Refonte UX/UI, poussée sur dev uniquement
 
 Demande de l'utilisateur : retravailler l'UX/UI du site avec les outils de design disponibles, et pousser uniquement sur `dev` (pas `main`) pour comparer avant/après. Repris le fil d'une session précédente (hors fenêtre de contexte visible) qui avait déjà mis en place la séparation `dev`/`main` sur Vercel (voir `WEB_DEPLOY.md` et la mémoire `dev-prod-environments`).

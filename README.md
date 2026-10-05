@@ -18,8 +18,9 @@ Une application équivalente existe déjà sur le Play Store (pas développée p
   - retour au dernier signet (dernière page lue).
 - Signets / favoris et reprise de lecture.
 - Recherche (par nom de sourate, numéro de page, numéro de Juz').
-- Fonctionnement 100% hors-ligne après installation.
-- (Optionnel, phase ultérieure) Lecture audio, mode nuit, zoom, partage de page/verset.
+- **Écoute audio des sourates** : récitation de Mahmoud Khalil Al-Hussary, rawiya Qaloun 3an Nafi3 (streaming depuis l'API publique [mp3quran.net](https://www.mp3quran.net/eng/api) — nécessite une connexion internet, seule fonctionnalité non hors-ligne de l'app).
+- Fonctionnement hors-ligne après installation (à l'exception de l'écoute audio, ci-dessus).
+- (Optionnel, phase ultérieure) Mode nuit, zoom, partage de page/verset.
 
 ## État du projet
 
