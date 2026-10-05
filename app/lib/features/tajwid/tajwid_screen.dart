@@ -17,12 +17,24 @@ class TajwidScreen extends StatelessWidget {
             ? const Center(child: Text('لا توجد ملخصات بعد'))
             : ListView.separated(
                 itemCount: tajwid.length,
-                separatorBuilder: (_, __) => const Divider(height: 1),
+                separatorBuilder: (_, __) => const Divider(height: 1, indent: 16, endIndent: 16),
                 itemBuilder: (context, i) {
                   final t = tajwid[i];
                   return ListTile(
-                    leading: const Icon(Icons.account_tree_outlined),
-                    title: Text(t.titre, style: const TextStyle(fontSize: 18)),
+                    leading: Icon(
+                      Icons.account_tree_outlined,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    title: Text(t.titre, style: Theme.of(context).textTheme.titleMedium),
+                    trailing: t.fichiers.length > 1
+                        ? Text(
+                            '${t.fichiers.length} صفحات',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.tertiary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        : null,
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(

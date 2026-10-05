@@ -96,7 +96,13 @@ class _ReaderScreenState extends State<ReaderScreen> {
             );
           },
         ),
-        bottomNavigationBar: BottomAppBar(
+        bottomNavigationBar: DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 1),
+            ),
+          ),
+          child: BottomAppBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -164,6 +170,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
               ),
             ],
           ),
+          ),
         ),
       ),
     );
@@ -191,7 +198,7 @@ class _NavButton extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon),
+            Icon(icon, color: Theme.of(context).colorScheme.primary),
             Text(label, style: Theme.of(context).textTheme.labelSmall),
           ],
         ),

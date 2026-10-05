@@ -59,7 +59,10 @@ class _GotoPageScreenState extends State<GotoPageScreen> {
               const SizedBox(height: 24),
               const Divider(),
               ListTile(
-                leading: const Icon(Icons.info_outline),
+                leading: Icon(
+                  Icons.info_outline,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
                 title: const Text('التعريف بالمصحف'),
                 subtitle: const Text('مقدمة الطبعة وقواعد التجويد'),
                 onTap: () => Navigator.of(context)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/models/sourate.dart';
+import '../../shared/widgets/roundel.dart';
 
 class SouratesScreen extends StatelessWidget {
   const SouratesScreen({super.key, required this.sourates});
@@ -14,17 +15,23 @@ class SouratesScreen extends StatelessWidget {
         appBar: AppBar(title: const Text('السور')),
         body: ListView.separated(
           itemCount: sourates.length,
-          separatorBuilder: (_, __) => const Divider(height: 1),
+          separatorBuilder: (_, __) => const Divider(height: 1, indent: 16, endIndent: 16),
           itemBuilder: (context, i) {
             final s = sourates[i];
             return ListTile(
-              leading: CircleAvatar(child: Text('${s.numero}')),
-              title: Text(s.nomAr, style: const TextStyle(fontSize: 18)),
+              leading: Roundel(text: '${s.numero}'),
+              title: Text(s.nomAr, style: Theme.of(context).textTheme.titleMedium),
               subtitle: Text(
-                '${s.nomFr} · ${s.nombreAyat} versets · '
+                '${s.nomFr} · ${s.nombreAyat} آية · '
                 '${s.estMecquoise ? "مكية" : "مدنية"}',
               ),
-              trailing: Text('ص ${s.pageDebut}'),
+              trailing: Text(
+                'ص ${s.pageDebut}',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               onTap: () => Navigator.of(context).pop(s.pageDebut),
             );
           },

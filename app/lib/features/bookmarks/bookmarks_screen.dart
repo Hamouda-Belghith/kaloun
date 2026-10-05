@@ -61,15 +61,34 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
         body: _loading
             ? const Center(child: CircularProgressIndicator())
             : _bookmarks.isEmpty
-                ? const Center(child: Text('لا توجد إشارات مرجعية بعد'))
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.bookmark_outline,
+                          size: 40,
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
+                        const SizedBox(height: 12),
+                        const Text('لا توجد إشارات مرجعية بعد'),
+                      ],
+                    ),
+                  )
                 : ListView.separated(
                     itemCount: _bookmarks.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
+                    separatorBuilder: (_, __) => const Divider(height: 1, indent: 16, endIndent: 16),
                     itemBuilder: (context, i) {
                       final b = _bookmarks[i];
                       return ListTile(
-                        leading: const Icon(Icons.bookmark),
-                        title: Text(widget.data.libellePage(b.page)),
+                        leading: Icon(
+                          Icons.bookmark,
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
+                        title: Text(
+                          widget.data.libellePage(b.page),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                         subtitle: Text(
                           '${b.createdAt.year}-${b.createdAt.month.toString().padLeft(2, '0')}-${b.createdAt.day.toString().padLeft(2, '0')}',
                         ),

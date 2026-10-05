@@ -25,3 +25,10 @@ flutter:
     - assets/data/navigation.json
     - assets/pages/
     - assets/tajwid/
+  fonts:
+    - family: ReemKufi
+      fonts:
+        - asset: assets/fonts/ReemKufi-Variable.ttf
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Variable.ttf

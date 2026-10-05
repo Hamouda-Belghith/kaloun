@@ -4,6 +4,24 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-05 (session 16) — Refonte UX/UI, poussée sur dev uniquement
+
+Demande de l'utilisateur : retravailler l'UX/UI du site avec les outils de design disponibles, et pousser uniquement sur `dev` (pas `main`) pour comparer avant/après. Repris le fil d'une session précédente (hors fenêtre de contexte visible) qui avait déjà mis en place la séparation `dev`/`main` sur Vercel (voir `WEB_DEPLOY.md` et la mémoire `dev-prod-environments`).
+
+- **Direction de design** (skill `frontend-design` chargée avant toute décision visuelle) : palette et typographie puisées dans le contenu réel de l'app plutôt que des défauts génériques — papier ivoire et encre des pages scannées, rose des frises qui les bordent, indigo et or de la couverture déjà utilisée comme icône. Polices **Reem Kufi** (titres, référence au koufique des premiers Corans manuscrits) + **Cairo** (texte d'interface), embarquées en local (`app/assets/fonts/`, fichiers variables ~720 Ko au total) — volontairement pas de `google_fonts` à chargement réseau, pour ne pas introduire de dépendance en ligne dans une app qui se veut 100% hors-ligne.
+- `AppTheme` réécrit : `ColorScheme` composée à la main (pas de `fromSeed` algorithmique) à partir des jetons de couleur, `AppBar` indigo avec liseré doré, `BottomAppBar` avec liseré doré en écho, `InputDecorationTheme`/`FilledButtonThemeData` cohérents, variantes clair/sombre.
+- Nouveau composant `Roundel` (médaillon à liseré doré) qui remplace les `CircleAvatar` Material génériques dans les listes sourates/Juz' — référence directe aux repères visibles en marge des pages scannées du Mosshaf.
+- Écrans retouchés : `SouratesScreen`, `JuzScreen`, `BookmarksScreen` (+ état vide), `TajwidScreen` (badge "n صفحات" pour les documents multi-pages), `GotoPageScreen`, `ReaderScreen` (barre du bas teintée, icônes en indigo).
+- Aucun changement de logique/texte repéré par les tests : `flutter analyze` 0 erreur, `flutter test` 10/10 sans modification. `flutter build web --release` vérifié en plus (catch une erreur de type `BottomAppBarTheme` → `BottomAppBarThemeData`, renommage côté SDK Flutter récent).
+- Poussé sur `origin/dev` uniquement, `main`/prod non touché.
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur compare l'URL dev (https://mushaf-qaloun-tounsi-dev.vercel.app, connexion Vercel requise) à la prod actuelle et donne son avis.
+2. Si validé : `git checkout main && git merge --ff-only dev && git push && git checkout dev` pour passer en prod (geste réservé à l'utilisateur, jamais automatique).
+3. Envisager d'appliquer la même direction de design à l'icône iOS si la publication App Store reprend un jour (actuellement hors sujet, l'app web reste la priorité).
+
+---
+
 ## 2026-09-24 (session 15) — 4 nouveaux documents tajwid, dont un multi-pages
 
 - L'utilisateur a ajouté 4 nouveaux PDF : شجرة حكم لام التعريف (1 page), خلاصة مخارج الحروف (1 page), خلاصة صفات الحروف (2 pages), et متن تحفة الأطفال (le poème de tajwid de l'imam Al-Jamzuri, 5 pages, format portrait contrairement aux autres qui sont en paysage).
