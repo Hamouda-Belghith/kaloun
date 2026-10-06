@@ -4,6 +4,23 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-06 (session 19) — Écoute à partir d'un verset précis
+
+Suite directe de la session 18 (promue en prod). Demande de l'utilisateur : pouvoir démarrer la récitation à un verset précis (son exemple : verset 150 d'Al-Baqara), et vérifier qu'on dispose bien du découpage audio nécessaire.
+
+- **Recherche** : la même API mp3quran.net expose un endpoint `ayat_timing` (`GET /api/v3/ayat_timing?surah=X&read=270`) donnant le `start_time` en millisecondes de chaque verset dans le fichier MP3 de la sourate entière. `read=270` correspond spécifiquement à la rawiya Qaloun d'Al-Hussary (vérifié en comparant les horodatages retournés pour différents `read` — ils diffèrent réellement). CORS ouvert (`Access-Control-Allow-Origin: *`), donc appelable directement depuis le navigateur. Détail dans [DATA_SOURCES.md](DATA_SOURCES.md).
+- Limite rencontrée et gérée : le dernier verset d'une sourate est parfois absent du tableau renvoyé (ex. Al-Baqara : 285 entrées pour 286 versets) — on prend alors le verset disponible le plus proche avant celui demandé.
+- **Implémentation** : `core/models/ayah_timing.dart` + `core/services/ayah_timing_service.dart` (fetch + cache en mémoire par sourate) ; `QuranAudioController.playSourateFromAyah(numero, ayah)` (charge la sourate puis `seek()` à l'horodatage du verset avant de lancer la lecture) ; dans `SouratesScreen`, une icône "استماع من آية محددة" par sourate ouvre une boîte de dialogue (champ numérique borné 1..nombre de versets de la sourate) qui déclenche la lecture au bon endroit.
+- Nouvelle dépendance `http` (requêtes JSON vers l'API de minutage).
+- `flutter analyze` : 0 erreur. `flutter test` : 12/12 (1 test ajouté). `flutter build web --release` vérifié.
+- Poussé sur `dev`, à valider avant promotion en `main`.
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur teste : ouvrir la liste des sourates, choisir Al-Baqara, "استماع من آية محددة" → 150, vérifier que la lecture démarre bien au bon endroit.
+2. Si validé : promotion en prod.
+
+---
+
 ## 2026-10-06 (session 18) — Lecteur audio global, accessible depuis le lecteur de pages
 
 Suite de la session 17 : l'utilisateur a validé l'écoute audio (promue en prod), puis demandé qu'elle soit aussi pilotable **depuis l'écran du lecteur de pages** (pas seulement la liste des sourates), avec lecture/pause, un choix entre répéter la sourate ou enchaîner sur la suivante, etc.

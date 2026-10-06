@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
+import 'ayah_timing_service.dart';
 import 'quran_audio.dart';
 
 /// Comportement en fin de sourate.
@@ -37,6 +38,26 @@ class QuranAudioController {
     currentSourateNumero.value = numero;
     try {
       await player.setUrl(QuranAudio.urlForSourate(numero));
+      await player.play();
+    } catch (_) {
+      error.value = 'تعذّر تحميل التلاوة. تحقق من اتصالك بالإنترنت.';
+      currentSourateNumero.value = null;
+    }
+  }
+
+  /// Démarre une sourate à partir d'un verset précis plutôt que du début
+  /// (ex. verset 150 d'Al-Baqara). Récupère le minutage par verset depuis
+  /// [AyahTimingService], puis cherche dans le fichier audio.
+  Future<void> playSourateFromAyah(int numero, int ayah) async {
+    error.value = null;
+    currentSourateNumero.value = numero;
+    try {
+      await player.setUrl(QuranAudio.urlForSourate(numero));
+      final startTime =
+          await AyahTimingService.instance.startTimeForAyah(numero, ayah);
+      if (startTime != null) {
+        await player.seek(startTime);
+      }
       await player.play();
     } catch (_) {
       error.value = 'تعذّر تحميل التلاوة. تحقق من اتصالك بالإنترنت.';

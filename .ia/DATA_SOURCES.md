@@ -79,6 +79,13 @@ Les débuts de Juz' restent basés sur le texte de l'en-tête (motif régulier d
 - **Pas de fichiers embarqués dans l'app** : le Coran entier en Qaloun par ce récitateur pèserait plusieurs Go, et les droits précis sur l'enregistrement audio lui-même (par opposition au texte coranique, non copyrightable) n'ont pas été vérifiés formellement avec le récitateur/ses ayants droit — seulement constaté que mp3quran.net le propose publiquement pour ce type d'usage. Le streaming direct depuis leur CDN évite de dupliquer/héberger nous-mêmes ces fichiers.
 - Conséquence : c'est la **seule fonctionnalité de l'app qui nécessite une connexion internet** (tout le reste — lecture du Mosshaf, navigation, signets, tajwid — reste 100% hors-ligne). Géré dans `app/lib/features/sourates/sourates_screen.dart` : bouton d'écoute par sourate, lecteur en bas d'écran, message d'erreur explicite si le réseau n'est pas disponible.
 
+## Minutage par verset (ajouté le 2026-10-06)
+
+- Même API (mp3quran.net) expose un endpoint `ayat_timing` : `GET /api/v3/ayat_timing?surah=<1-114>&read=270` renvoie, pour chaque verset de la sourate, `start_time`/`end_time` en millisecondes dans le fichier MP3 de la sourate entière. `read=270` est l'identifiant **spécifique à la rawiya Qaloun d'Al-Hussary** (distinct de l'identifiant `118` du récitateur en général) — vérifié en comparant les horodatages retournés pour différents `read` : ils diffèrent réellement, ce n'est pas une réponse générique.
+- CORS ouvert (`Access-Control-Allow-Origin: *`), donc appelable directement depuis le navigateur sans passer par un serveur intermédiaire.
+- Limite connue : le dernier verset d'une sourate est parfois absent du tableau (ex. Al-Baqara : 285 entrées pour 286 versets). Géré côté app en prenant le verset disponible le plus proche avant celui demandé plutôt que d'échouer.
+- Utilisé pour la fonctionnalité "écouter à partir d'un verset précis" (`core/services/ayah_timing_service.dart`).
+
 ## Prochaines étapes concrètes
 
 - [ ] Relecture humaine de `navigation.json` avant publication (au moins un échantillon aléatoire de sourates/Juz', en particulier le Juz' 30 qui a le plus de sourates par page).

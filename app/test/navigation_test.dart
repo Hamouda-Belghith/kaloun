@@ -204,4 +204,32 @@ void main() {
     // sans exception non gérée qui ferait planter l'écran.
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+      "Démarrer l'écoute à partir d'un verset précis ne plante pas",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byIcon(Icons.menu_book));
+    await tester.pumpAndSettle();
+
+    final ayahIcon = find.byIcon(Icons.format_list_numbered).first;
+    expect(ayahIcon, findsOneWidget);
+    await tester.tap(ayahIcon);
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField), '150');
+    await tester.tap(find.text('ابدأ'));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    // Comme pour l'écoute depuis le début : pas de plugin audio réel dans
+    // l'environnement de test, l'important est que l'échec soit intercepté
+    // proprement, sans exception non gérée.
+    expect(tester.takeException(), isNull);
+  });
 }
