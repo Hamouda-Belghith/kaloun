@@ -4,6 +4,30 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-06 (session 18) — Lecteur audio global, accessible depuis le lecteur de pages
+
+Suite de la session 17 : l'utilisateur a validé l'écoute audio (promue en prod), puis demandé qu'elle soit aussi pilotable **depuis l'écran du lecteur de pages** (pas seulement la liste des sourates), avec lecture/pause, un choix entre répéter la sourate ou enchaîner sur la suivante, etc.
+
+**Décisions de design (demandées explicitement : "brainstorme et réfléchis à la façon idéale") :**
+- Le lecteur devient un **contrôleur global unique** (`QuranAudioController`, singleton) au lieu d'un état local à `SouratesScreen` : l'audio lancé depuis un écran continue et reste pilotable si on navigue vers un autre.
+- **Deux modes explicites** : `repeatOne` (réécoute la même sourate en boucle, pour la mémorisation) et `continueNext` (enchaîne automatiquement sur la sourate suivante à la fin — défaut, plus naturel pour une écoute continue façon radio). Bascule via une icône dans le mini-lecteur (`repeat_one` / `playlist_play`), pas un simple bouton caché.
+- **Pas de défilement de page synchronisé avec l'audio** : l'API mp3quran.net fournit un seul fichier MP3 par sourate entière, sans minutage par verset. Impossible de savoir à quel verset on en est pendant la lecture sans ces données — faire semblant de suivre aurait été trompeur sur un texte sacré. L'audio tourne donc indépendamment de la navigation entre pages.
+- Ajout de boutons précédent/suivant sourate dans le mini-lecteur (saut direct, sans repasser par la liste).
+
+**Implémentation :**
+- `core/services/quran_audio_controller.dart` (nouveau) : état partagé (sourate en cours, mode, erreur) + logique de fin de lecture (`playerStateStream` → `ProcessingState.completed` → rejoue ou enchaîne selon le mode).
+- `shared/widgets/audio_mini_player.dart` (nouveau, extrait de l'ancien `_MiniPlayer` local à `SouratesScreen`) : précédent/lecture-pause/suivant, nom de la sourate + récitateur, bascule de mode, barre de progression, stop. Réutilisé à l'identique dans `SouratesScreen` et `ReaderScreen`.
+- `SouratesScreen` simplifiée : ne possède plus son propre `AudioPlayer`, utilise le contrôleur partagé.
+- `ReaderScreen` : bouton lecture/pause dans la barre du haut (cible la sourate actuellement affichée) + `AudioMiniPlayer` entre la page et la barre de navigation du bas.
+- `flutter analyze` : 0 erreur. `flutter test` : 11/11 (aucune régression, le test de session 17 sur l'icône d'écoute passe toujours via le contrôleur global). `flutter build web --release` vérifié.
+- Poussé sur `dev` uniquement, à valider par l'utilisateur avant promotion en `main` (cette fois sans demande explicite de passage en prod).
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur teste depuis le lecteur de pages (pas seulement la liste des sourates) : lancer/mettre en pause, changer de mode, précédent/suivant, puis donne son avis.
+2. Si validé : promotion en prod.
+
+---
+
 ## 2026-10-05 (session 17) — Écoute audio des sourates (Al-Hussary, rawiya Qaloun)
 
 Demande de l'utilisateur : ajouter l'audio d'un seul récitateur, Mahmoud Khalil Al-Hussary, en rawiya Qaloun 3an Nafi3 impérativement. L'utilisateur avait repéré l'enregistrement sur SoundCloud et sur qaloun.app.
