@@ -4,6 +4,22 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-07 (session 21) — Correction : la flèche du panneau audio était invisible au premier lancement
+
+Bug signalé par l'utilisateur : à l'ouverture de l'app, la petite flèche du panneau audio (ajoutée en session 20) n'apparaissait pas dans le lecteur de pages — il fallait d'abord ouvrir "السور" pour qu'elle apparaisse, ensuite seulement elle devenait disponible partout.
+
+- **Cause** : `AudioMiniPlayer` enveloppait tout son contenu, flèche comprise, dans un `ValueListenableBuilder` qui retournait `SizedBox.shrink()` tant qu'aucune sourate n'avait jamais été chargée (`currentSourateNumero == null`). Au tout premier lancement, rien n'a encore joué, donc le panneau entier — y compris la flèche censée permettre de *démarrer* l'écoute — restait invisible. Une fois une sourate lancée depuis "السور", l'état global devenait non nul et la flèche apparaissait enfin, y compris en revenant au lecteur.
+- **Correctif** : la flèche est désormais **toujours affichée**, que quelque chose soit chargé ou non. Nouveau paramètre `defaultSourate` sur `AudioMiniPlayer` : dans `ReaderScreen`, on lui passe la sourate actuellement affichée, pour que le panneau déplié (même avant toute lecture) propose directement "écouter *cette* sourate" sans devoir passer par la liste. Dans `SouratesScreen` (pas de sourate "courante" évidente), le panneau déplié sans rien de chargé affiche un message neutre plutôt que de planter.
+- Repli par défaut (`_expanded = false`) conservé : la flèche ne s'ouvre pas toute seule, elle est juste désormais visible pour qu'on sache qu'elle existe.
+- Test de régression ajouté : la flèche est visible dès le lecteur de pages, sans passer par "السور". `flutter analyze` : 0 erreur. `flutter test` : 13/13. `flutter build web --release` vérifié.
+- Poussé sur `dev`, à valider avant promotion en `main`.
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur vérifie, dès l'ouverture de l'app (sans rien avoir touché), que la flèche est bien visible en bas du lecteur de pages, et qu'en la dépliant on peut lancer directement l'écoute de la sourate affichée.
+2. Si validé : promotion en prod.
+
+---
+
 ## 2026-10-07 (session 20) — Refonte du lecteur : bouton centré, verset en cours, répétition configurable, panneau repliable
 
 Demande de l'utilisateur, en plusieurs points :

@@ -37,6 +37,17 @@ void main() {
     return (widget.image as AssetImage).assetName;
   }
 
+  testWidgets(
+      "La flèche du panneau audio est visible dès le lecteur de pages (sans ouvrir السور d'abord)",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    expect(find.byIcon(Icons.keyboard_arrow_up), findsOneWidget);
+  });
+
   testWidgets('Al-Baqara affiche page_0003 (partagée avec la fin de Al-Fatiha)',
       (WidgetTester tester) async {
     final asset = await pageShownAfterTapping(tester, 'البقرة');

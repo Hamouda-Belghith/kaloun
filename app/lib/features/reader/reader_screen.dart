@@ -101,7 +101,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
                 },
               ),
             ),
-            AudioMiniPlayer(sourates: data.sourates),
+            AudioMiniPlayer(sourates: data.sourates, defaultSourate: sourate),
           ],
         ),
         bottomNavigationBar: DecoratedBox(
