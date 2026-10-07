@@ -3,61 +3,13 @@ import 'package:just_audio/just_audio.dart';
 import '../../core/models/sourate.dart';
 import '../../core/services/quran_audio_controller.dart';
 import '../../shared/widgets/audio_mini_player.dart';
+import '../../shared/widgets/listen_options_dialog.dart';
 import '../../shared/widgets/roundel.dart';
 
 class SouratesScreen extends StatelessWidget {
   const SouratesScreen({super.key, required this.sourates});
 
   final List<Sourate> sourates;
-
-  Future<void> _showAyahDialog(BuildContext context, Sourate s) async {
-    final fieldController = TextEditingController();
-    final result = await showDialog<int>(
-      context: context,
-      builder: (dialogContext) {
-        String? error;
-        return StatefulBuilder(
-          builder: (dialogContext, setState) {
-            return Directionality(
-              textDirection: TextDirection.rtl,
-              child: AlertDialog(
-                title: Text('استماع من آية — ${s.nomAr}'),
-                content: TextField(
-                  controller: fieldController,
-                  keyboardType: TextInputType.number,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'رقم الآية (1 - ${s.nombreAyat})',
-                    errorText: error,
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(dialogContext).pop(),
-                    child: const Text('إلغاء'),
-                  ),
-                  FilledButton(
-                    onPressed: () {
-                      final value = int.tryParse(fieldController.text);
-                      if (value == null || value < 1 || value > s.nombreAyat) {
-                        setState(() => error = 'أدخل رقمًا بين 1 و ${s.nombreAyat}');
-                        return;
-                      }
-                      Navigator.of(dialogContext).pop(value);
-                    },
-                    child: const Text('ابدأ'),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-    if (result != null) {
-      QuranAudioController.instance.playSourateFromAyah(s.numero, result);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,9 +50,9 @@ class SouratesScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.format_list_numbered),
-                          tooltip: 'استماع من آية محددة',
-                          onPressed: () => _showAyahDialog(context, s),
+                          icon: const Icon(Icons.tune),
+                          tooltip: 'إعدادات الاستماع',
+                          onPressed: () => showListenOptionsDialog(context, sourate: s),
                         ),
                         ValueListenableBuilder<int?>(
                           valueListenable: controller.currentSourateNumero,

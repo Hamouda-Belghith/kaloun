@@ -216,12 +216,12 @@ void main() {
     await tester.tap(find.byIcon(Icons.menu_book));
     await tester.pumpAndSettle();
 
-    final ayahIcon = find.byIcon(Icons.format_list_numbered).first;
+    final ayahIcon = find.byIcon(Icons.tune).first;
     expect(ayahIcon, findsOneWidget);
     await tester.tap(ayahIcon);
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField), '150');
+    await tester.enterText(find.byType(TextField).first, '150');
     await tester.tap(find.text('ابدأ'));
     for (var i = 0; i < 10; i++) {
       await tester.pump(const Duration(milliseconds: 100));

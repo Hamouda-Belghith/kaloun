@@ -4,6 +4,35 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-07 (session 20) — Refonte du lecteur : bouton centré, verset en cours, répétition configurable, panneau repliable
+
+Demande de l'utilisateur, en plusieurs points :
+1. Déplacer le bouton lecture (qui était dans la barre du haut du lecteur de pages) vers le bas, centré.
+2. Afficher en bas le numéro du verset en cours de récitation.
+3. Depuis la page principale (le lecteur de pages), pouvoir choisir le verset de départ, le nombre de répétitions, et si la répétition porte sur le verset ou sur la sourate.
+4. Pouvoir cacher tout ce système audio avec une petite flèche, pour ne pas gêner la lecture simple.
+
+**Suivi du verset en cours** : possible grâce au minutage par verset déjà récupéré en session 19 — à chaque changement de position (`positionStream`), on cherche quel intervalle `[start_time, end_time)` contient la position actuelle et on met à jour `currentAyah` en conséquence. Fonctionne pour toute lecture, pas seulement celles démarrées "depuis un verset précis".
+
+**Modèle de répétition généralisé** : l'ancien `QuranPlaybackMode` (répéter la sourate / continuer) est remplacé par un système plus général : `RepeatScope` (`ayah` ou `sourate`) × `repeatCount` (nombre entier). Une "unité de répétition" est soit le verset seul (boucle entre son `start_time` et son `end_time`), soit la sourate à partir du verset de départ choisi (boucle jusqu'à la fin naturelle du fichier). Une fois les répétitions épuisées, avance au verset suivant (si portée = verset) ou à la sourate suivante (si portée = sourate) — unifie l'ancien comportement "continuer" comme cas particulier (`repeatCount = 1`).
+- Boucle au niveau verset détectée activement via `positionStream` (pas d'événement natif à la fin d'un verset, contrairement à la fin du fichier).
+- Boucle au niveau sourate toujours détectée via l'événement `ProcessingState.completed` du lecteur (comme avant).
+
+**Interface** :
+- `ReaderScreen` : bouton de la barre du haut retiré.
+- `AudioMiniPlayer` (partagé, utilisé dans `ReaderScreen` et `SouratesScreen`) entièrement repensé : une petite flèche en haut du panneau pour le replier/déplier (replié = juste la flèche, ne gêne pas la lecture) ; en déplié, une ligne de contrôles avec le bouton lecture/pause **centré** (grâce à deux `Expanded` symétriques de part et d'autre portant respectivement l'icône réglages et l'icône stop, avec précédent/suivant **verset** autour du bouton central) ; en dessous, le nom de la sourate et **"الآية N"** du verset en cours ; puis la barre de progression.
+- Nouvelle boîte de dialogue partagée `showListenOptionsDialog` (`shared/widgets/listen_options_dialog.dart`) : verset de départ, nombre de répétitions, et un `SegmentedButton` pour choisir la portée (الآية فقط / السورة). Remplace l'ancienne boîte de dialogue plus simple de `SouratesScreen` (qui ne gérait que le verset de départ, sans répétition) — un seul composant partagé maintenant, réutilisé depuis la liste des sourates ET depuis le lecteur de pages (icône réglages dans le mini-lecteur).
+- `core/models/ayah_timing.dart` : ajout du champ `endTime` (manquant jusqu'ici, nécessaire pour délimiter la boucle "verset seul").
+- `flutter analyze` : 0 erreur. `flutter test` : 12/12 (test de la session 19 adapté à la nouvelle boîte de dialogue à deux champs). `flutter build web --release` vérifié.
+- Poussé sur `dev`, à valider avant promotion en `main`.
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur teste depuis le lecteur de pages : replier/déplier le panneau, bouton centré, numéro de verset affiché en temps réel, réglages (verset de départ + répétitions + portée) via l'icône réglages.
+2. Si validé : promotion en prod.
+3. Vérifier que le comportement de répétition "verset seul" est fluide (pas de coupure audible au bouclage) une fois testé avec un vrai réseau — non vérifiable dans cet environnement de développement (pas de plugin audio réel disponible pour `flutter test`/ni de connexion fiable pour un test manuel direct depuis cette session).
+
+---
+
 ## 2026-10-06 (session 19) — Écoute à partir d'un verset précis
 
 Suite directe de la session 18 (promue en prod). Demande de l'utilisateur : pouvoir démarrer la récitation à un verset précis (son exemple : verset 150 d'Al-Baqara), et vérifier qu'on dispose bien du découpage audio nécessaire.

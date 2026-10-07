@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import '../../core/models/sourate.dart';
-import '../../core/services/quran_audio.dart';
 import '../../core/services/quran_audio_controller.dart';
+import 'listen_options_dialog.dart';
 
-/// Mini-lecteur persistant : lecture/pause, précédent/suivant, bascule
-/// du mode (répéter cette sourate / continuer), barre de progression,
-/// arrêt. Visible depuis n'importe quel écran qui l'inclut, tant qu'une
-/// sourate est chargée dans [QuranAudioController].
-class AudioMiniPlayer extends StatelessWidget {
+/// Panneau audio persistant : repliable (petite flèche) pour ne pas gêner
+/// la lecture, bouton lecture/pause centré, verset en cours affiché,
+/// réglages de répétition (verset/sourate, nombre de fois) accessibles
+/// via une icône dédiée.
+class AudioMiniPlayer extends StatefulWidget {
   const AudioMiniPlayer({super.key, required this.sourates});
 
   final List<Sourate> sourates;
+
+  @override
+  State<AudioMiniPlayer> createState() => _AudioMiniPlayerState();
+}
+
+class _AudioMiniPlayerState extends State<AudioMiniPlayer> {
+  bool _expanded = true;
 
   String _fmt(Duration d) {
     final m = d.inMinutes.remainder(60).toString().padLeft(2, '0');
@@ -28,7 +35,7 @@ class AudioMiniPlayer extends StatelessWidget {
       valueListenable: controller.currentSourateNumero,
       builder: (context, numero, __) {
         if (numero == null) return const SizedBox.shrink();
-        final sourate = sourates.firstWhere((s) => s.numero == numero);
+        final sourate = widget.sourates.firstWhere((s) => s.numero == numero);
 
         return DecoratedBox(
           decoration: BoxDecoration(
@@ -37,17 +44,39 @@ class AudioMiniPlayer extends StatelessWidget {
           ),
           child: SafeArea(
             top: false,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  onTap: () => setState(() => _expanded = !_expanded),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Icon(
+                      _expanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
+                      color: scheme.tertiary,
+                    ),
+                  ),
+                ),
+                if (_expanded) ...[
                   Row(
                     children: [
+                      Expanded(
+                        child: Align(
+                          child: IconButton(
+                            icon: const Icon(Icons.tune),
+                            tooltip: 'إعدادات الاستماع',
+                            onPressed: () => showListenOptionsDialog(
+                              context,
+                              sourate: sourate,
+                              initialAyah: controller.currentAyah.value ?? 1,
+                            ),
+                          ),
+                        ),
+                      ),
                       IconButton(
                         icon: const Icon(Icons.skip_previous),
-                        tooltip: 'السورة السابقة',
-                        onPressed: numero > 1 ? controller.previous : null,
+                        tooltip: 'الآية السابقة',
+                        onPressed: controller.previousAyah,
                       ),
                       StreamBuilder<PlayerState>(
                         stream: controller.player.playerStateStream,
@@ -59,8 +88,8 @@ class AudioMiniPlayer extends StatelessWidget {
                             return const Padding(
                               padding: EdgeInsets.all(12),
                               child: SizedBox(
-                                width: 24,
-                                height: 24,
+                                width: 28,
+                                height: 28,
                                 child: CircularProgressIndicator(strokeWidth: 2),
                               ),
                             );
@@ -70,7 +99,7 @@ class AudioMiniPlayer extends StatelessWidget {
                             icon: Icon(
                               playing ? Icons.pause_circle_filled : Icons.play_circle_filled,
                             ),
-                            iconSize: 36,
+                            iconSize: 44,
                             color: scheme.primary,
                             onPressed: controller.togglePlayPause,
                           );
@@ -78,84 +107,76 @@ class AudioMiniPlayer extends StatelessWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.skip_next),
-                        tooltip: 'السورة التالية',
-                        onPressed: numero < 114 ? controller.next : null,
+                        tooltip: 'الآية التالية',
+                        onPressed: controller.nextAyah,
                       ),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(sourate.nomAr, style: Theme.of(context).textTheme.titleSmall),
-                            Text(
-                              '${QuranAudio.reciterNomAr} — ${QuranAudio.riwayaNomAr}',
-                              style: Theme.of(context).textTheme.bodySmall,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                        child: Align(
+                          child: IconButton(
+                            icon: const Icon(Icons.close),
+                            tooltip: 'إيقاف',
+                            onPressed: controller.stop,
+                          ),
                         ),
-                      ),
-                      ValueListenableBuilder<QuranPlaybackMode>(
-                        valueListenable: controller.mode,
-                        builder: (context, mode, __) {
-                          final repeatOne = mode == QuranPlaybackMode.repeatOne;
-                          return IconButton(
-                            icon: Icon(repeatOne ? Icons.repeat_one : Icons.playlist_play),
-                            color: repeatOne ? scheme.secondary : scheme.primary,
-                            tooltip: repeatOne
-                                ? 'إعادة هذه السورة فقط (اضغط للمتابعة إلى التي تليها)'
-                                : 'متابعة إلى السورة التالية (اضغط لإعادة هذه السورة فقط)',
-                            onPressed: controller.toggleMode,
-                          );
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.close),
-                        tooltip: 'إيقاف',
-                        onPressed: controller.stop,
                       ),
                     ],
                   ),
-                  StreamBuilder<Duration>(
-                    stream: controller.player.positionStream,
-                    builder: (context, snapshot) {
-                      final position = snapshot.data ?? Duration.zero;
-                      final total = controller.player.duration ?? Duration.zero;
-                      final max =
-                          total.inMilliseconds > 0 ? total.inMilliseconds.toDouble() : 1.0;
-                      final value =
-                          position.inMilliseconds.clamp(0, max.toInt()).toDouble();
-                      return Column(
-                        children: [
-                          SliderTheme(
-                            data: SliderTheme.of(context).copyWith(
-                              trackHeight: 2,
-                              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
-                            ),
-                            child: Slider(
-                              value: value,
-                              max: max,
-                              activeColor: scheme.secondary,
-                              onChanged: total.inMilliseconds > 0
-                                  ? (v) => controller.player.seek(Duration(milliseconds: v.toInt()))
-                                  : null,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(_fmt(position), style: Theme.of(context).textTheme.labelSmall),
-                                Text(_fmt(total), style: Theme.of(context).textTheme.labelSmall),
-                              ],
-                            ),
-                          ),
-                        ],
+                  ValueListenableBuilder<int?>(
+                    valueListenable: controller.currentAyah,
+                    builder: (context, ayah, __) {
+                      return Text(
+                        ayah != null
+                            ? '${sourate.nomAr} — الآية $ayah'
+                            : sourate.nomAr,
+                        style: Theme.of(context).textTheme.titleSmall,
                       );
                     },
                   ),
+                  const SizedBox(height: 4),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: StreamBuilder<Duration>(
+                      stream: controller.player.positionStream,
+                      builder: (context, snapshot) {
+                        final position = snapshot.data ?? Duration.zero;
+                        final total = controller.player.duration ?? Duration.zero;
+                        final max =
+                            total.inMilliseconds > 0 ? total.inMilliseconds.toDouble() : 1.0;
+                        final value =
+                            position.inMilliseconds.clamp(0, max.toInt()).toDouble();
+                        return Column(
+                          children: [
+                            SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                trackHeight: 2,
+                                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+                              ),
+                              child: Slider(
+                                value: value,
+                                max: max,
+                                activeColor: scheme.secondary,
+                                onChanged: total.inMilliseconds > 0
+                                    ? (v) => controller.player.seek(Duration(milliseconds: v.toInt()))
+                                    : null,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(_fmt(position), style: Theme.of(context).textTheme.labelSmall),
+                                  Text(_fmt(total), style: Theme.of(context).textTheme.labelSmall),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                 ],
-              ),
+              ],
             ),
           ),
         );
