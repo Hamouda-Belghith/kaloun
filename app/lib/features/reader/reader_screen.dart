@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/models/navigation_data.dart';
 import '../../core/services/bookmark_service.dart';
 import '../../core/services/navigation_data_service.dart';
+import '../../core/services/quran_audio_controller.dart';
 import '../../shared/widgets/audio_mini_player.dart';
 import '../bookmarks/bookmarks_screen.dart';
 import '../goto_page/goto_page_screen.dart';
@@ -81,24 +82,31 @@ class _ReaderScreenState extends State<ReaderScreen> {
         body: Column(
           children: [
             Expanded(
-              child: PageView.builder(
-                controller: _controller,
-                // Pas de `reverse` : le Directionality RTL parent place déjà la page 1
-                // à droite et fait avancer vers la gauche (`reverse: true` annulerait ça).
-                itemCount: data.totalPages,
-                onPageChanged: _onPageChanged,
-                itemBuilder: (context, index) {
-                  final pageNumber = index + 1;
-                  return InteractiveViewer(
-                    maxScale: 4,
-                    child: Center(
-                      child: Image.asset(
-                        'assets/pages/page_${pageNumber.toString().padLeft(4, '0')}.webp',
-                        fit: BoxFit.contain,
+              child: GestureDetector(
+                // Un tap sur la page fait apparaître la barre audio, qui se
+                // referme toute seule après quelques secondes (en plus de la
+                // flèche, qui reste un contrôle manuel permanent).
+                onTap: QuranAudioController.instance.showPanelTemporarily,
+                behavior: HitTestBehavior.translucent,
+                child: PageView.builder(
+                  controller: _controller,
+                  // Pas de `reverse` : le Directionality RTL parent place déjà la page 1
+                  // à droite et fait avancer vers la gauche (`reverse: true` annulerait ça).
+                  itemCount: data.totalPages,
+                  onPageChanged: _onPageChanged,
+                  itemBuilder: (context, index) {
+                    final pageNumber = index + 1;
+                    return InteractiveViewer(
+                      maxScale: 4,
+                      child: Center(
+                        child: Image.asset(
+                          'assets/pages/page_${pageNumber.toString().padLeft(4, '0')}.webp',
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
             AudioMiniPlayer(sourates: data.sourates, defaultSourate: sourate),

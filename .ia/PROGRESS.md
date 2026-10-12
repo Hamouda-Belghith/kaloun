@@ -4,6 +4,24 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-12 (session 22) — Affichage temporaire du panneau audio au tap sur la page
+
+Demande de l'utilisateur : garder la flèche (contrôle manuel), et ajouter qu'un tap sur la page du Coran fasse apparaître la barre de lecture, qui se referme toute seule après 3 secondes sans interaction.
+
+- La visibilité du panneau (`panelExpanded`) passe d'un état local à `AudioMiniPlayer` à un état centralisé dans `QuranAudioController` — nécessaire pour qu'un tap dans `ReaderScreen` (un widget différent) puisse la piloter.
+- `QuranAudioController.showPanelTemporarily()` : ouvre le panneau et (re)lance un minuteur de 3 secondes qui le referme. `togglePanel()` (utilisé par la flèche) ouvre de la même façon ou referme immédiatement en annulant le minuteur en cours.
+- `ReaderScreen` : la zone de la page (le `PageView`) est enveloppée d'un `GestureDetector` (`HitTestBehavior.translucent`, pour ne pas gêner le zoom/pan de `InteractiveViewer` ni le swipe de page) dont le `onTap` appelle `showPanelTemporarily()`. Un tap répété pendant que le panneau est déjà ouvert relance simplement le délai.
+- `AudioMiniPlayer` repasse de `StatefulWidget` à `StatelessWidget` (son seul état local, `_expanded`, a été déplacé dans le contrôleur).
+- Comportement volontairement unifié : la flèche et le tap-sur-page utilisent le même minuteur de 3 secondes (pas de distinction "ouverture permanente via la flèche" vs "temporaire via le tap") — plus simple et prévisible.
+- Test de régression ajouté : tap sur la page → panneau visible (icône réglages apparaît) → après 4 secondes simulées → panneau refermé. `flutter analyze` : 0 erreur. `flutter test` : 14/14. `flutter build web --release` vérifié.
+- Poussé sur `dev`, à valider avant promotion en `main`.
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur teste sur un vrai appareil : taper sur une page du Coran fait apparaître la barre, qui disparaît bien toute seule après environ 3 secondes ; la flèche reste utilisable pour replier/déplier manuellement.
+2. Si validé : promotion en prod.
+
+---
+
 ## 2026-10-07 (session 21) — Correction : la flèche du panneau audio était invisible au premier lancement
 
 Bug signalé par l'utilisateur : à l'ouverture de l'app, la petite flèche du panneau audio (ajoutée en session 20) n'apparaissait pas dans le lecteur de pages — il fallait d'abord ouvrir "السور" pour qu'elle apparaisse, ensuite seulement elle devenait disponible partout.

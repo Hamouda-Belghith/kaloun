@@ -10,22 +10,21 @@ import 'listen_options_dialog.dart';
 /// répétition (verset/sourate, nombre de fois) accessibles via une icône
 /// dédiée.
 ///
+/// La visibilité (dépliée/repliée) est pilotée par
+/// [QuranAudioController.panelExpanded] : la flèche la bascule
+/// manuellement, et [QuranAudioController.showPanelTemporarily] (déclenché
+/// par un tap ailleurs dans l'écran, ex. sur la page du Coran) l'ouvre et
+/// la referme toute seule après quelques secondes.
+///
 /// [defaultSourate] est la sourate à utiliser quand rien n'est encore
 /// chargé (ex. la sourate affichée dans le lecteur de pages) : permet de
 /// démarrer l'écoute directement depuis le panneau replié, sans devoir
 /// d'abord ouvrir la liste des sourates.
-class AudioMiniPlayer extends StatefulWidget {
+class AudioMiniPlayer extends StatelessWidget {
   const AudioMiniPlayer({super.key, required this.sourates, this.defaultSourate});
 
   final List<Sourate> sourates;
   final Sourate? defaultSourate;
-
-  @override
-  State<AudioMiniPlayer> createState() => _AudioMiniPlayerState();
-}
-
-class _AudioMiniPlayerState extends State<AudioMiniPlayer> {
-  bool _expanded = false;
 
   String _fmt(Duration d) {
     final m = d.inMinutes.remainder(60).toString().padLeft(2, '0');
@@ -42,9 +41,8 @@ class _AudioMiniPlayerState extends State<AudioMiniPlayer> {
       valueListenable: controller.currentSourateNumero,
       builder: (context, numero, __) {
         final isLoaded = numero != null;
-        final Sourate? sourate = isLoaded
-            ? widget.sourates.firstWhere((s) => s.numero == numero)
-            : widget.defaultSourate;
+        final Sourate? sourate =
+            isLoaded ? sourates.firstWhere((s) => s.numero == numero) : defaultSourate;
 
         return DecoratedBox(
           decoration: BoxDecoration(
@@ -56,28 +54,38 @@ class _AudioMiniPlayerState extends State<AudioMiniPlayer> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                InkWell(
-                  onTap: () => setState(() => _expanded = !_expanded),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    child: Icon(
-                      _expanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
-                      color: scheme.tertiary,
-                    ),
-                  ),
-                ),
-                if (_expanded)
-                  sourate == null
-                      ? const Padding(
-                          padding: EdgeInsets.only(bottom: 12),
-                          child: Text('اختر سورة من القائمة للاستماع'),
-                        )
-                      : _ExpandedContent(
-                          controller: controller,
-                          sourate: sourate,
-                          isLoaded: isLoaded,
-                          fmt: _fmt,
+                ValueListenableBuilder<bool>(
+                  valueListenable: controller.panelExpanded,
+                  builder: (context, expanded, __) {
+                    return InkWell(
+                      onTap: controller.togglePanel,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        child: Icon(
+                          expanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
+                          color: scheme.tertiary,
                         ),
+                      ),
+                    );
+                  },
+                ),
+                ValueListenableBuilder<bool>(
+                  valueListenable: controller.panelExpanded,
+                  builder: (context, expanded, __) {
+                    if (!expanded) return const SizedBox.shrink();
+                    return sourate == null
+                        ? const Padding(
+                            padding: EdgeInsets.only(bottom: 12),
+                            child: Text('اختر سورة من القائمة للاستماع'),
+                          )
+                        : _ExpandedContent(
+                            controller: controller,
+                            sourate: sourate,
+                            isLoaded: isLoaded,
+                            fmt: _fmt,
+                          );
+                  },
+                ),
               ],
             ),
           ),

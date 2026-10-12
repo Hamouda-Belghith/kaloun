@@ -48,6 +48,29 @@ void main() {
     expect(find.byIcon(Icons.keyboard_arrow_up), findsOneWidget);
   });
 
+  testWidgets(
+      "Taper sur la page affiche le panneau audio puis le referme après 3 secondes",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    expect(find.byIcon(Icons.keyboard_arrow_up), findsOneWidget);
+    expect(find.byIcon(Icons.tune), findsNothing);
+
+    await tester.tap(find.byType(PageView));
+    await tester.pump();
+
+    expect(find.byIcon(Icons.keyboard_arrow_down), findsOneWidget);
+    expect(find.byIcon(Icons.tune), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 4));
+
+    expect(find.byIcon(Icons.keyboard_arrow_up), findsOneWidget);
+    expect(find.byIcon(Icons.tune), findsNothing);
+  });
+
   testWidgets('Al-Baqara affiche page_0003 (partagée avec la fin de Al-Fatiha)',
       (WidgetTester tester) async {
     final asset = await pageShownAfterTapping(tester, 'البقرة');

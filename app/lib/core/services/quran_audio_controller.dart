@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/ayah_timing.dart';
@@ -29,6 +31,29 @@ class QuranAudioController {
   final ValueNotifier<RepeatScope> repeatScope = ValueNotifier(RepeatScope.sourate);
   final ValueNotifier<int> repeatCount = ValueNotifier(1);
   final ValueNotifier<String?> error = ValueNotifier(null);
+
+  /// Visibilité du panneau de contrôle (barre de lecture). Peut être
+  /// ouverte manuellement (flèche) ou temporairement (tap sur la page),
+  /// et se referme toute seule après [_autoHideDelay] sans nouvelle
+  /// sollicitation.
+  final ValueNotifier<bool> panelExpanded = ValueNotifier(false);
+  static const _autoHideDelay = Duration(seconds: 3);
+  Timer? _hideTimer;
+
+  void showPanelTemporarily() {
+    panelExpanded.value = true;
+    _hideTimer?.cancel();
+    _hideTimer = Timer(_autoHideDelay, () => panelExpanded.value = false);
+  }
+
+  void togglePanel() {
+    if (panelExpanded.value) {
+      _hideTimer?.cancel();
+      panelExpanded.value = false;
+    } else {
+      showPanelTemporarily();
+    }
+  }
 
   List<AyahTiming> _timings = [];
   Duration? _loopStart;
