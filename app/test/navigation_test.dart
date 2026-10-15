@@ -63,7 +63,7 @@ void main() {
 
     // Laisse le panneau se refermer tout seul pour ne pas fausser l'état
     // (singleton partagé) des tests suivants.
-    await tester.pump(const Duration(seconds: 4));
+    await tester.pump(const Duration(seconds: 11));
   });
 
   testWidgets(
@@ -78,7 +78,7 @@ void main() {
   });
 
   testWidgets(
-      "Taper sur la page affiche le panneau audio puis le referme après 3 secondes",
+      "Taper sur la page affiche le panneau audio puis le referme après 10 secondes",
       (WidgetTester tester) async {
     await tester.pumpWidget(const MosshafQalounApp());
     for (var i = 0; i < 15; i++) {
@@ -94,7 +94,7 @@ void main() {
     expect(find.byIcon(Icons.keyboard_arrow_down), findsOneWidget);
     expect(find.byIcon(Icons.tune), findsOneWidget);
 
-    await tester.pump(const Duration(seconds: 4));
+    await tester.pump(const Duration(seconds: 11));
 
     expect(find.byIcon(Icons.keyboard_arrow_up), findsOneWidget);
     expect(find.byIcon(Icons.tune), findsNothing);

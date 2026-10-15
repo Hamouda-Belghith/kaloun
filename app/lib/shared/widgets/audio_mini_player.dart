@@ -134,7 +134,7 @@ class _ExpandedContent extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.skip_previous),
+              icon: const Icon(Icons.arrow_back_ios_new, size: 18),
               tooltip: 'الآية السابقة',
               onPressed: isLoaded ? controller.previousAyah : null,
             ),
@@ -168,7 +168,7 @@ class _ExpandedContent extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.skip_next),
+              icon: const Icon(Icons.arrow_forward_ios, size: 18),
               tooltip: 'الآية التالية',
               onPressed: isLoaded ? controller.nextAyah : null,
             ),

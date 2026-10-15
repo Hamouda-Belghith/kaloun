@@ -4,6 +4,24 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-15 (session 24) — Délai d'auto-masquage à 10s, icônes verset précédent/suivant
+
+Demande de l'utilisateur :
+1. Le panneau audio se refermait tout seul après 3 secondes : passer ce délai à 10 secondes.
+2. Les icônes "verset précédent/suivant" (`Icons.skip_previous`/`Icons.skip_next`, ressemblant à des boutons "piste précédente/suivante") créaient de la confusion sur ce qu'elles font réellement.
+
+- `QuranAudioController._autoHideDelay` : `Duration(seconds: 3)` → `Duration(seconds: 10)`.
+- `AudioMiniPlayer` : icônes remplacées par de simples chevrons (`Icons.arrow_back_ios_new` / `Icons.arrow_forward_ios`), moins ambigus que les doubles-triangles de style "piste suivante".
+- Tests mis à jour pour le nouveau délai (pump de 11s au lieu de 4s dans les deux tests concernés par l'auto-masquage).
+- `flutter analyze` : 0 erreur. `flutter test` : 17/17. `flutter build web --release` vérifié.
+- Poussé sur `dev`, à valider avant promotion en `main`.
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur vérifie que le panneau reste visible 10 secondes avant de se refermer tout seul, et que les nouvelles icônes verset précédent/suivant sont plus claires.
+2. Si validé : promotion en prod.
+
+---
+
 ## 2026-10-15 (session 23) — Quatre corrections sur le panneau audio
 
 Demande de l'utilisateur, quatre bugs signalés d'un coup :

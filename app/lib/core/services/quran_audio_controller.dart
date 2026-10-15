@@ -51,7 +51,7 @@ class QuranAudioController {
   /// et se referme toute seule après [_autoHideDelay] sans nouvelle
   /// sollicitation.
   final ValueNotifier<bool> panelExpanded = ValueNotifier(false);
-  static const _autoHideDelay = Duration(seconds: 3);
+  static const _autoHideDelay = Duration(seconds: 10);
   Timer? _hideTimer;
 
   void showPanelTemporarily() {
