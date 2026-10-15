@@ -40,9 +40,9 @@ class AudioMiniPlayer extends StatelessWidget {
     return ValueListenableBuilder<int?>(
       valueListenable: controller.currentSourateNumero,
       builder: (context, numero, __) {
-        final isLoaded = numero != null;
+        final hasSourate = numero != null;
         final Sourate? sourate =
-            isLoaded ? sourates.firstWhere((s) => s.numero == numero) : defaultSourate;
+            hasSourate ? sourates.firstWhere((s) => s.numero == numero) : defaultSourate;
 
         return DecoratedBox(
           decoration: BoxDecoration(
@@ -73,17 +73,21 @@ class AudioMiniPlayer extends StatelessWidget {
                   valueListenable: controller.panelExpanded,
                   builder: (context, expanded, __) {
                     if (!expanded) return const SizedBox.shrink();
-                    return sourate == null
-                        ? const Padding(
-                            padding: EdgeInsets.only(bottom: 12),
-                            child: Text('اختر سورة من القائمة للاستماع'),
-                          )
-                        : _ExpandedContent(
-                            controller: controller,
-                            sourate: sourate,
-                            isLoaded: isLoaded,
-                            fmt: _fmt,
-                          );
+                    if (sourate == null) {
+                      return const Padding(
+                        padding: EdgeInsets.only(bottom: 12),
+                        child: Text('اختر سورة من القائمة للاستماع'),
+                      );
+                    }
+                    return ValueListenableBuilder<bool>(
+                      valueListenable: controller.sourceReady,
+                      builder: (context, isLoaded, __) => _ExpandedContent(
+                        controller: controller,
+                        sourate: sourate,
+                        isLoaded: isLoaded,
+                        fmt: _fmt,
+                      ),
+                    );
                   },
                 ),
               ],
@@ -138,7 +142,9 @@ class _ExpandedContent extends StatelessWidget {
               stream: controller.player.playerStateStream,
               builder: (context, snapshot) {
                 final s = snapshot.data;
+                final playing = isLoaded && (s?.playing ?? false);
                 final loading = isLoaded &&
+                    !playing &&
                     (s?.processingState == ProcessingState.loading ||
                         s?.processingState == ProcessingState.buffering);
                 if (loading) {
@@ -151,16 +157,13 @@ class _ExpandedContent extends StatelessWidget {
                     ),
                   );
                 }
-                final playing = isLoaded && (s?.playing ?? false);
                 return IconButton(
                   icon: Icon(
                     playing ? Icons.pause_circle_filled : Icons.play_circle_filled,
                   ),
                   iconSize: 44,
                   color: scheme.primary,
-                  onPressed: isLoaded
-                      ? controller.togglePlayPause
-                      : () => controller.playSourate(sourate.numero),
+                  onPressed: () => controller.playOrResume(sourate.numero),
                 );
               },
             ),

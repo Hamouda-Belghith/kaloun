@@ -38,6 +38,35 @@ void main() {
   }
 
   testWidgets(
+      "La dernière position écoutée (sourate + verset) est restaurée au démarrage",
+      (WidgetTester tester) async {
+    // Doit être le tout premier test à instancier le widget : le contrôleur
+    // audio est un singleton qui ne restaure sa position qu'une seule fois,
+    // à sa toute première construction dans le processus de test.
+    SharedPreferences.setMockInitialValues({
+      'audio_last_sourate': 18,
+      'audio_last_ayah': 115,
+    });
+
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byType(PageView));
+    await tester.pump();
+
+    expect(find.textContaining('الكهف'), findsWidgets);
+    expect(find.textContaining('115'), findsOneWidget);
+
+    expect(tester.takeException(), isNull);
+
+    // Laisse le panneau se refermer tout seul pour ne pas fausser l'état
+    // (singleton partagé) des tests suivants.
+    await tester.pump(const Duration(seconds: 4));
+  });
+
+  testWidgets(
       "La flèche du panneau audio est visible dès le lecteur de pages (sans ouvrir السور d'abord)",
       (WidgetTester tester) async {
     await tester.pumpWidget(const MosshafQalounApp());
@@ -69,6 +98,49 @@ void main() {
 
     expect(find.byIcon(Icons.keyboard_arrow_up), findsOneWidget);
     expect(find.byIcon(Icons.tune), findsNothing);
+  });
+
+  testWidgets(
+      "Retaper sur la page pendant que le panneau est déplié le referme immédiatement",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byType(PageView));
+    await tester.pump();
+    expect(find.byIcon(Icons.keyboard_arrow_down), findsOneWidget);
+    expect(find.byIcon(Icons.tune), findsOneWidget);
+
+    await tester.tap(find.byType(PageView));
+    await tester.pump();
+
+    expect(find.byIcon(Icons.keyboard_arrow_up), findsOneWidget);
+    expect(find.byIcon(Icons.tune), findsNothing);
+  });
+
+  testWidgets(
+      "Le champ 'آية' des options d'écoute se vide dès le premier focus (valeur par défaut)",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MosshafQalounApp());
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+
+    await tester.tap(find.byIcon(Icons.menu_book));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.tune).first);
+    await tester.pumpAndSettle();
+
+    final ayahField = find.byType(TextField).first;
+    expect(tester.widget<TextField>(ayahField).controller!.text, '1');
+
+    await tester.tap(ayahField);
+    await tester.pump();
+
+    expect(tester.widget<TextField>(ayahField).controller!.text, isEmpty);
   });
 
   testWidgets('Al-Baqara affiche page_0003 (partagée avec la fin de Al-Fatiha)',

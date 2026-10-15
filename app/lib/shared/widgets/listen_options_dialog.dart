@@ -15,6 +15,25 @@ Future<void> showListenOptionsDialog(
       TextEditingController(text: '${QuranAudioController.instance.repeatCount.value}');
   var scope = QuranAudioController.instance.repeatScope.value;
 
+  // Le texte par défaut (ex. "1") doit disparaître dès le premier focus
+  // sur le champ, pas seulement quand l'utilisateur l'efface à la main.
+  var ayahCleared = false;
+  final ayahFocusNode = FocusNode();
+  var countCleared = false;
+  final countFocusNode = FocusNode();
+  ayahFocusNode.addListener(() {
+    if (ayahFocusNode.hasFocus && !ayahCleared) {
+      ayahCleared = true;
+      ayahController.clear();
+    }
+  });
+  countFocusNode.addListener(() {
+    if (countFocusNode.hasFocus && !countCleared) {
+      countCleared = true;
+      countController.clear();
+    }
+  });
+
   await showDialog<void>(
     context: context,
     builder: (dialogContext) {
@@ -31,6 +50,7 @@ Future<void> showListenOptionsDialog(
                 children: [
                   TextField(
                     controller: ayahController,
+                    focusNode: ayahFocusNode,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'ابدأ من آية (1 - ${sourate.nombreAyat})',
@@ -40,6 +60,7 @@ Future<void> showListenOptionsDialog(
                   const SizedBox(height: 16),
                   TextField(
                     controller: countController,
+                    focusNode: countFocusNode,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(labelText: 'عدد التكرارات'),
                   ),
@@ -87,4 +108,6 @@ Future<void> showListenOptionsDialog(
       );
     },
   );
+  ayahFocusNode.dispose();
+  countFocusNode.dispose();
 }

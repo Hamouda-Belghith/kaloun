@@ -4,6 +4,29 @@ Nouvelle entrée en haut du fichier, la plus récente en premier.
 
 ---
 
+## 2026-10-15 (session 23) — Quatre corrections sur le panneau audio
+
+Demande de l'utilisateur, quatre bugs signalés d'un coup :
+1. Retaper sur la page pendant que le panneau est déjà ouvert devait le refermer immédiatement, pas juste relancer le délai de 3 secondes.
+2. Le bouton lecture affichait parfois son indicateur de chargement en boucle alors que l'audio jouait déjà ("tourne dans le vide").
+3. Les champs numériques pré-remplis (ex. "1" pour le verset de départ) devaient se vider dès le premier focus, pas seulement quand on les efface à la main.
+4. Mémoriser la position exacte (sourate + verset) pour reprendre au même endroit après avoir fermé puis rouvert l'app.
+
+- **#1** : `ReaderScreen` appelait `showPanelTemporarily` sur chaque tap, qui relance toujours le minuteur sans jamais refermer. Changé pour `togglePanel` (déjà existant depuis la session 22) qui referme immédiatement si le panneau est déjà ouvert.
+- **#2** : dans `AudioMiniPlayer` et `SouratesScreen`, `loading` était calculé avant `playing` et pouvait rester vrai en configuration de buffering intermittent côté navigateur alors que `playing` était déjà vrai. Inversé l'ordre : `playing` d'abord, puis `loading` seulement si `!playing`.
+- **#3** : `listen_options_dialog.dart` — ajout d'un `FocusNode` par champ (verset, nombre de répétitions) avec un listener à usage unique qui vide le `TextEditingController` dès le premier focus (garde booléenne pour ne pas effacer une saisie déjà faite lors d'un refocus ultérieur).
+- **#4** : `QuranAudioController` lit/écrit `audio_last_sourate` et `audio_last_ayah` via `SharedPreferences` — restauration légère (pas de chargement audio, juste les deux entiers) à la construction du singleton, sauvegarde à chaque changement de verset détecté et au démarrage d'une nouvelle sourate. Nouveau `ValueNotifier<bool> sourceReady` distingue "position connue/restaurée" de "fichier réellement chargé" : `currentSourateNumero`/`currentAyah` peuvent être renseignés sans qu'un `setUrl` ait eu lieu. Nouvelle méthode `playOrResume(numero)` : bascule lecture/pause si déjà chargée, relance depuis le verset mémorisé si seulement restaurée, ou démarre une sourate différente depuis le début — utilisée par les boutons lecture de `AudioMiniPlayer` et `SouratesScreen` à la place d'un appel direct à `playSourate`.
+- Reste volontairement hors de ce mécanisme : le bouton "ابدأ" de `showListenOptionsDialog`, qui appelle toujours `playSourateFromAyah` directement (un choix explicite de l'utilisateur ne doit jamais être court-circuité en simple bascule lecture/pause).
+- Tests de régression ajoutés : un second tap referme le panneau immédiatement ; le champ "آية" se vide au premier focus ; la position (sourate 18 "الكهف", verset 115) seedée via `SharedPreferences.setMockInitialValues` est bien restaurée et affichée au démarrage (ce dernier test doit rester le tout premier du fichier : le contrôleur audio est un singleton qui ne restaure sa position qu'à sa toute première construction dans le processus de test).
+- `flutter analyze` : 0 erreur. `flutter test` : 17/17. `flutter build web --release` vérifié.
+- Poussé sur `dev`, à valider avant promotion en `main`.
+
+### Prochaine session — à faire en priorité
+1. L'utilisateur teste sur un vrai appareil les quatre corrections : second tap referme bien la barre, plus de spinner qui tourne pendant une lecture audible, les champs de la boîte de dialogue d'écoute se vident bien au premier tap, et fermer/rouvrir l'app reprend bien au même verset (tester par ex. en écoutant jusqu'à l'Aya 115 d'Al-Kahf, fermer l'app, la rouvrir).
+2. Si validé : promotion en prod.
+
+---
+
 ## 2026-10-12 (session 22) — Affichage temporaire du panneau audio au tap sur la page
 
 Demande de l'utilisateur : garder la flèche (contrôle manuel), et ajouter qu'un tap sur la page du Coran fasse apparaître la barre de lecture, qui se referme toute seule après 3 secondes sans interaction.

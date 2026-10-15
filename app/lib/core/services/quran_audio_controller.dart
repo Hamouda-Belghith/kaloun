@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/ayah_timing.dart';
 import 'ayah_timing_service.dart';
 import 'quran_audio.dart';
@@ -16,14 +17,20 @@ enum RepeatScope {
 }
 
 /// Contrôleur audio unique pour toute l'app : l'état (sourate/verset en
-/// cours, options de répétition) survit à la navigation entre écrans.
+/// cours, options de répétition) survit à la navigation entre écrans, et
+/// le dernier verset écouté est mémorisé localement pour reprendre au
+/// même endroit après avoir fermé puis rouvert l'app.
 class QuranAudioController {
   QuranAudioController._() {
     player.playerStateStream.listen(_onPlayerStateChanged);
     player.positionStream.listen(_onPositionChanged);
+    _restoreLastPosition();
   }
 
   static final QuranAudioController instance = QuranAudioController._();
+
+  static const _prefsSourateKey = 'audio_last_sourate';
+  static const _prefsAyahKey = 'audio_last_ayah';
 
   final AudioPlayer player = AudioPlayer();
   final ValueNotifier<int?> currentSourateNumero = ValueNotifier(null);
@@ -31,6 +38,13 @@ class QuranAudioController {
   final ValueNotifier<RepeatScope> repeatScope = ValueNotifier(RepeatScope.sourate);
   final ValueNotifier<int> repeatCount = ValueNotifier(1);
   final ValueNotifier<String?> error = ValueNotifier(null);
+
+  /// `true` une fois qu'un fichier audio a réellement été chargé dans le
+  /// lecteur. [currentSourateNumero]/[currentAyah] peuvent être renseignés
+  /// (ex. position restaurée au démarrage) sans que ce soit encore le cas :
+  /// il faut alors lancer une vraie lecture avant de pouvoir mettre en
+  /// pause/reprendre.
+  final ValueNotifier<bool> sourceReady = ValueNotifier(false);
 
   /// Visibilité du panneau de contrôle (barre de lecture). Peut être
   /// ouverte manuellement (flèche) ou temporairement (tap sur la page),
@@ -65,8 +79,51 @@ class QuranAudioController {
     repeatCount.value = count.clamp(1, 99);
   }
 
+  Future<void> _restoreLastPosition() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final numero = prefs.getInt(_prefsSourateKey);
+      final ayah = prefs.getInt(_prefsAyahKey);
+      if (numero == null) return;
+      currentSourateNumero.value = numero;
+      currentAyah.value = ayah ?? 1;
+      // Minutage chargé à l'avance (léger, pas d'audio) pour que
+      // précédent/suivant fonctionnent dès que la lecture démarre.
+      _timings = await AyahTimingService.instance.timingsForSourate(numero);
+    } catch (_) {
+      // Pas grave : on perd juste la reprise, l'app reste utilisable.
+    }
+  }
+
+  Future<void> _saveLastPosition(int numero, int ayah) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_prefsSourateKey, numero);
+      await prefs.setInt(_prefsAyahKey, ayah);
+    } catch (_) {
+      // Pas grave : juste la reprise qui ne sera pas mémorisée.
+    }
+  }
+
+  /// Point d'entrée pour un simple bouton lecture : reprend si une lecture
+  /// est déjà chargée pour cette sourate, relance depuis le dernier verset
+  /// connu si la sourate était seulement restaurée (pas encore chargée),
+  /// ou démarre une sourate différente depuis son premier verset.
+  Future<void> playOrResume(int numero) async {
+    if (currentSourateNumero.value == numero) {
+      if (sourceReady.value) {
+        await togglePlayPause();
+      } else {
+        await playSourateFromAyah(numero, currentAyah.value ?? 1);
+      }
+      return;
+    }
+    await playSourate(numero);
+  }
+
   Future<void> playSourate(int numero, {int startAyah = 1}) async {
     error.value = null;
+    sourceReady.value = false;
     currentSourateNumero.value = numero;
     currentAyah.value = null;
     _timings = [];
@@ -80,10 +137,13 @@ class QuranAudioController {
       await player.setUrl(QuranAudio.urlForSourate(numero));
       _setupLoop(startAyah);
       if (_loopStart != null) await player.seek(_loopStart);
+      sourceReady.value = true;
       await player.play();
+      await _saveLastPosition(numero, startAyah);
     } catch (_) {
       error.value = 'تعذّر تحميل التلاوة. تحقق من اتصالك بالإنترنت.';
       currentSourateNumero.value = null;
+      sourceReady.value = false;
     }
   }
 
@@ -106,11 +166,12 @@ class QuranAudioController {
   }
 
   Future<void> togglePlayPause() async {
-    if (currentSourateNumero.value == null) return;
+    if (!sourceReady.value) return;
     player.playing ? await player.pause() : await player.play();
   }
 
   Future<void> previousAyah() async {
+    if (!sourceReady.value) return;
     final ayah = currentAyah.value;
     final numero = currentSourateNumero.value;
     if (ayah == null || numero == null || ayah <= 1) return;
@@ -119,6 +180,7 @@ class QuranAudioController {
   }
 
   Future<void> nextAyah() async {
+    if (!sourceReady.value) return;
     final ayah = currentAyah.value;
     final numero = currentSourateNumero.value;
     if (ayah == null || numero == null) return;
@@ -140,7 +202,8 @@ class QuranAudioController {
   }
 
   Future<void> stop() async {
-    await player.stop();
+    if (sourceReady.value) await player.stop();
+    sourceReady.value = false;
     currentSourateNumero.value = null;
     currentAyah.value = null;
   }
@@ -157,6 +220,8 @@ class QuranAudioController {
       }
       if (found != null && found.ayah != currentAyah.value) {
         currentAyah.value = found.ayah;
+        final numero = currentSourateNumero.value;
+        if (numero != null) _saveLastPosition(numero, found.ayah);
       }
     }
     final loopEnd = _loopEnd;

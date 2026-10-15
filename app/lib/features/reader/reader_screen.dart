@@ -86,7 +86,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
                 // Un tap sur la page fait apparaître la barre audio, qui se
                 // referme toute seule après quelques secondes (en plus de la
                 // flèche, qui reste un contrôle manuel permanent).
-                onTap: QuranAudioController.instance.showPanelTemporarily,
+                onTap: QuranAudioController.instance.togglePanel,
                 behavior: HitTestBehavior.translucent,
                 child: PageView.builder(
                   controller: _controller,

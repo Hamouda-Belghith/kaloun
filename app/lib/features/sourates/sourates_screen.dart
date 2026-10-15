@@ -57,32 +57,41 @@ class SouratesScreen extends StatelessWidget {
                         ValueListenableBuilder<int?>(
                           valueListenable: controller.currentSourateNumero,
                           builder: (context, activeNumero, __) {
-                            final isActive = activeNumero == s.numero;
-                            return StreamBuilder<PlayerState>(
-                              stream: controller.player.playerStateStream,
-                              builder: (context, snapshot) {
-                                final state = snapshot.data;
-                                final loading = isActive &&
-                                    (state?.processingState == ProcessingState.loading ||
-                                        state?.processingState == ProcessingState.buffering);
-                                final playing = isActive && (state?.playing ?? false);
-                                if (loading) {
-                                  return const Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(strokeWidth: 2),
-                                    ),
-                                  );
-                                }
-                                return IconButton(
-                                  icon: Icon(
-                                    playing ? Icons.pause_circle_filled : Icons.play_circle_outline,
-                                  ),
-                                  color: Theme.of(context).colorScheme.secondary,
-                                  tooltip: 'استماع',
-                                  onPressed: () => controller.playSourate(s.numero),
+                            return ValueListenableBuilder<bool>(
+                              valueListenable: controller.sourceReady,
+                              builder: (context, sourceReady, __) {
+                                final isActive =
+                                    activeNumero == s.numero && sourceReady;
+                                return StreamBuilder<PlayerState>(
+                                  stream: controller.player.playerStateStream,
+                                  builder: (context, snapshot) {
+                                    final state = snapshot.data;
+                                    final playing = isActive && (state?.playing ?? false);
+                                    final loading = isActive &&
+                                        !playing &&
+                                        (state?.processingState == ProcessingState.loading ||
+                                            state?.processingState == ProcessingState.buffering);
+                                    if (loading) {
+                                      return const Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator(strokeWidth: 2),
+                                        ),
+                                      );
+                                    }
+                                    return IconButton(
+                                      icon: Icon(
+                                        playing
+                                            ? Icons.pause_circle_filled
+                                            : Icons.play_circle_outline,
+                                      ),
+                                      color: Theme.of(context).colorScheme.secondary,
+                                      tooltip: 'استماع',
+                                      onPressed: () => controller.playOrResume(s.numero),
+                                    );
+                                  },
                                 );
                               },
                             );
